@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diagram</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    // Mermaid v10+ ESM
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+    window.__mermaid = mermaid;
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: "dark",
+      themeVariables: { fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif" },
+      flowchart: { curve: "basis", htmlLabels: true },
+      securityLevel: "loose",
+    });
+    document.dispatchEvent(new Event("mermaid-ready"));
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html, body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+    .mermaid svg { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
+  <div class="mx-auto max-w-5xl px-4 sm:px-6 py-8">
+    <header class="mb-6 flex items-start justify-between gap-4">
+      <div>
+        <h1 id="title" class="text-2xl sm:text-3xl font-extrabold tracking-tight">Diagram</h1>
+        <p id="description" class="mt-1 text-sm text-slate-400"></p>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="cursor-pointer text-xs sm:text-sm bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg px-3 py-2 font-semibold">
+          Load JSON
+          <input id="file-input" type="file" accept="application/json,.json" class="hidden" />
+        </label>
+        <button id="toggle-src" class="text-xs sm:text-sm bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg px-3 py-2 font-semibold">View source</button>
+      </div>
+    </header>
+
+    <div id="diagram-wrap" class="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 overflow-x-auto">
+      <div id="diagram" class="mermaid"></div>
+    </div>
+
+    <pre id="source" class="hidden mt-4 rounded-xl border border-slate-800 bg-slate-950 p-4 text-xs text-slate-300 overflow-x-auto"></pre>
+    <div id="error" class="hidden mt-4 rounded-xl border border-rose-500/50 bg-rose-500/10 p-4 text-sm text-rose-200"></div>
+  </div>
+
+  <script type="module">
+    const SHAPES = {
+      rect:    (id, label) => `${id}["${escapeLabel(label)}"]`,
+      round:   (id, label) => `${id}(${quote(label)})`,
+      stadium: (id, label) => `${id}([${quote(label)}])`,
+      diamond: (id, label) => `${id}{${quote(label)}}`,
+      circle:  (id, label) => `${id}((${quote(label)}))`,
+      hex:     (id, label) => `${id}{{${quote(label)}}}`,
+    };
+    function quote(s) { return `"${escapeLabel(s)}"`; }
+    function escapeLabel(s) {
+      return String(s ?? "").replace(/"/g, "\\\"").replace(/\n/g, "<br/>");
+    }
+    function safeId(s, i) {
+      let id = String(s ?? `n${i}`).replace(/[^a-zA-Z0-9_]/g, "_");
+      if (!/^[a-zA-Z]/.test(id)) id = "n_" + id;
+      return id;
+    }
+
+    // Emits a Mermaid `click` directive for a node, if it declared a link.
+    // Supports either { link: "https://..." } or shorthand { href: "..." }.
+    // Optional: tooltip, linkTarget ("_self" | "_blank", default "_blank").
+    function clickLineFor(id, node) {
+      const url = node?.link || node?.href;
+      if (!url) return null;
+      const target = node.linkTarget || "_blank";
+      const tip = node.tooltip ? ` ${quote(node.tooltip)}` : "";
+      // Mermaid syntax:  click <id> "<url>" "<tooltip>" _blank
+      return `  click ${id} ${quote(url)}${tip} ${target}`;
+    }
+
+    function compileFlowchart(d) {
+      const dir = d.direction || "TD";
+      const lines = [`flowchart ${dir}`];
+      const clicks = [];
+      const nodes = d.nodes || [];
+      for (const n of nodes) {
+        const id = safeId(n.id ?? n.label, 0);
+        const shape = SHAPES[n.shape] || SHAPES.rect;
+        lines.push("  " + shape(id, n.label ?? n.id));
+        const c = clickLineFor(id, n);
+        if (c) clicks.push(c);
+      }
+      for (const e of d.edges || []) {
+        const a = safeId(e.from, 0), b = safeId(e.to, 0);
+        const arrow = e.label ? `-- ${quote(e.label)} -->` : "-->";
+        lines.push(`  ${a} ${arrow} ${b}`);
+      }
+      return [...lines, ...clicks].join("\n");
+    }
+
+    function compileTree(d) {
+      const dir = d.direction || "TD";
+      const lines = [`flowchart ${dir}`];
+      const clicks = [];
+      let i = 0;
+      function walk(node, parentId) {
+        const id = safeId(node.id ?? `n${i++}`, i);
+        const shape = SHAPES[node.shape] || SHAPES.rect;
+        lines.push("  " + shape(id, node.label ?? ""));
+        if (parentId) lines.push(`  ${parentId} --> ${id}`);
+        const c = clickLineFor(id, node);
+        if (c) clicks.push(c);
+        for (const child of node.children || []) walk(child, id);
+      }
+      if (d.root) walk(d.root, null);
+      return [...lines, ...clicks].join("\n");
+    }
+
+    function compileMindmap(d) {
+      // Mermaid mindmap uses indentation. Two spaces per level.
+      const lines = ["mindmap"];
+      function walk(node, depth) {
+        const indent = "  ".repeat(depth + 1);
+        const label = (node.label ?? "").replace(/[\r\n]+/g, " ");
+        // Use rounded shape for non-root, default for root.
+        lines.push(`${indent}${depth === 0 ? `root((${label}))` : label}`);
+        for (const child of node.children || []) walk(child, depth + 1);
+      }
+      if (d.root) walk(d.root, 0);
+      return lines.join("\n");
+    }
+
+    function compile(d) {
+      if (typeof d.mermaid === "string") return d.mermaid; // raw escape hatch
+      const t = d.type || "flowchart";
+      if (t === "flowchart") return compileFlowchart(d);
+      if (t === "tree") return compileTree(d);
+      if (t === "mindmap") return compileMindmap(d);
+      throw new Error(`Unknown diagram type: ${t}`);
+    }
+
+    async function render(text) {
+      const wait = window.__mermaid
+        ? Promise.resolve()
+        : new Promise((r) => document.addEventListener("mermaid-ready", r, { once: true }));
+      await wait;
+      const m = window.__mermaid;
+      const out = document.getElementById("diagram");
+      try {
+        const { svg } = await m.render("g_" + Math.random().toString(36).slice(2, 8), text);
+        out.innerHTML = svg;
+        showError(null);
+      } catch (err) {
+        showError(err.message || String(err));
+      }
+    }
+
+    function showError(msg) {
+      const el = document.getElementById("error");
+      if (!msg) { el.classList.add("hidden"); return; }
+      el.textContent = msg;
+      el.classList.remove("hidden");
+    }
+
+    async function load(url, sourceLabel) {
+      try {
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
+        const data = await res.json();
+        applyMeta(data, sourceLabel);
+        const src = compile(data);
+        document.getElementById("source").textContent = src;
+        await render(src);
+      } catch (err) {
+        showError(err.message || String(err));
+      }
+    }
+
+    function applyMeta(data, sourceLabel) {
+      document.getElementById("title").textContent = data.title || sourceLabel || "Diagram";
+      document.getElementById("description").textContent = data.description || "";
+      document.title = data.title || "Diagram";
+    }
+
+    document.getElementById("toggle-src").addEventListener("click", () => {
+      document.getElementById("source").classList.toggle("hidden");
+    });
+
+    document.getElementById("file-input").addEventListener("change", (e) => {
+      const f = e.target.files && e.target.files[0];
+      if (!f) return;
+      const reader = new FileReader();
+      reader.onload = async () => {
+        try {
+          const data = JSON.parse(reader.result);
+          applyMeta(data, f.name);
+          const src = compile(data);
+          document.getElementById("source").textContent = src;
+          await render(src);
+        } catch (err) { showError(err.message); }
+      };
+      reader.readAsText(f);
+    });
+
+    // Boot: read ?src=<url> or fall back to flowchart sample.
+    const params = new URLSearchParams(location.search);
+    const src = params.get("src") || "flowchart-static-site.json";
+    load(src, src);
+  </script>
+</body>
+</html>

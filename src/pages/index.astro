@@ -1,0 +1,279 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { decks, puzzles, diagrams } from "@/lib/catalog";
+import { getCollection } from "astro:content";
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const recentPosts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const LANG_LABEL: Record<string, string> = { en: "EN", ur: "اردو", ar: "العربية" };
+---
+<Layout title="Home · madinah3">
+  <!-- Greeting -->
+  <section class="mb-10">
+    <h1 class="text-3xl font-extrabold tracking-tight sm:text-4xl">
+      <span id="greeting">Welcome</span><span class="text-amber-300">.</span>
+    </h1>
+    <p class="mt-2 text-slate-400">Pick a deck to study or a puzzle to play. Your progress stays in this browser.</p>
+  </section>
+
+  <!-- Flashcards -->
+  <section id="flashcards" class="mb-12">
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <h2 class="text-xl font-bold">Flashcards</h2>
+      <div class="flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-900/50 p-1 text-xs" role="tablist" aria-label="Filter decks">
+        <button data-filter="all"        class="filter-btn rounded-md px-3 py-1.5 font-semibold text-slate-200 bg-slate-800/80">All</button>
+        <button data-filter="todo"       class="filter-btn rounded-md px-3 py-1.5 font-medium text-slate-400 hover:text-slate-200">To do</button>
+        <button data-filter="in-progress" class="filter-btn rounded-md px-3 py-1.5 font-medium text-slate-400 hover:text-slate-200">In progress</button>
+        <button data-filter="done"       class="filter-btn rounded-md px-3 py-1.5 font-medium text-slate-400 hover:text-slate-200">Done</button>
+      </div>
+    </div>
+
+    {decks.length === 0 ? (
+      <div class="rounded-xl border border-dashed border-slate-700 p-8 text-center text-sm text-slate-400">
+        No decks yet. Add one to <code class="text-slate-300">src/lib/catalog.ts</code>.
+      </div>
+    ) : (
+      <ul id="deck-grid" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {decks.map((d) => (
+          <li
+            class="deck-card group rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-slate-700"
+            data-deck-id={d.id}
+            data-deck-json={`${base}/${d.json}`}
+            data-status="todo"
+          >
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h3 class="text-lg font-bold leading-tight">{d.title}</h3>
+                <p class="mt-1 text-sm text-slate-400">{d.description}</p>
+              </div>
+              <span class="status-badge shrink-0 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider">
+                Loading
+              </span>
+            </div>
+
+            <div class="mt-4">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span><span class="score-pct">0</span>% learned</span>
+                <span class="score-frac">—</span>
+              </div>
+              <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-800">
+                <div class="score-bar h-full bg-emerald-400 transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="mt-5 flex items-center justify-between">
+              <a
+                href={`${base}/flashcards/index.html?deck=${encodeURIComponent(base + "/" + d.json)}&id=${encodeURIComponent(d.id)}`}
+                class="rounded-lg bg-amber-300 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-amber-200"
+              >Open</a>
+              <span class="text-xs text-slate-500">{d.tags?.join(" · ")}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+
+  <!-- Puzzles -->
+  <section id="puzzles" class="mb-12">
+    <div class="mb-4">
+      <h2 class="text-xl font-bold">Crosswords &amp; Word Searches</h2>
+      <p class="text-sm text-slate-400">No scores tracked — just open and play.</p>
+    </div>
+    <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {puzzles.map((p) => (
+        <li class="rounded-xl border border-slate-800 bg-slate-900/60 p-5 hover:border-slate-700">
+          <div class="flex items-center gap-2 text-[11px] uppercase tracking-wider text-slate-400">
+            <span class={`rounded-full px-2 py-0.5 ${p.kind === "crossword" ? "bg-indigo-500/15 text-indigo-300" : "bg-emerald-500/15 text-emerald-300"}`}>
+              {p.kind === "crossword" ? "Crossword" : "Word search"}
+            </span>
+            {p.language && <span class="text-slate-500">· {p.language.toUpperCase()}</span>}
+          </div>
+          <h3 class="mt-2 text-lg font-bold">{p.title}</h3>
+          <p class="mt-1 text-sm text-slate-400">{p.description}</p>
+          <a
+            href={`${base}/${p.href}`}
+            class="mt-4 inline-block rounded-lg border border-slate-700 px-3 py-1.5 text-sm font-semibold text-slate-200 hover:bg-slate-800"
+          >Open →</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- Diagrams -->
+  <section id="diagrams" class="mb-12">
+    <div class="mb-4">
+      <h2 class="text-xl font-bold">Diagrams</h2>
+      <p class="text-sm text-slate-400">JSON-driven flowcharts, trees, and mindmaps (rendered with Mermaid).</p>
+    </div>
+    {diagrams.length === 0 ? (
+      <div class="rounded-xl border border-dashed border-slate-700 p-8 text-center text-sm text-slate-400">
+        No diagrams yet. Add one to <code class="text-slate-300">src/lib/catalog.ts</code>.
+      </div>
+    ) : (
+      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {diagrams.map((d) => (
+          <li class="rounded-xl border border-slate-800 bg-slate-900/60 p-5 hover:border-slate-700">
+            <div class="flex items-center gap-2 text-[11px] uppercase tracking-wider text-slate-400">
+              <span class={`rounded-full px-2 py-0.5 ${d.kind === "flowchart" ? "bg-sky-500/15 text-sky-300" : d.kind === "tree" ? "bg-violet-500/15 text-violet-300" : "bg-rose-500/15 text-rose-300"}`}>
+                {d.kind}
+              </span>
+            </div>
+            <h3 class="mt-2 text-lg font-bold">{d.title}</h3>
+            <p class="mt-1 text-sm text-slate-400">{d.description}</p>
+            <a
+              href={`${base}/diagrams/view.html?src=${encodeURIComponent(base + "/" + d.json)}`}
+              class="mt-4 inline-block rounded-lg border border-slate-700 px-3 py-1.5 text-sm font-semibold text-slate-200 hover:bg-slate-800"
+            >Open →</a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+
+  <!-- Blog -->
+  <section id="blog" class="mb-12">
+    <div class="mb-4 flex items-end justify-between gap-3">
+      <div>
+        <h2 class="text-xl font-bold">Recent posts</h2>
+        <p class="text-sm text-slate-400">Notes in English, Urdu, and Arabic.</p>
+      </div>
+      <a class="text-sm text-emerald-300 hover:text-emerald-200" href={`${base}/blog/`}>All posts →</a>
+    </div>
+    {recentPosts.length === 0 ? (
+      <div class="rounded-xl border border-dashed border-slate-700 p-8 text-center text-sm text-slate-400">
+        No posts yet. Add one under <code class="text-slate-300">src/content/blog/</code>.
+      </div>
+    ) : (
+      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {recentPosts.map((p) => {
+          const rtl = p.data.lang === "ur" || p.data.lang === "ar";
+          const fontClass =
+            p.data.lang === "ur" ? "font-urdu" :
+            p.data.lang === "ar" ? "font-arabic" : "";
+          return (
+            <li class="rounded-xl border border-slate-800 bg-slate-900/60 p-5 hover:border-slate-700">
+              <a href={`${base}/blog/${p.slug}/`} class="block">
+                <div class="flex items-center justify-between text-[10px] uppercase tracking-wider text-slate-400">
+                  <span>{p.data.date.toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" })}</span>
+                  <span class="rounded-full bg-slate-800 px-2 py-0.5">{LANG_LABEL[p.data.lang] ?? p.data.lang}</span>
+                </div>
+                <div lang={p.data.lang} dir={rtl ? "rtl" : "ltr"} class:list={["mt-2", fontClass]}>
+                  <h3 class="text-lg font-bold leading-snug">{p.data.title}</h3>
+                  {p.data.description && <p class="mt-1 text-sm text-slate-400 line-clamp-3">{p.data.description}</p>}
+                </div>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    )}
+  </section>
+
+  <script>
+    import { profile, getRaw } from "@/lib/storage";
+
+    // ---------- Greeting ----------
+    function setGreeting() {
+      const name = profile.getName();
+      const el = document.getElementById("greeting")!;
+      el.textContent = name ? `Welcome back, ${name}` : "Welcome";
+    }
+    setGreeting();
+    document.addEventListener("a3:name-changed", setGreeting);
+
+    // ---------- Flashcard progress ----------
+    type LegacyEntry = { learned?: string[]; queue?: string[] };
+    type LegacyMap = Record<string, LegacyEntry>;
+
+    // Mirror the signature scheme used by /public/flashcards/index.html.
+    // signature = `${title}::${count}::${ids.join("|")}` (truncated to 200 chars)
+    function signatureFor(title: string, ids: string[]) {
+      return `${title}::${ids.length}::${ids.join("|")}`.slice(0, 200);
+    }
+
+    function ensureIds(cards: any[]): string[] {
+      const seen = new Set<string>();
+      const out: string[] = [];
+      for (const c of cards) {
+        const fallback =
+          ((c.front?.en || c.front?.ur || "card") + "__" + (c.back?.en || c.back?.ur || ""));
+        let id = c.id || fallback;
+        let unique = id, n = 1;
+        while (seen.has(unique)) unique = `${id}#${++n}`;
+        seen.add(unique);
+        out.push(unique);
+      }
+      return out;
+    }
+
+    function statusFromPct(pct: number): "todo" | "in-progress" | "done" {
+      if (pct >= 100) return "done";
+      if (pct > 0) return "in-progress";
+      return "todo";
+    }
+
+    const STATUS_STYLES: Record<string, string> = {
+      todo: "border-slate-600 text-slate-300",
+      "in-progress": "border-amber-400/60 text-amber-300",
+      done: "border-emerald-400/60 text-emerald-300",
+    };
+    const STATUS_LABELS: Record<string, string> = {
+      todo: "To do",
+      "in-progress": "In progress",
+      done: "Done",
+    };
+
+    async function hydrateDeck(card: HTMLElement) {
+      const url = card.dataset.deckJson!;
+      let total = 0, learnedN = 0;
+      try {
+        const res = await fetch(url, { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          const cards = Array.isArray(data) ? data : (data.cards || []);
+          const title = (data && data.title && (data.title.en || data.title.ur)) || "Deck";
+          const ids = ensureIds(cards);
+          total = ids.length;
+          const sig = signatureFor(title, ids);
+          const all = getRaw<LegacyMap>("flashcards.progress.v1", {}) || {};
+          const entry = all[sig];
+          if (entry && Array.isArray(entry.learned)) learnedN = entry.learned.length;
+        }
+      } catch { /* ignore — leave at 0 */ }
+
+      const pct = total ? Math.round((learnedN / total) * 100) : 0;
+      const status = statusFromPct(pct);
+      card.dataset.status = status;
+
+      const badge = card.querySelector(".status-badge") as HTMLElement;
+      badge.textContent = STATUS_LABELS[status];
+      badge.className = `status-badge shrink-0 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${STATUS_STYLES[status]}`;
+
+      (card.querySelector(".score-pct") as HTMLElement).textContent = String(pct);
+      (card.querySelector(".score-frac") as HTMLElement).textContent = total ? `${learnedN} / ${total}` : "—";
+      (card.querySelector(".score-bar") as HTMLElement).style.width = `${pct}%`;
+    }
+
+    const cards = Array.from(document.querySelectorAll<HTMLElement>(".deck-card"));
+    cards.forEach(hydrateDeck);
+
+    // ---------- Filter ----------
+    const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>(".filter-btn"));
+    function applyFilter(f: string) {
+      cards.forEach((c) => {
+        const matches = f === "all" || c.dataset.status === f;
+        c.classList.toggle("hidden", !matches);
+      });
+      filterButtons.forEach((b) => {
+        const active = b.dataset.filter === f;
+        b.className = `filter-btn rounded-md px-3 py-1.5 ${active ? "font-semibold text-slate-200 bg-slate-800/80" : "font-medium text-slate-400 hover:text-slate-200"}`;
+      });
+    }
+    filterButtons.forEach((b) => b.addEventListener("click", () => applyFilter(b.dataset.filter!)));
+  </script>
+</Layout>

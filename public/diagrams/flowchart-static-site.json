@@ -1,0 +1,32 @@
+{
+  "title": "How a request reaches a static site",
+  "description": "Browser → DNS → CDN → bundled assets. Click any node for more info.",
+  "type": "flowchart",
+  "direction": "LR",
+  "nodes": [
+    { "id": "user",  "label": "User types URL",   "shape": "round",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview",
+      "tooltip": "MDN: How HTTP works" },
+    { "id": "dns",   "label": "DNS resolves host", "shape": "rect",
+      "link": "https://developer.mozilla.org/en-US/docs/Glossary/DNS",
+      "tooltip": "MDN: DNS" },
+    { "id": "edge",  "label": "CDN edge node",     "shape": "rect",
+      "link": "https://developer.mozilla.org/en-US/docs/Glossary/CDN",
+      "tooltip": "MDN: CDN" },
+    { "id": "cache", "label": "Is it cached?",     "shape": "diamond" },
+    { "id": "hit",   "label": "Serve from cache",  "shape": "rect" },
+    { "id": "origin","label": "Fetch from origin", "shape": "rect" },
+    { "id": "html",  "label": "HTML + JS + CSS",   "shape": "round",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/HTML",
+      "tooltip": "MDN: HTML" }
+  ],
+  "edges": [
+    { "from": "user",   "to": "dns" },
+    { "from": "dns",    "to": "edge" },
+    { "from": "edge",   "to": "cache" },
+    { "from": "cache",  "to": "hit",    "label": "yes" },
+    { "from": "cache",  "to": "origin", "label": "no"  },
+    { "from": "origin", "to": "hit" },
+    { "from": "hit",    "to": "html" }
+  ]
+}

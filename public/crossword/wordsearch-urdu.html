@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="ur" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>اردو لفظوں کی تلاش — Urdu Word Search</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/gh/MichaelWehar/Crossword-Layout-Generator@master/layout_generator.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111c34;
+      --panel-2: #16223d;
+      --ink: #e6edf7;
+      --muted: #93a4c2;
+      --accent: #ffd166;
+      --accent-2: #6ee7b7;
+      --error: #fb7185;
+      --cell: #f8fafc;
+      --cell-ink: #0f172a;
+      --border: #1f2c4d;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      background: radial-gradient(1200px 800px at 10% -10%, #1b2a52 0%, var(--bg) 55%) fixed;
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+    }
+    header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 28px 32px 8px; gap: 16px; flex-wrap: wrap;
+    }
+    header h1 { margin: 0; font-size: 26px; letter-spacing: 0.5px; }
+    header h1 .urdu {
+      font-family: "Noto Naskh Arabic", serif;
+      font-weight: 700;
+      margin-inline-end: 10px;
+    }
+    header h1 .dot { color: var(--accent); }
+    header .tag { color: var(--muted); font-size: 13px; }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(320px, auto) 1fr;
+      gap: 28px;
+      padding: 16px 32px 40px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { main { grid-template-columns: 1fr; padding: 16px; } }
+
+    .panel {
+      background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    .board-wrap { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+    .board-stage { position: relative; }
+    .board {
+      display: grid;
+      gap: 2px;
+      background: #0b1325;
+      padding: 6px;
+      border-radius: 10px;
+      user-select: none;
+      touch-action: none;
+    }
+    .cell {
+      position: relative;
+      width: 46px; height: 46px;
+      background: var(--cell);
+      color: var(--cell-ink);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: "Noto Naskh Arabic", "Geeza Pro", "Scheherazade New", serif;
+      font-size: 26px; font-weight: 700;
+      cursor: pointer;
+      direction: rtl;
+      unicode-bidi: isolate;
+    }
+    .cell.dim { color: #94a3b8; }
+    svg.overlay { position: absolute; inset: 6px; pointer-events: none; }
+    .selection { stroke: var(--accent); }
+    .found-line { stroke: var(--accent-2); }
+    .overlay line { stroke-width: 38; stroke-linecap: round; opacity: 0.45; }
+
+    .toolbar { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    button.btn {
+      background: var(--panel-2); color: var(--ink);
+      border: 1px solid var(--border);
+      padding: 9px 14px; border-radius: 10px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+    }
+    button.btn:hover { background: #1c2a4d; border-color: #2b3d6b; }
+    button.btn.primary { background: var(--accent); color: #1f1505; border-color: #c79b3a; }
+    button.btn.primary:hover { background: #ffdd86; }
+
+    .status { min-height: 22px; font-size: 14px; color: var(--muted); text-align: center; }
+    .status.win { color: var(--accent-2); font-weight: 700; }
+
+    .words h2 {
+      margin: 0 0 10px;
+      font-size: 14px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent-2);
+    }
+    .words ul {
+      list-style: none; padding: 0; margin: 0;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 16px;
+    }
+    @media (max-width: 700px) { .words ul { grid-template-columns: 1fr; } }
+    .words li {
+      padding: 8px 10px; border-radius: 8px;
+      color: var(--ink);
+      background: rgba(255,255,255,0.03);
+      display: flex; flex-direction: column; gap: 4px;
+      font-size: 14px;
+    }
+    .words li.found {
+      color: #064e3b;
+      background: var(--accent-2);
+    }
+    .words li.found .answer { text-decoration: line-through; text-decoration-color: rgba(6, 78, 59, 0.6); }
+    .words li .clue { font-size: 14px; }
+    .words li .answer {
+      font-family: "Noto Naskh Arabic", serif;
+      direction: rtl; text-align: right;
+      font-size: 18px; letter-spacing: 0.02em;
+      font-weight: 700;
+    }
+    .words li .answer.hidden {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px; letter-spacing: 0.18em;
+      opacity: 0.85;
+      direction: ltr; text-align: left;
+    }
+
+    .file-row {
+      display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+      margin-bottom: 12px;
+      font-size: 12px; color: var(--muted);
+    }
+    .file-row label.file-btn {
+      background: var(--panel-2); color: var(--ink);
+      border: 1px solid var(--border);
+      padding: 6px 10px; border-radius: 8px; cursor: pointer;
+      font-weight: 600;
+    }
+    .file-row input[type=file] { display: none; }
+    .file-row .file-name { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+    footer { text-align: center; color: var(--muted); font-size: 12px; padding: 8px 32px 24px; }
+    footer a { color: var(--accent-2); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><span class="urdu">اردو لفظوں کی تلاش</span>Word Search<span class="dot">.</span></h1>
+    <div class="tag">Drag across letters to circle each word.</div>
+  </header>
+
+  <main>
+    <section class="panel board-wrap">
+      <div class="board-stage">
+        <div id="board" class="board" role="grid" aria-label="Urdu word search grid"></div>
+        <svg id="overlay" class="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div class="toolbar">
+        <button class="btn primary" id="new-game">New game</button>
+        <button class="btn" id="hint">Hint</button>
+        <button class="btn" id="reveal-all">Reveal all</button>
+      </div>
+      <div id="status" class="status">Click and drag (or tap and drag) across a word.</div>
+    </section>
+
+    <section class="panel words">
+      <h2>Find these words</h2>
+      <div class="file-row">
+        <label class="file-btn" for="file-input">Load urdu-words.json</label>
+        <input type="file" id="file-input" accept="application/json,.json" />
+        <span class="file-name" id="file-name">urdu-words.json</span>
+      </div>
+      <ul id="wordlist"></ul>
+    </section>
+  </main>
+
+  <footer>
+    Layout via
+    <a href="https://github.com/MichaelWehar/Crossword-Layout-Generator" target="_blank" rel="noreferrer">
+      crossword-layout-generator
+    </a>
+  </footer>
+
+  <script>
+    // ---- Urdu alphabet (isolated forms) for random filler letters ------
+    const URDU_ALPHABET = [
+      "ا","ب","پ","ت","ٹ","ث","ج","چ","ح","خ",
+      "د","ڈ","ذ","ر","ڑ","ز","ژ","س","ش","ص",
+      "ض","ط","ظ","ع","غ","ف","ق","ک","گ","ل",
+      "م","ن","و","ہ","ھ","ء","ی","ے","آ"
+    ];
+
+    // Fallback word list — used when the page is opened via file:// and
+    // urdu-words.json can't be fetched. Use "Load urdu-words.json" otherwise.
+    const FALLBACK_WORDS = [
+      { answer: "سلام",  clue: "Greeting — peace" },
+      { answer: "کتاب",  clue: "Something you read" },
+      { answer: "پانی",  clue: "Drink it to live" },
+      { answer: "درخت",  clue: "Has leaves and branches" },
+      { answer: "چاند",  clue: "Shines at night" },
+      { answer: "سورج",  clue: "Shines during the day" },
+      { answer: "پھول",  clue: "Smells sweet, has petals" },
+      { answer: "آسمان", clue: "Above us, blue by day" },
+      { answer: "گھر",   clue: "Where you live" },
+      { answer: "دوست",  clue: "A close companion" },
+      { answer: "ماں",   clue: "Your mother" },
+      { answer: "علم",   clue: "Knowledge" }
+    ];
+
+    let WORDS = FALLBACK_WORDS;
+
+    // Split a string into an array of Unicode code points (works for Urdu).
+    function chars(str) { return Array.from(str); }
+
+    const board = document.getElementById("board");
+    const overlay = document.getElementById("overlay");
+    const wordlist = document.getElementById("wordlist");
+    const statusEl = document.getElementById("status");
+
+    let cols = 0, rows = 0;
+    let solutionGrid = [];
+    let realLetterAt = [];
+    let cellEls = [];
+    let placedWords = [];
+    let foundSet = new Set();
+
+    // ---- Build puzzle --------------------------------------------------
+    // The layout library treats the "answer" as a string and indexes by
+    // character. Urdu letters used here are single code points, so it
+    // places one Urdu letter per cell — which is exactly what we want.
+    function buildPuzzle() {
+      // Pre-tokenize so we know the visual length (codepoints) of each word.
+      const input = WORDS.map(w => ({
+        answer: w.answer,
+        clue: w.clue || "",
+        _letters: chars(w.answer),
+      }));
+
+      const layout = generateLayout(input);
+      placedWords = layout.result
+        .filter(w => w.orientation !== "none")
+        .map(w => ({ ...w, _letters: chars(w.answer) }));
+      cols = layout.cols;
+      rows = layout.rows;
+      solutionGrid = Array.from({ length: rows }, () => Array(cols).fill(null));
+      realLetterAt = Array.from({ length: rows }, () => Array(cols).fill(false));
+
+      for (const w of placedWords) {
+        for (let i = 0; i < w._letters.length; i++) {
+          const x = (w.orientation === "across" ? w.startx + i : w.startx) - 1;
+          const y = (w.orientation === "down"   ? w.starty + i : w.starty) - 1;
+          if (x < 0 || y < 0 || x >= cols || y >= rows) continue;
+          solutionGrid[y][x] = w._letters[i];
+          realLetterAt[y][x] = true;
+        }
+      }
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          if (!solutionGrid[y][x]) {
+            solutionGrid[y][x] = URDU_ALPHABET[Math.floor(Math.random() * URDU_ALPHABET.length)];
+          }
+        }
+      }
+    }
+
+    // ---- Render --------------------------------------------------------
+    function render() {
+      board.innerHTML = "";
+      overlay.innerHTML = "";
+      board.style.gridTemplateColumns = `repeat(${cols}, 46px)`;
+      board.style.gridTemplateRows    = `repeat(${rows}, 46px)`;
+      cellEls = Array.from({ length: rows }, () => Array(cols).fill(null));
+
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const div = document.createElement("div");
+          div.className = "cell";
+          if (!realLetterAt[y][x]) div.classList.add("dim");
+          // Each cell holds ONE Urdu codepoint; isolation prevents shaping
+          // with neighboring cells. unicode-bidi:isolate (in CSS) also helps.
+          div.textContent = solutionGrid[y][x];
+          div.dataset.x = x;
+          div.dataset.y = y;
+          board.appendChild(div);
+          cellEls[y][x] = div;
+        }
+      }
+
+      // word list — answers hidden until found or revealed
+      wordlist.innerHTML = "";
+      foundSet = new Set();
+      const sorted = [...placedWords].sort((a, b) =>
+        (a.clue || "").localeCompare(b.clue || "") || a.answer.localeCompare(b.answer));
+      for (const w of sorted) {
+        const li = document.createElement("li");
+        li.dataset.answer = w.answer;
+        const len = chars(w.answer).length;
+        const masked = "·".repeat(len);
+        const clueText = w.clue ? escapeHtml(w.clue) : `(${len} letters)`;
+        li.innerHTML =
+          `<span class="clue">${clueText}</span>` +
+          `<span class="answer hidden" data-real="${escapeHtml(w.answer)}" aria-hidden="true">${masked} · ${len} letters</span>`;
+        wordlist.appendChild(li);
+      }
+      setStatus(`Find ${placedWords.length} words. Drag in any of 8 directions.`);
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+
+    // ---- Geometry ------------------------------------------------------
+    const CELL = 46, GAP = 2;
+    function cellCenter(x, y) {
+      return { cx: x * (CELL + GAP) + CELL / 2, cy: y * (CELL + GAP) + CELL / 2 };
+    }
+    function sizeOverlay() {
+      const w = cols * CELL + (cols - 1) * GAP;
+      const h = rows * CELL + (rows - 1) * GAP;
+      overlay.setAttribute("viewBox", `0 0 ${w} ${h}`);
+      overlay.setAttribute("width", w);
+      overlay.setAttribute("height", h);
+    }
+
+    // ---- Selection -----------------------------------------------------
+    let dragging = false;
+    let startCell = null;
+    let endCell = null;
+    let liveLine = null;
+
+    function cellAtEvent(e) {
+      const t = (e.touches && e.touches[0]) || e;
+      const el = document.elementFromPoint(t.clientX, t.clientY);
+      const cell = el && el.closest && el.closest(".cell");
+      if (!cell || !board.contains(cell)) return null;
+      return { x: +cell.dataset.x, y: +cell.dataset.y };
+    }
+
+    function snap(s, e) {
+      const dx = e.x - s.x, dy = e.y - s.y;
+      if (dx === 0 && dy === 0) return { x: s.x, y: s.y, stepX: 0, stepY: 0, len: 0 };
+      const adx = Math.abs(dx), ady = Math.abs(dy);
+      let stepX = 0, stepY = 0, len;
+      if (adx > ady * 2) { stepX = Math.sign(dx); stepY = 0; len = adx; }
+      else if (ady > adx * 2) { stepX = 0; stepY = Math.sign(dy); len = ady; }
+      else { stepX = Math.sign(dx); stepY = Math.sign(dy); len = Math.max(adx, ady); }
+      return { x: s.x + stepX * len, y: s.y + stepY * len, stepX, stepY, len };
+    }
+
+    function drawSelection() {
+      if (liveLine) liveLine.remove();
+      liveLine = null;
+      if (!startCell || !endCell) return;
+      const a = cellCenter(startCell.x, startCell.y);
+      const b = cellCenter(endCell.x, endCell.y);
+      liveLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      liveLine.setAttribute("x1", a.cx); liveLine.setAttribute("y1", a.cy);
+      liveLine.setAttribute("x2", b.cx); liveLine.setAttribute("y2", b.cy);
+      liveLine.setAttribute("class", "selection");
+      overlay.appendChild(liveLine);
+    }
+
+    function lettersAlong(s, snapped) {
+      const cells = [];
+      if (snapped.len === 0 || (snapped.x === s.x && snapped.y === s.y)) {
+        cells.push({ x: s.x, y: s.y });
+      } else {
+        const { stepX, stepY, len } = snapped;
+        for (let i = 0; i <= len; i++) {
+          const x = s.x + stepX * i, y = s.y + stepY * i;
+          if (x < 0 || y < 0 || x >= cols || y >= rows) break;
+          cells.push({ x, y });
+        }
+      }
+      const letters = cells.map(c => solutionGrid[c.y][c.x]);
+      return { cells, word: letters.join("") };
+    }
+
+    function onDown(e) {
+      const c = cellAtEvent(e);
+      if (!c) return;
+      e.preventDefault();
+      dragging = true;
+      startCell = c;
+      endCell = { x: c.x, y: c.y, stepX: 0, stepY: 0, len: 0 };
+      drawSelection();
+    }
+    function onMove(e) {
+      if (!dragging) return;
+      const c = cellAtEvent(e);
+      if (!c) return;
+      e.preventDefault();
+      endCell = snap(startCell, c);
+      drawSelection();
+    }
+    function onUp() {
+      if (!dragging) return;
+      dragging = false;
+      if (startCell && endCell) {
+        const { word } = lettersAlong(startCell, endCell);
+        tryMatch(word, startCell, endCell);
+      }
+      if (liveLine) { liveLine.remove(); liveLine = null; }
+      startCell = endCell = null;
+    }
+
+    board.addEventListener("mousedown", onDown);
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    board.addEventListener("touchstart", onDown, { passive: false });
+    board.addEventListener("touchmove", onMove, { passive: false });
+    board.addEventListener("touchend", onUp);
+
+    // ---- Matching ------------------------------------------------------
+    function tryMatch(word, startC, snapped) {
+      const reversed = chars(word).reverse().join("");
+      const candidates = new Set([word, reversed]);
+      const found = placedWords.find(w => {
+        if (foundSet.has(w.answer)) return false;
+        return candidates.has(w.answer);
+      });
+      if (!found) {
+        flashStatus(`Not a match.`);
+        return;
+      }
+      foundSet.add(found.answer);
+      markFound(startC, snapped);
+      const li = wordlist.querySelector(`li[data-answer="${cssEscape(found.answer)}"]`);
+      if (li) {
+        li.classList.add("found");
+        revealAnswerInLi(li);
+      }
+      if (foundSet.size === placedWords.length) {
+        setStatus("All words found! 🎉", "win");
+      } else {
+        setStatus(`Found "${found.answer}". ${placedWords.length - foundSet.size} to go.`);
+      }
+    }
+
+    function cssEscape(s) {
+      // attribute selectors only need a few characters escaped
+      return s.replace(/"/g, '\\"');
+    }
+
+    function markFound(startC, snapped) {
+      const a = cellCenter(startC.x, startC.y);
+      const b = cellCenter(snapped.x, snapped.y);
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", a.cx); line.setAttribute("y1", a.cy);
+      line.setAttribute("x2", b.cx); line.setAttribute("y2", b.cy);
+      line.setAttribute("class", "found-line");
+      overlay.appendChild(line);
+    }
+
+    function revealAnswerInLi(li) {
+      const ans = li.querySelector(".answer");
+      if (!ans) return;
+      ans.textContent = ans.dataset.real;
+      ans.classList.remove("hidden");
+      ans.removeAttribute("aria-hidden");
+    }
+
+    function setStatus(msg, kind) {
+      statusEl.textContent = msg;
+      statusEl.classList.remove("win");
+      if (kind === "win") statusEl.classList.add("win");
+    }
+    function flashStatus(msg) {
+      setStatus(msg);
+      clearTimeout(flashStatus._t);
+      flashStatus._t = setTimeout(() => {
+        if (foundSet.size === placedWords.length) return;
+        setStatus(`${placedWords.length - foundSet.size} word(s) left.`);
+      }, 1400);
+    }
+
+    // ---- Buttons -------------------------------------------------------
+    document.getElementById("new-game").addEventListener("click", () => {
+      buildPuzzle(); sizeOverlay(); render();
+    });
+    document.getElementById("hint").addEventListener("click", () => {
+      const remaining = placedWords.filter(w => !foundSet.has(w.answer));
+      if (!remaining.length) return;
+      const w = remaining[Math.floor(Math.random() * remaining.length)];
+      const sx = w.startx - 1, sy = w.starty - 1;
+      const el = cellEls[sy][sx];
+      el.animate(
+        [{ outline: "3px solid var(--accent)" }, { outline: "3px solid transparent" }],
+        { duration: 1400, iterations: 2 }
+      );
+      setStatus(`Hint: starts at row ${sy + 1}, col ${sx + 1} (${w.orientation}).`);
+    });
+    document.getElementById("reveal-all").addEventListener("click", () => {
+      for (const w of placedWords) {
+        if (!foundSet.has(w.answer)) {
+          const len = w._letters.length;
+          const sx = w.startx - 1, sy = w.starty - 1;
+          const ex = (w.orientation === "across" ? w.startx + len - 1 : w.startx) - 1;
+          const ey = (w.orientation === "down"   ? w.starty + len - 1 : w.starty) - 1;
+          markFound({ x: sx, y: sy }, { x: ex, y: ey });
+          foundSet.add(w.answer);
+        }
+        const li = wordlist.querySelector(`li[data-answer="${cssEscape(w.answer)}"]`);
+        if (li) {
+          li.classList.add("found");
+          revealAnswerInLi(li);
+        }
+      }
+      setStatus("All words revealed.", "win");
+    });
+
+    // ---- Word list loading --------------------------------------------
+    function validateWords(arr) {
+      if (!Array.isArray(arr)) throw new Error("JSON must be an array.");
+      const cleaned = [];
+      for (const item of arr) {
+        if (!item || typeof item !== "object") continue;
+        const answer = String(item.answer || "").trim();
+        if (!answer) continue;
+        cleaned.push({ answer, clue: item.clue ? String(item.clue) : "" });
+      }
+      if (!cleaned.length) throw new Error("No valid {answer, clue} entries.");
+      return cleaned;
+    }
+
+    async function loadWordsFromUrl(url) {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return validateWords(await res.json());
+    }
+
+    function restart(words, sourceLabel) {
+      WORDS = words;
+      document.getElementById("file-name").textContent = sourceLabel;
+      buildPuzzle(); sizeOverlay(); render();
+    }
+
+    document.getElementById("file-input").addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const words = validateWords(JSON.parse(reader.result));
+          restart(words, file.name);
+        } catch (err) {
+          setStatus(`Could not load ${file.name}: ${err.message}`);
+        }
+      };
+      reader.onerror = () => setStatus(`Could not read ${file.name}.`);
+      reader.readAsText(file);
+    });
+
+    // ---- Start ---------------------------------------------------------
+    (async () => {
+      try {
+        const words = await loadWordsFromUrl("urdu-words.json");
+        restart(words, "urdu-words.json");
+      } catch (err) {
+        restart(FALLBACK_WORDS, "(bundled fallback — use “Load urdu-words.json”)");
+      }
+    })();
+  </script>
+</body>
+</html>

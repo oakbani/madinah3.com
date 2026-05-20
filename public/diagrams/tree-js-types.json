@@ -1,0 +1,32 @@
+{
+  "title": "JavaScript data types",
+  "description": "A summary of primitive vs. reference types.",
+  "type": "tree",
+  "direction": "TD",
+  "root": {
+    "label": "JS data types",
+    "children": [
+      {
+        "label": "Primitive",
+        "children": [
+          { "label": "string" },
+          { "label": "number" },
+          { "label": "boolean" },
+          { "label": "null" },
+          { "label": "undefined" },
+          { "label": "symbol" },
+          { "label": "bigint" }
+        ]
+      },
+      {
+        "label": "Reference",
+        "children": [
+          { "label": "Object" },
+          { "label": "Array" },
+          { "label": "Function" },
+          { "label": "Date / Map / Set / ..." }
+        ]
+      }
+    ]
+  }
+}

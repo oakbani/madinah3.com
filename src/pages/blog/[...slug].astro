@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "@/layouts/BlogLayout.astro";
+
+// Static path generation: one URL per blog entry, e.g. /blog/hello-astro/
+export async function getStaticPaths() {
+  const entries = await getCollection("blog", ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+<BlogLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  date={entry.data.date}
+  lang={entry.data.lang}
+  tags={entry.data.tags}
+>
+  <Content />
+</BlogLayout>

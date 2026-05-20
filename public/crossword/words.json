@@ -1,0 +1,14 @@
+[
+  { "answer": "javascript", "clue": "Language of the web" },
+  { "answer": "python",     "clue": "Snake-named language" },
+  { "answer": "react",      "clue": "UI library by Meta" },
+  { "answer": "node",       "clue": "JS runtime on V8" },
+  { "answer": "typescript", "clue": "JS with static types" },
+  { "answer": "html",       "clue": "Markup of web pages" },
+  { "answer": "css",        "clue": "Styles for the web" },
+  { "answer": "git",        "clue": "Version control" },
+  { "answer": "array",      "clue": "Ordered list" },
+  { "answer": "object",     "clue": "Key/value structure" },
+  { "answer": "loop",       "clue": "Repeats code" },
+  { "answer": "promise",    "clue": "Async value" }
+]

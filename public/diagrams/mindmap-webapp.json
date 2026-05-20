@@ -1,0 +1,35 @@
+{
+  "title": "Building a web app",
+  "description": "Mindmap of layers you'll touch.",
+  "type": "mindmap",
+  "root": {
+    "label": "Web app",
+    "children": [
+      {
+        "label": "Frontend",
+        "children": [
+          { "label": "HTML" },
+          { "label": "CSS" },
+          { "label": "JavaScript" },
+          { "label": "Framework" }
+        ]
+      },
+      {
+        "label": "Backend",
+        "children": [
+          { "label": "API" },
+          { "label": "Auth" },
+          { "label": "Database" }
+        ]
+      },
+      {
+        "label": "Infra",
+        "children": [
+          { "label": "Hosting" },
+          { "label": "CI/CD" },
+          { "label": "Monitoring" }
+        ]
+      }
+    ]
+  }
+}
