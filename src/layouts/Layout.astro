@@ -2,35 +2,67 @@
 export interface Props {
   title?: string;
   description?: string;
+  ogType?: string;
 }
-const { title = "madinah3", description = "Flashcards, crosswords, and word searches." } = Astro.props;
+const {
+  title = "madinah3",
+  description = "Flashcards, crosswords, and word searches.",
+  ogType = "website",
+} = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 <!doctype html>
-<html lang="en" class="bg-slate-950 text-slate-100">
+<html lang="en" class="bg-white text-slate-900">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Naskh+Arabic:wght@500;700&family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet" />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 font-sans antialiased">
-    <header class="border-b border-slate-800/60 bg-slate-950/60 backdrop-blur">
+  <body class="min-h-screen bg-slate-50 font-sans antialiased">
+    <header class="border-b border-slate-200 bg-white/80 backdrop-blur">
       <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <a href={`${base}/`} class="flex items-center gap-2 font-extrabold tracking-tight text-lg">
-          <span class="inline-block h-6 w-6 rounded-md bg-gradient-to-br from-amber-300 to-fuchsia-500"></span>
-          automation<span class="text-amber-300">·</span>3
+          <svg viewBox="0 0 32 32" class="h-7 w-7 shrink-0" aria-hidden="true">
+            <defs>
+              <linearGradient id="dome-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#34d399" />
+                <stop offset="100%" stop-color="#047857" />
+              </linearGradient>
+            </defs>
+            <!-- finial + crescent -->
+            <path d="M16 1.5 L16 5" stroke="#b45309" stroke-width="1.2" stroke-linecap="round" />
+            <path d="M14.6 4.2 a1.6 1.6 0 1 0 1.8 1.6 a1.2 1.2 0 1 1 -1.8 -1.6 z" fill="#d97706" />
+            <!-- dome -->
+            <path d="M5 19 a11 11 0 0 1 22 0 z" fill="url(#dome-grad)" />
+            <path d="M5 19 a11 11 0 0 1 22 0" fill="none" stroke="#065f46" stroke-width="0.6" />
+            <!-- drum / base -->
+            <rect x="4" y="19" width="24" height="4" fill="#cbd5e1" />
+            <rect x="3" y="23" width="26" height="3" fill="#94a3b8" />
+            <!-- arched window -->
+            <path d="M14 12 a2 2 0 0 1 4 0 v4 h-4 z" fill="#065f46" opacity="0.55" />
+          </svg>
+          <span>Madinah<span class="text-emerald-400">3</span></span>
         </a>
-        <nav class="flex items-center gap-1 text-sm text-slate-300">
-          <a class="rounded-lg px-3 py-1.5 hover:bg-slate-800/70" href={`${base}/`}>Home</a>
-          <a class="rounded-lg px-3 py-1.5 hover:bg-slate-800/70" href={`${base}/#flashcards`}>Flashcards</a>
-          <a class="rounded-lg px-3 py-1.5 hover:bg-slate-800/70" href={`${base}/#puzzles`}>Puzzles</a>
-          <a class="rounded-lg px-3 py-1.5 hover:bg-slate-800/70" href={`${base}/#diagrams`}>Diagrams</a>
-          <a class="rounded-lg px-3 py-1.5 hover:bg-slate-800/70" href={`${base}/blog/`}>Blog</a>
-          <button id="change-name" type="button" class="ml-1 rounded-lg border border-slate-700 px-3 py-1.5 text-xs text-slate-300 hover:bg-slate-800/70">
+        <nav class="flex items-center gap-1 text-sm text-slate-700">
+          <a class="rounded-lg px-3 py-1.5 hover:bg-slate-100" href={`${base}/`}>Home</a>
+          <a class="rounded-lg px-3 py-1.5 hover:bg-slate-100" href={`${base}/#flashcards`}>Flashcards</a>
+          <!-- Hidden for now — bring back later
+          <a class="rounded-lg px-3 py-1.5 hover:bg-slate-100" href={`${base}/#puzzles`}>Puzzles</a>
+          <a class="rounded-lg px-3 py-1.5 hover:bg-slate-100" href={`${base}/#diagrams`}>Diagrams</a>
+          <a class="rounded-lg px-3 py-1.5 hover:bg-slate-100" href={`${base}/blog/`}>Blog</a>
+          -->
+          <button id="change-name" type="button" class="ml-1 rounded-lg border border-slate-300 px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-100">
             <span id="name-pill">Hi!</span>
           </button>
         </nav>
@@ -42,19 +74,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     </main>
 
     <footer class="mx-auto max-w-5xl px-4 sm:px-6 py-10 text-center text-xs text-slate-500">
-      Built with <a class="hover:text-slate-300" href="https://astro.build">Astro</a> · hosted on GitHub Pages
+      Built with <a class="hover:text-slate-700" href="https://astro.build">Astro</a> · hosted on GitHub Pages
     </footer>
 
     <!-- Name prompt modal -->
-    <div id="name-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/80 px-4">
-      <form id="name-form" class="w-full max-w-sm rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl">
+    <div id="name-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-white/30 px-4">
+      <form id="name-form" class="w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
         <h2 class="text-lg font-bold">What should we call you?</h2>
-        <p class="mt-1 text-sm text-slate-400">Stored only in your browser. You can change it anytime.</p>
+        <p class="mt-1 text-sm text-slate-600">Stored only in your browser. You can change it anytime.</p>
         <input id="name-input" type="text" required minlength="1" maxlength="40" autocomplete="given-name" placeholder="Your name"
-          class="mt-4 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-amber-400" />
+          class="mt-4 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-emerald-400" />
         <div class="mt-4 flex justify-end gap-2">
-          <button type="button" id="name-cancel" class="rounded-lg px-3 py-2 text-sm text-slate-400 hover:text-slate-200">Cancel</button>
-          <button type="submit" class="rounded-lg bg-amber-300 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-amber-200">Save</button>
+          <button type="button" id="name-cancel" class="rounded-lg px-3 py-2 text-sm text-slate-600 hover:text-slate-800">Cancel</button>
+          <button type="submit" class="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-400">Save</button>
         </div>
       </form>
     </div>

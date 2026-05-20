@@ -1,0 +1,373 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { decks, type Deck } from "@/lib/catalog";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+
+type CardSide = { en?: string; ur?: string };
+type Card = { id?: string; front: CardSide; back: CardSide };
+type DeckJson = { title?: { en?: string; ur?: string }; cards: Card[] };
+
+export function getStaticPaths() {
+  const publicDir = fileURLToPath(new URL("../../../public/", import.meta.url));
+  return decks.map((d) => {
+    const file = path.join(publicDir, d.json);
+    const data = JSON.parse(readFileSync(file, "utf-8")) as DeckJson;
+    return {
+      params: { deck: d.id },
+      props: { deck: d, data },
+    };
+  });
+}
+
+interface Props {
+  deck: Deck;
+  data: DeckJson;
+}
+
+const { deck, data } = Astro.props as Props;
+const title = `${deck.title} — Flashcards · madinah3`;
+const description = deck.description;
+// Server-render the first card so search engines see real content.
+const previewCount = Math.min(6, data.cards.length);
+const previewCards = data.cards.slice(0, previewCount);
+---
+<Layout title={title} description={description} ogType="article">
+  <nav class="mb-4 text-sm text-slate-600">
+    <a href="/" class="hover:text-slate-800">Home</a>
+    <span class="mx-2 text-slate-600">/</span>
+    <a href="/#flashcards" class="hover:text-slate-800">Flashcards</a>
+    <span class="mx-2 text-slate-600">/</span>
+    <span class="text-slate-700">{deck.title}</span>
+  </nav>
+
+  <header class="mb-6">
+    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+      {deck.title}<span class="text-emerald-400">.</span>
+    </h1>
+    <p class="text-sm text-slate-600 mt-1">{deck.description}</p>
+    <p class="text-xs text-slate-500 mt-2">
+      Tap or press <kbd class="px-1.5 py-0.5 bg-slate-100 rounded text-[10px]">Space</kbd> to flip. Then say if you knew it.
+    </p>
+  </header>
+
+  <!-- Toolbar -->
+  <div class="mb-4 flex items-center gap-2">
+    <select id="lang" class="bg-slate-100 border border-slate-300 rounded-lg text-sm px-3 py-2">
+      <option value="en">English</option>
+      <option value="ur">اردو</option>
+      <option value="both">Both</option>
+    </select>
+    <span class="ml-auto text-xs text-slate-600">
+      <span id="learned-count">0</span> learned · <span id="remaining-count">{data.cards.length}</span> remaining
+    </span>
+  </div>
+
+  <div class="mb-4 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+    <div id="progress-bar" class="h-full bg-emerald-400 transition-all duration-500" style="width: 0%"></div>
+  </div>
+
+  <!-- Card stage -->
+  <div class="scene relative">
+    <div class="stack-card bg-slate-100 border border-slate-300 -z-20" style="transform: translateY(18px) scale(.94);"></div>
+    <div class="stack-card bg-slate-100 border border-slate-300 -z-10" style="transform: translateY(9px) scale(.97);"></div>
+
+    <div id="card" class="card-3d cursor-pointer select-none" role="button" aria-label="Flashcard. Tap to flip.">
+      <div class="card-face card-front bg-gradient-to-br from-emerald-700 via-emerald-600 to-teal-600 shadow-2xl">
+        <div class="w-full">
+          <div class="text-[11px] uppercase tracking-[0.25em] text-white/70 mb-3">Question</div>
+          <div id="front-content" class="text-2xl sm:text-3xl font-semibold leading-snug"></div>
+          <div class="mt-6 text-xs text-white/60 tap-hint">Tap to reveal</div>
+        </div>
+      </div>
+      <div class="card-face card-back bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600 shadow-2xl">
+        <div class="w-full">
+          <div class="text-[11px] uppercase tracking-[0.25em] text-white/80 mb-3">Answer</div>
+          <div id="back-content" class="text-3xl sm:text-4xl font-bold leading-snug"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="empty" class="hidden absolute inset-0 rounded-2xl bg-white/95 border border-slate-300 flex flex-col items-center justify-center text-center p-6">
+      <div class="text-3xl">🎉</div>
+      <div class="mt-2 text-xl font-bold">All cards learned!</div>
+      <div class="text-sm text-slate-600 mt-1">Reset progress or pick another deck.</div>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="mt-6 grid grid-cols-2 gap-3">
+    <button id="btn-didnt" class="rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/40 text-rose-300 hover:text-rose-200 px-4 py-4 font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed">
+      <div class="text-sm">Didn't know</div>
+      <div class="text-[11px] text-rose-300/70 mt-0.5">Press <kbd class="px-1 py-0.5 bg-slate-100 rounded">←</kbd> — repeats later</div>
+    </button>
+    <button id="btn-knew" class="rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/50 text-emerald-200 hover:text-emerald-100 px-4 py-4 font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed">
+      <div class="text-sm">I knew it</div>
+      <div class="text-[11px] text-emerald-300/70 mt-0.5">Press <kbd class="px-1 py-0.5 bg-slate-100 rounded">→</kbd> — marks learned</div>
+    </button>
+  </div>
+
+  <div class="mt-3 flex items-center justify-between text-xs text-slate-600">
+    <button id="btn-flip" class="hover:text-slate-800">Flip (Space)</button>
+    <button id="btn-shuffle" class="hover:text-slate-800">Shuffle</button>
+    <button id="btn-reset" class="hover:text-rose-300">Reset progress</button>
+  </div>
+
+  <!-- SEO-visible card preview list (also helps users browse) -->
+  <section class="mt-12 border-t border-slate-200 pt-8">
+    <h2 class="text-lg font-bold mb-3">In this deck</h2>
+    <p class="text-sm text-slate-600 mb-4">{data.cards.length} cards. Preview:</p>
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {previewCards.map((c) => (
+        <li class="rounded-lg border border-slate-200 bg-slate-100 p-4">
+          <div class="text-xs uppercase tracking-wider text-slate-500 mb-1">Question</div>
+          <div class="text-sm">{c.front?.en}</div>
+          {c.front?.ur && <div class="text-base mt-1" dir="rtl" lang="ur" style="font-family:'Noto Naskh Arabic',serif">{c.front.ur}</div>}
+          <div class="mt-3 text-xs uppercase tracking-wider text-slate-500 mb-1">Answer</div>
+          <div class="text-sm font-semibold">{c.back?.en}</div>
+          {c.back?.ur && <div class="text-base mt-1 font-semibold" dir="rtl" lang="ur" style="font-family:'Noto Naskh Arabic',serif">{c.back.ur}</div>}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- Embed deck data so the JS doesn't need to fetch -->
+  <script id="deck-data" type="application/json" set:html={JSON.stringify({ deck: data, id: deck.id })}></script>
+
+  <style>
+    .scene { perspective: 1400px; }
+    .card-3d {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 5 / 3;
+      transform-style: preserve-3d;
+      transition: transform 600ms cubic-bezier(.2,.8,.2,1), opacity 350ms ease;
+      will-change: transform;
+    }
+    .card-3d.flipped { transform: rotateY(180deg); }
+    .card-face {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 1.25rem;
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+    .card-back { transform: rotateY(180deg); }
+    .swipe-right { transform: translateX(140%) rotate(14deg) !important; opacity: 0 !important; }
+    .swipe-left  { transform: translateX(-140%) rotate(-14deg) !important; opacity: 0 !important; }
+    .swipe-in { animation: cardIn 350ms cubic-bezier(.2,.8,.2,1); }
+    @keyframes cardIn {
+      from { transform: translateY(24px) scale(.96); opacity: 0; }
+      to   { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .tap-hint { animation: tapHint 1.6s ease-in-out infinite; }
+    @keyframes tapHint {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    .stack-card {
+      position: absolute; inset: 0;
+      border-radius: 1.25rem;
+      pointer-events: none;
+    }
+    .urdu { font-family: 'Noto Naskh Arabic', serif; direction: rtl; }
+  </style>
+
+  <script is:inline>
+    (function () {
+      const STORAGE_KEY = "flashcards.progress.v1";
+      const raw = document.getElementById("deck-data").textContent;
+      const { deck: deckData } = JSON.parse(raw);
+
+      let lang = localStorage.getItem("flashcards.lang") || "en";
+      let deck = { title: deckData.title || {}, cards: ensureIds(deckData.cards || []) };
+      let deckSig = signatureFor(deck);
+      let learned = new Set();
+      let queue = [];
+      let currentId = null;
+      let flipped = false;
+      let animating = false;
+
+      const els = {
+        card: document.getElementById("card"),
+        front: document.getElementById("front-content"),
+        back: document.getElementById("back-content"),
+        empty: document.getElementById("empty"),
+        learnedCount: document.getElementById("learned-count"),
+        remainingCount: document.getElementById("remaining-count"),
+        progress: document.getElementById("progress-bar"),
+        btnKnew: document.getElementById("btn-knew"),
+        btnDidnt: document.getElementById("btn-didnt"),
+        btnFlip: document.getElementById("btn-flip"),
+        btnShuffle: document.getElementById("btn-shuffle"),
+        btnReset: document.getElementById("btn-reset"),
+        lang: document.getElementById("lang"),
+      };
+      els.lang.value = lang;
+
+      function ensureIds(cards) {
+        const seen = new Set();
+        return cards.map((c) => {
+          let id = c.id || `${(c.front?.en || c.front?.ur || "card")}__${(c.back?.en || c.back?.ur || "")}`;
+          let unique = id, n = 1;
+          while (seen.has(unique)) unique = `${id}#${++n}`;
+          seen.add(unique);
+          return { ...c, id: unique };
+        });
+      }
+
+      function signatureFor(d) {
+        const t = d.title?.en || d.title?.ur || "deck";
+        return `${t}::${d.cards.length}::${d.cards.map((c) => c.id).join("|")}`.slice(0, 200);
+      }
+
+      function loadProgress() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") || {}; }
+        catch { return {}; }
+      }
+      function persist() {
+        const all = loadProgress();
+        all[deckSig] = { learned: [...learned], queue, ts: Date.now() };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+      }
+      function restore() {
+        const entry = loadProgress()[deckSig];
+        if (entry && Array.isArray(entry.learned)) {
+          learned = new Set(entry.learned);
+          const remaining = deck.cards.map((c) => c.id).filter((id) => !learned.has(id));
+          if (Array.isArray(entry.queue) && entry.queue.length) {
+            const set = new Set(remaining);
+            const ordered = entry.queue.filter((id) => set.has(id));
+            for (const id of remaining) if (!ordered.includes(id)) ordered.push(id);
+            queue = ordered;
+          } else {
+            queue = remaining;
+          }
+        } else {
+          queue = deck.cards.map((c) => c.id);
+        }
+      }
+
+      function appendLine(parent, text, isUrdu) {
+        const div = document.createElement("div");
+        div.className = isUrdu ? "urdu text-3xl sm:text-4xl leading-snug" : "leading-snug";
+        div.textContent = text;
+        parent.appendChild(div);
+      }
+      function renderSide(el, content) {
+        el.innerHTML = "";
+        if (!content) { el.textContent = "—"; return; }
+        const en = content.en || "", ur = content.ur || "";
+        if (lang === "en") { if (en) appendLine(el, en, false); else if (ur) appendLine(el, ur, true); }
+        else if (lang === "ur") { if (ur) appendLine(el, ur, true); else if (en) appendLine(el, en, false); }
+        else {
+          if (en) appendLine(el, en, false);
+          if (en && ur) {
+            const sep = document.createElement("div");
+            sep.className = "h-px bg-white/20 my-3";
+            el.appendChild(sep);
+          }
+          if (ur) appendLine(el, ur, true);
+        }
+      }
+
+      function currentCard() { return deck.cards.find((c) => c.id === currentId) || null; }
+
+      function updateStats() {
+        const total = deck.cards.length;
+        els.learnedCount.textContent = String(learned.size);
+        els.remainingCount.textContent = String(total - learned.size);
+        els.progress.style.width = total ? `${Math.round((learned.size / total) * 100)}%` : "0%";
+      }
+
+      function renderCurrent() {
+        const c = currentCard();
+        if (!c) {
+          els.empty.classList.remove("hidden");
+          els.card.classList.add("invisible");
+          els.btnKnew.disabled = true;
+          els.btnDidnt.disabled = true;
+          return;
+        }
+        els.empty.classList.add("hidden");
+        els.card.classList.remove("invisible");
+        els.btnKnew.disabled = false;
+        els.btnDidnt.disabled = false;
+        renderSide(els.front, c.front);
+        renderSide(els.back, c.back);
+      }
+
+      function next(initial) {
+        flipped = false;
+        els.card.classList.remove("flipped");
+        currentId = queue[0] || null;
+        renderCurrent();
+        if (!initial) {
+          els.card.classList.add("swipe-in");
+          setTimeout(() => els.card.classList.remove("swipe-in"), 360);
+        }
+      }
+
+      function flip() {
+        if (animating) return;
+        flipped = !flipped;
+        els.card.classList.toggle("flipped", flipped);
+      }
+
+      function decide(known) {
+        if (!currentId || animating) return;
+        animating = true;
+        const id = currentId;
+        if (known) { learned.add(id); queue = queue.filter((x) => x !== id); }
+        else { queue = queue.filter((x) => x !== id); queue.push(id); }
+        persist();
+        updateStats();
+        els.card.classList.add(known ? "swipe-right" : "swipe-left");
+        setTimeout(() => {
+          els.card.classList.remove("swipe-right", "swipe-left");
+          animating = false;
+          next(false);
+        }, 420);
+      }
+
+      els.card.addEventListener("click", flip);
+      els.btnFlip.addEventListener("click", flip);
+      els.btnKnew.addEventListener("click", () => decide(true));
+      els.btnDidnt.addEventListener("click", () => decide(false));
+      els.btnShuffle.addEventListener("click", () => {
+        for (let i = queue.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [queue[i], queue[j]] = [queue[j], queue[i]];
+        }
+        persist();
+        next(false);
+      });
+      els.btnReset.addEventListener("click", () => {
+        if (!confirm("Reset progress for this deck?")) return;
+        learned = new Set();
+        queue = deck.cards.map((c) => c.id);
+        persist();
+        updateStats();
+        next(false);
+      });
+      els.lang.addEventListener("change", () => {
+        lang = els.lang.value;
+        localStorage.setItem("flashcards.lang", lang);
+        renderCurrent();
+      });
+      window.addEventListener("keydown", (e) => {
+        if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+        if (e.key === " " || e.key === "Spacebar") { e.preventDefault(); flip(); }
+        else if (e.key === "ArrowRight") { e.preventDefault(); decide(true); }
+        else if (e.key === "ArrowLeft")  { e.preventDefault(); decide(false); }
+      });
+
+      restore();
+      updateStats();
+      next(true);
+    })();
+  </script>
+</Layout>

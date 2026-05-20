@@ -23,13 +23,13 @@ const fontClass =
     lang={lang}
     dir={isRtl ? "rtl" : "ltr"}
   >
-    <header class="mb-6 border-b border-slate-800 pb-4">
+    <header class="mb-6 border-b border-slate-200 pb-4">
       <div class="text-xs uppercase tracking-wider text-slate-500">
         {date.toLocaleDateString(lang, { year: "numeric", month: "long", day: "numeric" })}
         {tags.length > 0 && <span class="ms-2">· {tags.join(" · ")}</span>}
       </div>
       <h1 class="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">{title}</h1>
-      {description && <p class="mt-2 text-slate-400">{description}</p>}
+      {description && <p class="mt-2 text-slate-600">{description}</p>}
     </header>
 
     <div class="prose-blog">
@@ -40,28 +40,28 @@ const fontClass =
 
 <style is:global>
   /* Minimal prose styles — works in both LTR and RTL. */
-  .prose-blog { line-height: 1.7; color: rgb(226 232 240); font-size: 1.05rem; }
+  .prose-blog { line-height: 1.7; color: rgb(15 23 42); font-size: 1.05rem; }
   .prose-blog h2 { font-size: 1.5rem; font-weight: 700; margin-top: 1.6em; margin-bottom: 0.4em; }
   .prose-blog h3 { font-size: 1.2rem; font-weight: 700; margin-top: 1.4em; margin-bottom: 0.4em; }
   .prose-blog p { margin: 0.8em 0; }
   .prose-blog ul, .prose-blog ol { margin: 0.8em 0; padding-inline-start: 1.5em; }
   .prose-blog li { margin: 0.25em 0; }
   .prose-blog blockquote {
-    border-inline-start: 3px solid rgb(245 158 11 / 0.7);
+    border-inline-start: 3px solid rgb(16 185 129 / 0.7);
     padding-inline-start: 0.9em;
-    color: rgb(203 213 225);
+    color: rgb(71 85 105);
     margin: 1em 0;
   }
   .prose-blog code {
-    background: rgb(15 23 42);
-    border: 1px solid rgb(30 41 59);
+    background: rgb(241 245 249);
+    border: 1px solid rgb(226 232 240);
     border-radius: 4px;
     padding: 0.05em 0.35em;
     font-size: 0.92em;
   }
   .prose-blog pre {
-    background: rgb(15 23 42);
-    border: 1px solid rgb(30 41 59);
+    background: rgb(241 245 249);
+    border: 1px solid rgb(226 232 240);
     border-radius: 10px;
     padding: 1em;
     overflow-x: auto;
@@ -69,7 +69,7 @@ const fontClass =
     text-align: left;
   }
   .prose-blog pre code { background: transparent; border: 0; padding: 0; }
-  .prose-blog a { color: rgb(110 231 183); text-decoration: underline; }
+  .prose-blog a { color: rgb(5 150 105); text-decoration: underline; }
   /* Arabic uses the same Naskh font we already load for Urdu. */
   .font-arabic { font-family: "Noto Naskh Arabic", serif; }
 </style>
