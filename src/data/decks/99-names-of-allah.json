@@ -1,0 +1,1105 @@
+{
+  "id": "99-names-of-allah",
+  "title": "99 Names of Allah",
+  "description": "Asma'ul Husna — the 99 beautiful names of Allah, with English and Urdu meanings.",
+  "tags": [
+    "arabic",
+    "islam",
+    "asma-ul-husna"
+  ],
+  "title_i18n": {
+    "en": "99 Names of Allah",
+    "ur": "اللہ کے ننانوے نام"
+  },
+  "cards": [
+    {
+      "id": "01-the-beneficent",
+      "front": {
+        "en": "الرحمن",
+        "ur": "الرحمن"
+      },
+      "back": {
+        "en": "The Beneficent",
+        "ur": "بے پایاں رحم کرنے والا"
+      }
+    },
+    {
+      "id": "02-the-merciful",
+      "front": {
+        "en": "ٱلْرَّحِيْمُ",
+        "ur": "ٱلْرَّحِيْمُ"
+      },
+      "back": {
+        "en": "The Merciful",
+        "ur": "بڑا رحم کرنے والا"
+      }
+    },
+    {
+      "id": "03-the-eternal-lord",
+      "front": {
+        "en": "ٱلْمَلِكُ",
+        "ur": "ٱلْمَلِكُ"
+      },
+      "back": {
+        "en": "The Eternal Lord",
+        "ur": "حاکم کائنات"
+      }
+    },
+    {
+      "id": "04-the-most-sacred",
+      "front": {
+        "en": "ٱلْقُدُّوسُ",
+        "ur": "ٱلْقُدُّوسُ"
+      },
+      "back": {
+        "en": "The Most Sacred",
+        "ur": "پاک"
+      }
+    },
+    {
+      "id": "05-the-embodiment-of-peace",
+      "front": {
+        "en": "ٱلْسَّلَامُ",
+        "ur": "ٱلْسَّلَامُ"
+      },
+      "back": {
+        "en": "The embodiment of Peace",
+        "ur": "امن و سلامتی کا سر چشمہ"
+      }
+    },
+    {
+      "id": "06-the-infuser-of-faith",
+      "front": {
+        "en": "ٱلْمُؤْمِنُ",
+        "ur": "ٱلْمُؤْمِنُ"
+      },
+      "back": {
+        "en": "The Infuser of Faith",
+        "ur": "امن و امان رکھنے والا"
+      }
+    },
+    {
+      "id": "07-the-preserver-of-safety",
+      "front": {
+        "en": "ٱلْمُهَيْمِنُ",
+        "ur": "ٱلْمُهَيْمِنُ"
+      },
+      "back": {
+        "en": "The Preserver of Safety",
+        "ur": "حفاظت کرنے والا"
+      }
+    },
+    {
+      "id": "08-all-mighty",
+      "front": {
+        "en": "ٱلْعَزِيزُ",
+        "ur": "ٱلْعَزِيزُ"
+      },
+      "back": {
+        "en": "All Mighty",
+        "ur": "بڑے اقتدار والا"
+      }
+    },
+    {
+      "id": "09-the-compeller-the-restorer",
+      "front": {
+        "en": "ٱلْجَبَّارُ",
+        "ur": "ٱلْجَبَّارُ"
+      },
+      "back": {
+        "en": "The Compeller, The Restorer",
+        "ur": "زبردست غلبہ رکھنے والا"
+      }
+    },
+    {
+      "id": "10-the-supreme-the-majestic",
+      "front": {
+        "en": "ٱلْمُتَكَبِّرُ",
+        "ur": "ٱلْمُتَكَبِّرُ"
+      },
+      "back": {
+        "en": "The Supreme, The Majestic",
+        "ur": "عظمت و کبریائی کا سر چشمہ"
+      }
+    },
+    {
+      "id": "11-the-creator-the-maker",
+      "front": {
+        "en": "ٱلْخَالِقُ",
+        "ur": "ٱلْخَالِقُ"
+      },
+      "back": {
+        "en": "The Creator, The Maker",
+        "ur": "وجود بخشنے والا، پیدا کرنے والا"
+      }
+    },
+    {
+      "id": "12-the-evolver",
+      "front": {
+        "en": "ٱلْبَارِئُ",
+        "ur": "ٱلْبَارِئُ"
+      },
+      "back": {
+        "en": "The Evolver",
+        "ur": "ہر چیز کو عدم سے وجود میں لانے والا"
+      }
+    },
+    {
+      "id": "13-the-fashioner",
+      "front": {
+        "en": "ٱلْمُصَوِّرُ",
+        "ur": "ٱلْمُصَوِّرُ"
+      },
+      "back": {
+        "en": "The Fashioner",
+        "ur": "مخلوقات کی صورت گری کرنے والا"
+      }
+    },
+    {
+      "id": "14-the-great-forgiver",
+      "front": {
+        "en": "ٱلْغَفَّارُ",
+        "ur": "ٱلْغَفَّارُ"
+      },
+      "back": {
+        "en": "The Great Forgiver",
+        "ur": "بڑا درگزر کرنے والا"
+      }
+    },
+    {
+      "id": "15-the-all-prevailing-one",
+      "front": {
+        "en": "ٱلْقَهَّارُ",
+        "ur": "ٱلْقَهَّارُ"
+      },
+      "back": {
+        "en": "The All-Prevailing One",
+        "ur": "اپنی مخلوق پر کامل غلبہ اور اختیار رکھنے والا"
+      }
+    },
+    {
+      "id": "16-the-supreme-bestower",
+      "front": {
+        "en": "ٱلْوَهَّابُ",
+        "ur": "ٱلْوَهَّابُ"
+      },
+      "back": {
+        "en": "The Supreme Bestower",
+        "ur": "بے غرض بخشش اور سخاوت کرنے والا"
+      }
+    },
+    {
+      "id": "17-the-provider",
+      "front": {
+        "en": "ٱلْرَّزَّاقُ",
+        "ur": "ٱلْرَّزَّاقُ"
+      },
+      "back": {
+        "en": "The Provider",
+        "ur": "حاجت روا"
+      }
+    },
+    {
+      "id": "18-the-supreme-solver",
+      "front": {
+        "en": "ٱلْفَتَّاحُ",
+        "ur": "ٱلْفَتَّاحُ"
+      },
+      "back": {
+        "en": "The Supreme Solver",
+        "ur": "مشکلوں کو حل کرنے والا"
+      }
+    },
+    {
+      "id": "19-the-all-knowing",
+      "front": {
+        "en": "ٱلْعَلِيمُ",
+        "ur": "ٱلْعَلِيمُ"
+      },
+      "back": {
+        "en": "The All-Knowing",
+        "ur": "ہر چیز جاننے والا"
+      }
+    },
+    {
+      "id": "20-the-withholder",
+      "front": {
+        "en": "ٱلْقَابِضُ",
+        "ur": "ٱلْقَابِضُ"
+      },
+      "back": {
+        "en": "The Withholder",
+        "ur": "ہر شے پر قبضہ رکھنے والا"
+      }
+    },
+    {
+      "id": "21-the-extender",
+      "front": {
+        "en": "ٱلْبَاسِطُ",
+        "ur": "ٱلْبَاسِطُ"
+      },
+      "back": {
+        "en": "The Extender",
+        "ur": "وسعت دینے والا"
+      }
+    },
+    {
+      "id": "22-the-reducer",
+      "front": {
+        "en": "ٱلْخَافِضُ",
+        "ur": "ٱلْخَافِضُ"
+      },
+      "back": {
+        "en": "The Reducer",
+        "ur": "پست کرنے والا"
+      }
+    },
+    {
+      "id": "23-the-exalter-the-elevator",
+      "front": {
+        "en": "ٱلْرَّافِعُ",
+        "ur": "ٱلْرَّافِعُ"
+      },
+      "back": {
+        "en": "The Exalter, The Elevator",
+        "ur": "وہ جو بلندیاں عطا کرتا ہے"
+      }
+    },
+    {
+      "id": "24-the-honourer-the-bestower",
+      "front": {
+        "en": "ٱلْمُعِزُّ",
+        "ur": "ٱلْمُعِزُّ"
+      },
+      "back": {
+        "en": "The Honourer, The Bestower",
+        "ur": "عزت دینے والا"
+      }
+    },
+    {
+      "id": "25-the-dishonourer-the-humiliator",
+      "front": {
+        "en": "ٱلْمُذِلُّ",
+        "ur": "ٱلْمُذِلُّ"
+      },
+      "back": {
+        "en": "The Dishonourer, The Humiliator",
+        "ur": "ذلت دینے والا"
+      }
+    },
+    {
+      "id": "26-the-all-hearing",
+      "front": {
+        "en": "ٱلْسَّمِيعُ",
+        "ur": "ٱلْسَّمِيعُ"
+      },
+      "back": {
+        "en": "The All-Hearing",
+        "ur": "بندوں کی سننے والا"
+      }
+    },
+    {
+      "id": "27-the-all-seeing",
+      "front": {
+        "en": "ٱلْبَصِيرُ",
+        "ur": "ٱلْبَصِيرُ"
+      },
+      "back": {
+        "en": "The All-Seeing",
+        "ur": "ہر چیز کو دیکھنے والا"
+      }
+    },
+    {
+      "id": "28-the-impartial-judge",
+      "front": {
+        "en": "ٱلْحَكَمُ",
+        "ur": "ٱلْحَكَمُ"
+      },
+      "back": {
+        "en": "The Impartial Judge",
+        "ur": "انصاف کرنے والا"
+      }
+    },
+    {
+      "id": "29-the-utterly-just",
+      "front": {
+        "en": "ٱلْعَدْلُ",
+        "ur": "ٱلْعَدْلُ"
+      },
+      "back": {
+        "en": "The Utterly Just",
+        "ur": "عدل کرنے والا"
+      }
+    },
+    {
+      "id": "30-the-subtle-one-the-most-gentle",
+      "front": {
+        "en": "ٱلْلَّطِيفُ",
+        "ur": "ٱلْلَّطِيفُ"
+      },
+      "back": {
+        "en": "The Subtle One, The Most Gentle",
+        "ur": "بڑا لطیف و کرم کرنے والا"
+      }
+    },
+    {
+      "id": "31-the-all-aware",
+      "front": {
+        "en": "ٱلْخَبِيرُ",
+        "ur": "ٱلْخَبِيرُ"
+      },
+      "back": {
+        "en": "The All-Aware",
+        "ur": "باخبر اور آگاہ"
+      }
+    },
+    {
+      "id": "32-the-most-forbearing",
+      "front": {
+        "en": "ٱلْحَلِيمُ",
+        "ur": "ٱلْحَلِيمُ"
+      },
+      "back": {
+        "en": "The Most Forbearing",
+        "ur": "بڑا بردبار اور برداشت کرنے والا"
+      }
+    },
+    {
+      "id": "33-the-magnificent-the-supreme",
+      "front": {
+        "en": "ٱلْعَظِيمُ",
+        "ur": "ٱلْعَظِيمُ"
+      },
+      "back": {
+        "en": "The Magnificent, The Supreme",
+        "ur": "بڑی بزرگی والا"
+      }
+    },
+    {
+      "id": "34-the-great-forgiver",
+      "front": {
+        "en": "ٱلْغَفُورُ",
+        "ur": "ٱلْغَفُورُ"
+      },
+      "back": {
+        "en": "The Great Forgiver",
+        "ur": "بڑآ بخشش کرنے والا"
+      }
+    },
+    {
+      "id": "35-the-most-appreciative",
+      "front": {
+        "en": "ٱلْشَّكُورُ",
+        "ur": "ٱلْشَّكُورُ"
+      },
+      "back": {
+        "en": "The Most Appreciative",
+        "ur": "بڑا قدر کرنے والا"
+      }
+    },
+    {
+      "id": "36-the-most-high-the-exalted",
+      "front": {
+        "en": "ٱلْعَلِيُّ",
+        "ur": "ٱلْعَلِيُّ"
+      },
+      "back": {
+        "en": "The Most High, The Exalted",
+        "ur": "بڑی بلندیوں والا"
+      }
+    },
+    {
+      "id": "37-the-preserver-the-all-heedful-and-all-protecting",
+      "front": {
+        "en": "ٱلْكَبِيرُ",
+        "ur": "ٱلْكَبِيرُ"
+      },
+      "back": {
+        "en": "The Preserver, The All-Heedful and All-Protecting",
+        "ur": "بہت بڑا"
+      }
+    },
+    {
+      "id": "38-the-preserver",
+      "front": {
+        "en": "ٱلْحَفِيظُ",
+        "ur": "ٱلْحَفِيظُ"
+      },
+      "back": {
+        "en": "The Preserver",
+        "ur": "سب کا محافظ، حفاظت کرنے والا"
+      }
+    },
+    {
+      "id": "39-the-sustainer",
+      "front": {
+        "en": "ٱلْمُقِيتُ",
+        "ur": "ٱلْمُقِيتُ"
+      },
+      "back": {
+        "en": "The Sustainer",
+        "ur": "سب کو روزی اور توانائی دینے والا"
+      }
+    },
+    {
+      "id": "40-the-reckoner",
+      "front": {
+        "en": "ٱلْحَسِيبُ",
+        "ur": "ٱلْحَسِيبُ"
+      },
+      "back": {
+        "en": "The Reckoner",
+        "ur": "بڑا شمار کنندہ"
+      }
+    },
+    {
+      "id": "41-the-majestic",
+      "front": {
+        "en": "ٱلْجَلِيلُ",
+        "ur": "ٱلْجَلِيلُ"
+      },
+      "back": {
+        "en": "The Majestic",
+        "ur": "بلند مرتبے والا"
+      }
+    },
+    {
+      "id": "42-the-most-generous-the-most-esteemed",
+      "front": {
+        "en": "ٱلْكَرِيمُ",
+        "ur": "ٱلْكَرِيمُ"
+      },
+      "back": {
+        "en": "The Most Generous, The Most Esteemed",
+        "ur": "بڑا کرم کرنے والا"
+      }
+    },
+    {
+      "id": "43-the-watchful",
+      "front": {
+        "en": "ٱلْرَّقِيبُ",
+        "ur": "ٱلْرَّقِيبُ"
+      },
+      "back": {
+        "en": "The Watchful",
+        "ur": "بڑا نگہبان"
+      }
+    },
+    {
+      "id": "44-the-responsive-one",
+      "front": {
+        "en": "ٱلْمُجِيبُ",
+        "ur": "ٱلْمُجِيبُ"
+      },
+      "back": {
+        "en": "The Responsive One",
+        "ur": "دعائیں قبول کرنے والا"
+      }
+    },
+    {
+      "id": "45-the-all-encompassing-the-boundless",
+      "front": {
+        "en": "ٱلْوَاسِعُ",
+        "ur": "ٱلْوَاسِعُ"
+      },
+      "back": {
+        "en": "The All-Encompassing, the Boundless",
+        "ur": "بڑی وسعت والا"
+      }
+    },
+    {
+      "id": "46-the-all-wise",
+      "front": {
+        "en": "ٱلْحَكِيمُ",
+        "ur": "ٱلْحَكِيمُ"
+      },
+      "back": {
+        "en": "The All-Wise",
+        "ur": "بڑی حکمت والا"
+      }
+    },
+    {
+      "id": "47-the-most-loving",
+      "front": {
+        "en": "ٱلْوَدُودُ",
+        "ur": "ٱلْوَدُودُ"
+      },
+      "back": {
+        "en": "The Most Loving",
+        "ur": "بڑا محبت کرنے والا"
+      }
+    },
+    {
+      "id": "48-the-glorious-the-most-honorable",
+      "front": {
+        "en": "ٱلْمَجِيدُ",
+        "ur": "ٱلْمَجِيدُ"
+      },
+      "back": {
+        "en": "The Glorious, The Most Honorable",
+        "ur": "بڑی بزرگی والا"
+      }
+    },
+    {
+      "id": "49-the-infuser-of-new-life",
+      "front": {
+        "en": "ٱلْبَاعِثُ",
+        "ur": "ٱلْبَاعِثُ"
+      },
+      "back": {
+        "en": "The Infuser of New Life",
+        "ur": "مردوں کو زندہ کرنے والا"
+      }
+    },
+    {
+      "id": "50-the-all-observing-witnessing",
+      "front": {
+        "en": "ٱلْشَّهِيدُ",
+        "ur": "ٱلْشَّهِيدُ"
+      },
+      "back": {
+        "en": "The All Observing Witnessing",
+        "ur": "حاضر و ناظر"
+      }
+    },
+    {
+      "id": "51-the-absolute-truth",
+      "front": {
+        "en": "ٱلْحَقُّ",
+        "ur": "ٱلْحَقُّ"
+      },
+      "back": {
+        "en": "The Absolute Truth",
+        "ur": "برحق و برقرار"
+      }
+    },
+    {
+      "id": "52-the-trustee-the-disposer-of-affairs",
+      "front": {
+        "en": "ٱلْوَكِيلُ",
+        "ur": "ٱلْوَكِيلُ"
+      },
+      "back": {
+        "en": "The Trustee, The Disposer of Affairs",
+        "ur": "بڑا کار ساز"
+      }
+    },
+    {
+      "id": "53-the-all-strong",
+      "front": {
+        "en": "ٱلْقَوِيُّ",
+        "ur": "ٱلْقَوِيُّ"
+      },
+      "back": {
+        "en": "The All-Strong",
+        "ur": "بڑی طاقت و قوت والا"
+      }
+    },
+    {
+      "id": "54-the-firm-the-steadfast",
+      "front": {
+        "en": "ٱلْمَتِينُ",
+        "ur": "ٱلْمَتِينُ"
+      },
+      "back": {
+        "en": "The Firm, The Steadfast",
+        "ur": "انتہائی مضبوط و مستحکم"
+      }
+    },
+    {
+      "id": "55-the-protecting-associatey",
+      "front": {
+        "en": "ٱلْوَلِيُّ",
+        "ur": "ٱلْوَلِيُّ"
+      },
+      "back": {
+        "en": "The Protecting Associatey",
+        "ur": "مدد گار اور حمایتی"
+      }
+    },
+    {
+      "id": "56-the-praiseworthy",
+      "front": {
+        "en": "ٱلْحَمِيدُ",
+        "ur": "ٱلْحَمِيدُ"
+      },
+      "back": {
+        "en": "The Praiseworthy",
+        "ur": "تعریف کے لائق"
+      }
+    },
+    {
+      "id": "57-the-all-enumerating-the-counter",
+      "front": {
+        "en": "ٱلْمُحْصِيُ",
+        "ur": "ٱلْمُحْصِيُ"
+      },
+      "back": {
+        "en": "The All-Enumerating, The Counter",
+        "ur": "اپنے علم اور شمار میں رکھنے والا"
+      }
+    },
+    {
+      "id": "58-the-originator-the-initiator",
+      "front": {
+        "en": "ٱلْمُبْدِئُ",
+        "ur": "ٱلْمُبْدِئُ"
+      },
+      "back": {
+        "en": "The Originator, The Initiator",
+        "ur": "پہلی بار پیدا کرنے والا"
+      }
+    },
+    {
+      "id": "59-the-restorer-the-reinstater",
+      "front": {
+        "en": "ٱلْمُعِيدُ",
+        "ur": "ٱلْمُعِيدُ"
+      },
+      "back": {
+        "en": "The Restorer, The Reinstater",
+        "ur": "دوبارہ پیدا کرنے والا"
+      }
+    },
+    {
+      "id": "60-the-giver-of-life",
+      "front": {
+        "en": "ٱلْمُحْيِى",
+        "ur": "ٱلْمُحْيِى"
+      },
+      "back": {
+        "en": "The Giver of Life",
+        "ur": "زندگی دینے والا"
+      }
+    },
+    {
+      "id": "61-the-inflicter-of-death",
+      "front": {
+        "en": "ٱلْمُمِيتُ",
+        "ur": "ٱلْمُمِيتُ"
+      },
+      "back": {
+        "en": "The Inflicter of Death",
+        "ur": "موت دینے والا"
+      }
+    },
+    {
+      "id": "62-the-ever-living",
+      "front": {
+        "en": "ٱلْحَىُّ",
+        "ur": "ٱلْحَىُّ"
+      },
+      "back": {
+        "en": "The Ever-Living",
+        "ur": "ہمیشہ ہمیشہ زندہ رہنے والا"
+      }
+    },
+    {
+      "id": "63-the-sustainer-the-self-subsisting",
+      "front": {
+        "en": "ٱلْقَيُّومُ",
+        "ur": "ٱلْقَيُّومُ"
+      },
+      "back": {
+        "en": "The Sustainer, The Self-Subsisting",
+        "ur": "قائم رکھنے اور سنبھالنے والا"
+      }
+    },
+    {
+      "id": "64-the-perceiver",
+      "front": {
+        "en": "ٱلْوَاجِدُ",
+        "ur": "ٱلْوَاجِدُ"
+      },
+      "back": {
+        "en": "The Perceiver",
+        "ur": "ہر چیز کا پانے والا"
+      }
+    },
+    {
+      "id": "65-the-illustrious-the-magnificent",
+      "front": {
+        "en": "ٱلْمَاجِدُ",
+        "ur": "ٱلْمَاجِدُ"
+      },
+      "back": {
+        "en": "The Illustrious, the Magnificent",
+        "ur": "بزرگی اور بڑائی والا"
+      }
+    },
+    {
+      "id": "66-the-one",
+      "front": {
+        "en": "ٱلْوَاحِدُ",
+        "ur": "ٱلْوَاحِدُ"
+      },
+      "back": {
+        "en": "The One",
+        "ur": "بے مثال، اکیلا"
+      }
+    },
+    {
+      "id": "67-the-unique-the-only-one",
+      "front": {
+        "en": "ٱلْأَحَد",
+        "ur": "ٱلْأَحَد"
+      },
+      "back": {
+        "en": "The Unique, The Only One",
+        "ur": "اکیلا"
+      }
+    },
+    {
+      "id": "68-the-eternal-satisfier-of-needs",
+      "front": {
+        "en": "ٱلْصَّمَدُ",
+        "ur": "ٱلْصَّمَدُ"
+      },
+      "back": {
+        "en": "The Eternal, Satisfier of Needs",
+        "ur": "بے نیاز جو کسی کام کا محتاج نہیں"
+      }
+    },
+    {
+      "id": "69-the-omnipotent-one",
+      "front": {
+        "en": "ٱلْقَادِرُ",
+        "ur": "ٱلْقَادِرُ"
+      },
+      "back": {
+        "en": "The Omnipotent One",
+        "ur": "بڑی قدرت والا"
+      }
+    },
+    {
+      "id": "70-the-powerful",
+      "front": {
+        "en": "ٱلْمُقْتَدِرُ",
+        "ur": "ٱلْمُقْتَدِرُ"
+      },
+      "back": {
+        "en": "The Powerful",
+        "ur": "بڑی قدرت والا"
+      }
+    },
+    {
+      "id": "71-the-expediter-the-promoter",
+      "front": {
+        "en": "ٱلْمُقَدِّمُ",
+        "ur": "ٱلْمُقَدِّمُ"
+      },
+      "back": {
+        "en": "The Expediter, The Promoter",
+        "ur": "آگے بڑھانے والا"
+      }
+    },
+    {
+      "id": "72-the-delayer",
+      "front": {
+        "en": "ٱلْمُؤَخِّرُ",
+        "ur": "ٱلْمُؤَخِّرُ"
+      },
+      "back": {
+        "en": "The Delayer",
+        "ur": "پیچھے رکھنے والا"
+      }
+    },
+    {
+      "id": "73-the-first",
+      "front": {
+        "en": "ٱلأَوَّلُ",
+        "ur": "ٱلأَوَّلُ"
+      },
+      "back": {
+        "en": "The First",
+        "ur": "سب سے پہلے"
+      }
+    },
+    {
+      "id": "74-the-last",
+      "front": {
+        "en": "ٱلْآخِرُ",
+        "ur": "ٱلْآخِرُ"
+      },
+      "back": {
+        "en": "The Last",
+        "ur": "سب کے بعد"
+      }
+    },
+    {
+      "id": "75-the-manifest",
+      "front": {
+        "en": "ٱلْظَّاهِرُ",
+        "ur": "ٱلْظَّاهِرُ"
+      },
+      "back": {
+        "en": "The Manifest",
+        "ur": "ظاہر و آشکار"
+      }
+    },
+    {
+      "id": "76-the-hidden-one-knower-of-the-hidden",
+      "front": {
+        "en": "ٱلْبَاطِنُ",
+        "ur": "ٱلْبَاطِنُ"
+      },
+      "back": {
+        "en": "The Hidden One, Knower of the Hidden",
+        "ur": "پوشیدہ و نہاں"
+      }
+    },
+    {
+      "id": "77-the-governor-the-patron",
+      "front": {
+        "en": "ٱلْوَالِي",
+        "ur": "ٱلْوَالِي"
+      },
+      "back": {
+        "en": "The Governor, The Patron",
+        "ur": "سر پرست، متصرف"
+      }
+    },
+    {
+      "id": "78-the-self-exalted",
+      "front": {
+        "en": "ٱلْمُتَعَالِي",
+        "ur": "ٱلْمُتَعَالِي"
+      },
+      "back": {
+        "en": "The Self Exalted",
+        "ur": "سب سے بلند و برتر"
+      }
+    },
+    {
+      "id": "79-the-source-of-all-goodness",
+      "front": {
+        "en": "ٱلْبَرُّ",
+        "ur": "ٱلْبَرُّ"
+      },
+      "back": {
+        "en": "The Source of All Goodness",
+        "ur": "تمام اچھائیوں کا سر چشمہ"
+      }
+    },
+    {
+      "id": "80-the-ever-pardoning-the-relenting",
+      "front": {
+        "en": "ٱلْتَّوَّابُ",
+        "ur": "ٱلْتَّوَّابُ"
+      },
+      "back": {
+        "en": "The Ever-Pardoning, The Relenting",
+        "ur": "توبہ قبول کرنے والا"
+      }
+    },
+    {
+      "id": "81-the-avenger",
+      "front": {
+        "en": "ٱلْمُنْتَقِمُ",
+        "ur": "ٱلْمُنْتَقِمُ"
+      },
+      "back": {
+        "en": "The Avenger",
+        "ur": "بدلہ لینے والا"
+      }
+    },
+    {
+      "id": "82-the-pardoner",
+      "front": {
+        "en": "ٱلْعَفُوُّ",
+        "ur": "ٱلْعَفُوُّ"
+      },
+      "back": {
+        "en": "The Pardoner",
+        "ur": "معاف کرنے والا"
+      }
+    },
+    {
+      "id": "83-the-most-kin",
+      "front": {
+        "en": "ٱلْرَّؤُفُ",
+        "ur": "ٱلْرَّؤُفُ"
+      },
+      "back": {
+        "en": "The Most Kin",
+        "ur": "بڑا مشفق و مہربان"
+      }
+    },
+    {
+      "id": "84-master-of-the-kingdom-owner-of-the-dominion",
+      "front": {
+        "en": "مَالِكُ ٱلْمُلْكُ",
+        "ur": "مَالِكُ ٱلْمُلْكُ"
+      },
+      "back": {
+        "en": "Master of the Kingdom, Owner of the Dominion",
+        "ur": "ملکوں کا مالک"
+      }
+    },
+    {
+      "id": "85-possessor-of-glory-and-honour-lord-of-majesty-and-generosity",
+      "front": {
+        "en": "ذُو ٱلْجَلَالِ وَٱلْإِكْرَامُ",
+        "ur": "ذُو ٱلْجَلَالِ وَٱلْإِكْرَامُ"
+      },
+      "back": {
+        "en": "Possessor of Glory and Honour, Lord of Majesty and Generosity",
+        "ur": "عظمت و جلال  اور انعام و اکرام والا"
+      }
+    },
+    {
+      "id": "86-the-just-one",
+      "front": {
+        "en": "ٱلْمُقْسِطُ",
+        "ur": "ٱلْمُقْسِطُ"
+      },
+      "back": {
+        "en": "The Just One",
+        "ur": "عدل و انصاف قائم رکھنے والا"
+      }
+    },
+    {
+      "id": "87-the-gatherer-the-uniter",
+      "front": {
+        "en": "ٱلْجَامِعُ",
+        "ur": "ٱلْجَامِعُ"
+      },
+      "back": {
+        "en": "The Gatherer, the Uniter",
+        "ur": "جمع کرنے والا"
+      }
+    },
+    {
+      "id": "88-the-self-sufficient-the-wealthy",
+      "front": {
+        "en": "ٱلْغَنيُّ",
+        "ur": "ٱلْغَنيُّ"
+      },
+      "back": {
+        "en": "The Self-Sufficient, The Wealthy",
+        "ur": "خود کفیل و بےپرواہ"
+      }
+    },
+    {
+      "id": "89-the-enricher",
+      "front": {
+        "en": "ٱلْمُغْنِيُّ",
+        "ur": "ٱلْمُغْنِيُّ"
+      },
+      "back": {
+        "en": "The Enricher",
+        "ur": "توانگر بنانے والا"
+      }
+    },
+    {
+      "id": "90-the-withholder",
+      "front": {
+        "en": "ٱلْمَانِعُ",
+        "ur": "ٱلْمَانِعُ"
+      },
+      "back": {
+        "en": "The Withholder",
+        "ur": "روکنے والا"
+      }
+    },
+    {
+      "id": "91-the-distresser",
+      "front": {
+        "en": "ٱلْضَّارُ",
+        "ur": "ٱلْضَّارُ"
+      },
+      "back": {
+        "en": "The Distresser",
+        "ur": "ضرر پہنچانے والا"
+      }
+    },
+    {
+      "id": "92-the-propitious-the-benefactor",
+      "front": {
+        "en": "ٱلْنَّافِعُ",
+        "ur": "ٱلْنَّافِعُ"
+      },
+      "back": {
+        "en": "The Propitious, the Benefactor",
+        "ur": "نفع پہنچانے والا"
+      }
+    },
+    {
+      "id": "93-the-light-the-illuminator",
+      "front": {
+        "en": "ٱلْنُّورُ",
+        "ur": "ٱلْنُّورُ"
+      },
+      "back": {
+        "en": "The Light, The Illuminator",
+        "ur": "نو راور انوار بخشنے والا"
+      }
+    },
+    {
+      "id": "94-the-guide",
+      "front": {
+        "en": "ٱلْهَادِي",
+        "ur": "ٱلْهَادِي"
+      },
+      "back": {
+        "en": "The Guide",
+        "ur": "سیدھی راہ دکھانے والا"
+      }
+    },
+    {
+      "id": "95-the-incomparable-originator",
+      "front": {
+        "en": "ٱلْبَدِيعُ",
+        "ur": "ٱلْبَدِيعُ"
+      },
+      "back": {
+        "en": "The Incomparable Originator",
+        "ur": "بے مثال چیزوں کا پیدا کرنے والا"
+      }
+    },
+    {
+      "id": "96-the-everlasting",
+      "front": {
+        "en": "ٱلْبَاقِي",
+        "ur": "ٱلْبَاقِي"
+      },
+      "back": {
+        "en": "The Everlasting",
+        "ur": "ہمیشہ باقی رہنے والا"
+      }
+    },
+    {
+      "id": "97-the-inheritor-the-heir",
+      "front": {
+        "en": "ٱلْوَارِثُ",
+        "ur": "ٱلْوَارِثُ"
+      },
+      "back": {
+        "en": "The Inheritor, The Heir",
+        "ur": "سب کے بعد موجود رہنے والا"
+      }
+    },
+    {
+      "id": "98-the-guide-infallible-teacher",
+      "front": {
+        "en": "ٱلْرَّشِيدُ",
+        "ur": "ٱلْرَّشِيدُ"
+      },
+      "back": {
+        "en": "The Guide, Infallible Teacher",
+        "ur": "صحیح راہ پر چلانے والا"
+      }
+    },
+    {
+      "id": "99-the-forbearing-the-patient",
+      "front": {
+        "en": "ٱلْصَّبُورُ",
+        "ur": "ٱلْصَّبُورُ"
+      },
+      "back": {
+        "en": "The Forbearing, The Patient",
+        "ur": "بڑے صبر و تحمل والا"
+      }
+    }
+  ]
+}

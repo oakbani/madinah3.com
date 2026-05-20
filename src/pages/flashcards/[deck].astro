@@ -28,7 +28,7 @@ const description = deck.description;
 
   <header class="mb-6">
     <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
-      {deck.title}<span class="text-emerald-400">.</span>
+      {deck.title}
     </h1>
     <p class="text-sm text-slate-600 mt-1">{deck.description}</p>
     <p class="text-xs text-slate-500 mt-2">
@@ -37,14 +37,28 @@ const description = deck.description;
   </header>
 
   <!-- Toolbar -->
-  <div class="mb-4 flex items-center gap-2">
+  <div class="mb-4 flex flex-wrap items-center gap-2">
     <select id="lang" class="bg-slate-100 border border-slate-300 rounded-lg text-sm px-3 py-2">
       <option value="en">English</option>
       <option value="ur">اردو</option>
     </select>
-    <span class="ml-auto text-xs text-slate-600">
+    <span class="text-xs text-slate-600">
       <span id="learned-count">0</span> learned · <span id="remaining-count">{deck.cards.length}</span> remaining
     </span>
+    <div class="ml-auto flex items-center gap-1.5">
+      <a id="share-whatsapp" href="#" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp"
+         class="inline-flex items-center justify-center h-9 w-9 rounded-lg border border-slate-300 bg-white text-slate-700 hover:border-emerald-500 hover:text-emerald-700 shadow-sm">
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M19.11 4.91A10 10 0 0 0 4.1 18.32L3 22l3.77-1.08A10 10 0 1 0 19.11 4.91Zm-7.1 15.4a8.3 8.3 0 0 1-4.24-1.16l-.3-.18-2.24.64.64-2.18-.2-.31a8.31 8.31 0 1 1 6.34 3.19Zm4.55-6.22c-.25-.13-1.47-.73-1.7-.81s-.39-.13-.56.13-.64.81-.78.97-.29.2-.54.07a6.79 6.79 0 0 1-2-1.24 7.5 7.5 0 0 1-1.39-1.73c-.14-.25 0-.39.11-.51s.25-.29.37-.43a1.6 1.6 0 0 0 .25-.41.46.46 0 0 0 0-.43c-.06-.13-.56-1.36-.77-1.86s-.41-.42-.56-.43h-.48a.92.92 0 0 0-.67.31 2.81 2.81 0 0 0-.88 2.09 4.88 4.88 0 0 0 1 2.61 11.16 11.16 0 0 0 4.27 3.79 13.34 13.34 0 0 0 1.43.53 3.46 3.46 0 0 0 1.58.1 2.59 2.59 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .15-1.2c-.06-.11-.23-.18-.48-.31Z"/></svg>
+      </a>
+      <a id="share-facebook" href="#" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"
+         class="inline-flex items-center justify-center h-9 w-9 rounded-lg border border-slate-300 bg-white text-slate-700 hover:border-emerald-500 hover:text-emerald-700 shadow-sm">
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.87.24-1.46 1.5-1.46H16.5V4.4A21 21 0 0 0 14.3 4.3c-2.2 0-3.7 1.34-3.7 3.8v2.4H8v3h2.6V21Z"/></svg>
+      </a>
+      <button id="share-copy" type="button" aria-label="Copy link"
+              class="inline-flex items-center justify-center h-9 w-9 rounded-lg border border-slate-300 bg-white text-slate-700 hover:border-emerald-500 hover:text-emerald-700 shadow-sm">
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+      </button>
+    </div>
   </div>
 
   <div class="mb-4 h-1.5 bg-slate-100 rounded-full overflow-hidden">
@@ -165,7 +179,12 @@ const description = deck.description;
       const raw = document.getElementById("deck-data").textContent;
       const { deck: deckData } = JSON.parse(raw);
 
-      let lang = localStorage.getItem("flashcards.lang") || "en";
+      let lang = (function () {
+        const url = new URL(window.location.href);
+        const q = (url.searchParams.get("lang") || "").toLowerCase();
+        if (q === "en" || q === "ur") return q;
+        return localStorage.getItem("flashcards.lang") || "en";
+      })();
       let deck = { title: deckData.title || {}, cards: ensureIds(deckData.cards || []) };
       let deckSig = signatureFor(deck);
       let learned = new Set();
@@ -190,6 +209,44 @@ const description = deck.description;
         lang: document.getElementById("lang"),
       };
       els.lang.value = lang;
+      try {
+        const url = new URL(window.location.href);
+        if (url.searchParams.get("lang") !== lang) {
+          url.searchParams.set("lang", lang);
+          window.history.replaceState({}, "", url);
+        }
+      } catch {}
+
+      const shareWa = document.getElementById("share-whatsapp");
+      const shareFb = document.getElementById("share-facebook");
+      const shareCopy = document.getElementById("share-copy");
+      function updateShareLinks() {
+        let shareUrl = window.location.href;
+        try {
+          const u = new URL(shareUrl);
+          u.searchParams.delete("lang");
+          shareUrl = u.toString();
+        } catch {}
+        const text = `${document.title} — ${shareUrl}`;
+        if (shareWa) shareWa.href = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        if (shareFb) shareFb.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+        if (shareCopy) shareCopy.dataset.shareUrl = shareUrl;
+      }
+      updateShareLinks();
+      if (shareCopy) {
+        shareCopy.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(shareCopy.dataset.shareUrl || window.location.href);
+            const orig = shareCopy.getAttribute("aria-label");
+            shareCopy.setAttribute("aria-label", "Link copied!");
+            shareCopy.classList.add("text-emerald-700", "border-emerald-500");
+            setTimeout(() => {
+              shareCopy.setAttribute("aria-label", orig || "Copy link");
+              shareCopy.classList.remove("text-emerald-700", "border-emerald-500");
+            }, 1500);
+          } catch {}
+        });
+      }
 
       function ensureIds(cards) {
         const seen = new Set();
@@ -236,7 +293,10 @@ const description = deck.description;
 
       function appendLine(parent, text, isUrdu) {
         const div = document.createElement("div");
-        div.className = isUrdu ? "urdu text-3xl sm:text-4xl leading-snug" : "leading-snug";
+        // Auto-detect Arabic/Urdu script even when "isUrdu" flag is false
+        // (e.g. front side of the 99 Names deck stores Arabic in the English field).
+        const hasArabic = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/.test(text);
+        div.className = (isUrdu || hasArabic) ? "urdu text-3xl sm:text-4xl leading-snug" : "leading-snug";
         div.textContent = text;
         parent.appendChild(div);
       }
@@ -339,6 +399,12 @@ const description = deck.description;
       els.lang.addEventListener("change", () => {
         lang = els.lang.value;
         localStorage.setItem("flashcards.lang", lang);
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set("lang", lang);
+          window.history.replaceState({}, "", url);
+        } catch {}
+        updateShareLinks();
         renderCurrent();
       });
       window.addEventListener("keydown", (e) => {
