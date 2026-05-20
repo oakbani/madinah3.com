@@ -1,18 +1,8 @@
-// Static catalog of available decks and puzzles. Adding content = adding an
-// entry here + dropping the JSON/HTML in /public.
+// Static catalog of puzzles and diagrams.
 //
-// Paths are relative to import.meta.env.BASE_URL so the site works under
-// the GitHub Pages subpath (/automation-3/).
-
-export type Deck = {
-  id: string;
-  title: string;
-  description: string;
-  /** Path under /public/ to the deck JSON file. */
-  json: string;
-  /** Optional tags for filtering / display. */
-  tags?: string[];
-};
+// NOTE: Flashcard decks have been moved to `src/data/decks/*.json` and are
+// auto-discovered by `src/lib/decks.ts`. To add a deck, drop a JSON file in
+// that directory — no edits here needed.
 
 export type Puzzle = {
   id: string;
@@ -32,16 +22,6 @@ export type Diagram = {
   json: string;
   kind: "flowchart" | "tree" | "mindmap";
 };
-
-export const decks: Deck[] = [
-  {
-    id: "urdu-vocab",
-    title: "Urdu vocabulary",
-    description: "Everyday Urdu words with English meanings. Tap a card to flip.",
-    json: "flashcards/cards.json",
-    tags: ["urdu", "vocabulary"],
-  },
-];
 
 export const puzzles: Puzzle[] = [
   {

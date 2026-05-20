@@ -1,37 +1,21 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { decks, type Deck } from "@/lib/catalog";
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
-
-type CardSide = { en?: string; ur?: string };
-type Card = { id?: string; front: CardSide; back: CardSide };
-type DeckJson = { title?: { en?: string; ur?: string }; cards: Card[] };
+import { decks, type Deck } from "@/lib/decks";
 
 export function getStaticPaths() {
-  const publicDir = fileURLToPath(new URL("../../../public/", import.meta.url));
-  return decks.map((d) => {
-    const file = path.join(publicDir, d.json);
-    const data = JSON.parse(readFileSync(file, "utf-8")) as DeckJson;
-    return {
-      params: { deck: d.id },
-      props: { deck: d, data },
-    };
-  });
+  return decks.map((d) => ({
+    params: { deck: d.id },
+    props: { deck: d },
+  }));
 }
 
 interface Props {
   deck: Deck;
-  data: DeckJson;
 }
 
-const { deck, data } = Astro.props as Props;
-const title = `${deck.title} — Flashcards · madinah3`;
+const { deck } = Astro.props as Props;
+const title = `${deck.title} — Flashcards · The Madinah Way`;
 const description = deck.description;
-// Server-render the first card so search engines see real content.
-const previewCount = Math.min(6, data.cards.length);
-const previewCards = data.cards.slice(0, previewCount);
 ---
 <Layout title={title} description={description} ogType="article">
   <nav class="mb-4 text-sm text-slate-600">
@@ -57,10 +41,9 @@ const previewCards = data.cards.slice(0, previewCount);
     <select id="lang" class="bg-slate-100 border border-slate-300 rounded-lg text-sm px-3 py-2">
       <option value="en">English</option>
       <option value="ur">اردو</option>
-      <option value="both">Both</option>
     </select>
     <span class="ml-auto text-xs text-slate-600">
-      <span id="learned-count">0</span> learned · <span id="remaining-count">{data.cards.length}</span> remaining
+      <span id="learned-count">0</span> learned · <span id="remaining-count">{deck.cards.length}</span> remaining
     </span>
   </div>
 
@@ -69,22 +52,22 @@ const previewCards = data.cards.slice(0, previewCount);
   </div>
 
   <!-- Card stage -->
-  <div class="scene relative">
+  <div class="scene relative mx-auto max-w-xl w-full">
     <div class="stack-card bg-slate-100 border border-slate-300 -z-20" style="transform: translateY(18px) scale(.94);"></div>
     <div class="stack-card bg-slate-100 border border-slate-300 -z-10" style="transform: translateY(9px) scale(.97);"></div>
 
     <div id="card" class="card-3d cursor-pointer select-none" role="button" aria-label="Flashcard. Tap to flip.">
       <div class="card-face card-front bg-gradient-to-br from-emerald-700 via-emerald-600 to-teal-600 shadow-2xl">
-        <div class="w-full">
+        <div class="w-full min-w-0">
           <div class="text-[11px] uppercase tracking-[0.25em] text-white/70 mb-3">Question</div>
-          <div id="front-content" class="text-2xl sm:text-3xl font-semibold leading-snug"></div>
+          <div id="front-content" class="text-xl sm:text-3xl font-semibold leading-snug break-words"></div>
           <div class="mt-6 text-xs text-white/60 tap-hint">Tap to reveal</div>
         </div>
       </div>
       <div class="card-face card-back bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600 shadow-2xl">
-        <div class="w-full">
+        <div class="w-full min-w-0">
           <div class="text-[11px] uppercase tracking-[0.25em] text-white/80 mb-3">Answer</div>
-          <div id="back-content" class="text-3xl sm:text-4xl font-bold leading-snug"></div>
+          <div id="back-content" class="text-2xl sm:text-4xl font-bold leading-snug break-words"></div>
         </div>
       </div>
     </div>
@@ -97,53 +80,47 @@ const previewCards = data.cards.slice(0, previewCount);
   </div>
 
   <!-- Action buttons -->
-  <div class="mt-6 grid grid-cols-2 gap-3">
-    <button id="btn-didnt" class="rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/40 text-rose-300 hover:text-rose-200 px-4 py-4 font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed">
-      <div class="text-sm">Didn't know</div>
-      <div class="text-[11px] text-rose-300/70 mt-0.5">Press <kbd class="px-1 py-0.5 bg-slate-100 rounded">←</kbd> — repeats later</div>
+  <div class="mt-6 grid grid-cols-2 gap-2 sm:gap-3 mx-auto max-w-xl">
+    <button id="btn-didnt" class="rounded-xl bg-rose-600 hover:bg-rose-700 text-white border border-rose-700 px-3 sm:px-4 py-3 sm:py-4 font-semibold shadow-sm transition disabled:opacity-40 disabled:cursor-not-allowed">
+      <div class="text-sm sm:text-base">Didn't know</div>
+      <div class="hidden sm:block text-[11px] text-white/80 mt-0.5">Press <kbd class="px-1 py-0.5 bg-white/20 rounded">←</kbd> — repeats later</div>
     </button>
-    <button id="btn-knew" class="rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/50 text-emerald-200 hover:text-emerald-100 px-4 py-4 font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed">
-      <div class="text-sm">I knew it</div>
-      <div class="text-[11px] text-emerald-300/70 mt-0.5">Press <kbd class="px-1 py-0.5 bg-slate-100 rounded">→</kbd> — marks learned</div>
+    <button id="btn-knew" class="rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-700 px-3 sm:px-4 py-3 sm:py-4 font-semibold shadow-sm transition disabled:opacity-40 disabled:cursor-not-allowed">
+      <div class="text-sm sm:text-base">I knew it</div>
+      <div class="hidden sm:block text-[11px] text-white/80 mt-0.5">Press <kbd class="px-1 py-0.5 bg-white/20 rounded">→</kbd> — marks learned</div>
     </button>
   </div>
 
-  <div class="mt-3 flex items-center justify-between text-xs text-slate-600">
-    <button id="btn-flip" class="hover:text-slate-800">Flip (Space)</button>
-    <button id="btn-shuffle" class="hover:text-slate-800">Shuffle</button>
-    <button id="btn-reset" class="hover:text-rose-300">Reset progress</button>
+  <div class="mt-4 grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:justify-center mx-auto max-w-xl">
+    <button id="btn-flip" class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-300 bg-white px-2 sm:px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 shadow-sm hover:border-emerald-500 hover:text-emerald-700">
+      <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h13a4 4 0 0 1 4 4v0"/><path d="M6 4 3 7l3 3"/><path d="M21 17H8a4 4 0 0 1-4-4v0"/><path d="m18 20 3-3-3-3"/></svg>
+      <span>Flip<span class="hidden sm:inline">&nbsp;(Space)</span></span>
+    </button>
+    <button id="btn-shuffle" class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-300 bg-white px-2 sm:px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 shadow-sm hover:border-emerald-500 hover:text-emerald-700">
+      <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>
+      Shuffle
+    </button>
+    <button id="btn-reset" class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-rose-300 bg-white px-2 sm:px-3 py-2 text-xs sm:text-sm font-semibold text-rose-700 shadow-sm hover:border-rose-500 hover:bg-rose-50">
+      <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+      <span>Reset<span class="hidden sm:inline">&nbsp;progress</span></span>
+    </button>
   </div>
-
-  <!-- SEO-visible card preview list (also helps users browse) -->
-  <section class="mt-12 border-t border-slate-200 pt-8">
-    <h2 class="text-lg font-bold mb-3">In this deck</h2>
-    <p class="text-sm text-slate-600 mb-4">{data.cards.length} cards. Preview:</p>
-    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      {previewCards.map((c) => (
-        <li class="rounded-lg border border-slate-200 bg-slate-100 p-4">
-          <div class="text-xs uppercase tracking-wider text-slate-500 mb-1">Question</div>
-          <div class="text-sm">{c.front?.en}</div>
-          {c.front?.ur && <div class="text-base mt-1" dir="rtl" lang="ur" style="font-family:'Noto Naskh Arabic',serif">{c.front.ur}</div>}
-          <div class="mt-3 text-xs uppercase tracking-wider text-slate-500 mb-1">Answer</div>
-          <div class="text-sm font-semibold">{c.back?.en}</div>
-          {c.back?.ur && <div class="text-base mt-1 font-semibold" dir="rtl" lang="ur" style="font-family:'Noto Naskh Arabic',serif">{c.back.ur}</div>}
-        </li>
-      ))}
-    </ul>
-  </section>
 
   <!-- Embed deck data so the JS doesn't need to fetch -->
-  <script id="deck-data" type="application/json" set:html={JSON.stringify({ deck: data, id: deck.id })}></script>
+  <script id="deck-data" type="application/json" set:html={JSON.stringify({ deck: { title: deck.title_i18n ?? { en: deck.title }, cards: deck.cards }, id: deck.id })}></script>
 
   <style>
     .scene { perspective: 1400px; }
     .card-3d {
       position: relative;
       width: 100%;
-      aspect-ratio: 5 / 3;
+      aspect-ratio: 4 / 3;
       transform-style: preserve-3d;
       transition: transform 600ms cubic-bezier(.2,.8,.2,1), opacity 350ms ease;
       will-change: transform;
+    }
+    @media (min-width: 640px) {
+      .card-3d { aspect-ratio: 3 / 2; }
     }
     .card-3d.flipped { transform: rotateY(180deg); }
     .card-face {
@@ -152,8 +129,14 @@ const previewCards = data.cards.slice(0, previewCount);
       -webkit-backface-visibility: hidden;
       border-radius: 1.25rem;
       display: flex; align-items: center; justify-content: center;
-      padding: 2rem;
+      padding: 1.25rem;
       text-align: center;
+      overflow: hidden;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+    @media (min-width: 640px) {
+      .card-face { padding: 1.75rem; }
     }
     .card-back { transform: rotateY(180deg); }
     .swipe-right { transform: translateX(140%) rotate(14deg) !important; opacity: 0 !important; }

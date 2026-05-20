@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { decks, puzzles, diagrams } from "@/lib/catalog";
+import { decks } from "@/lib/decks";
+import { puzzles, diagrams } from "@/lib/catalog";
 import { getCollection } from "astro:content";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -11,7 +12,7 @@ const recentPosts = (await getCollection("blog", ({ data }) => !data.draft))
 
 const LANG_LABEL: Record<string, string> = { en: "EN", ur: "اردو", ar: "العربية" };
 ---
-<Layout title="Home · madinah3">
+<Layout title="The Madinah Way">
   <!-- Greeting -->
   <section class="mb-10">
     <h1 class="text-3xl font-extrabold tracking-tight sm:text-4xl">
@@ -34,7 +35,7 @@ const LANG_LABEL: Record<string, string> = { en: "EN", ur: "اردو", ar: "ال
 
     {decks.length === 0 ? (
       <div class="rounded-xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-600">
-        No decks yet. Add one to <code class="text-slate-700">src/lib/catalog.ts</code>.
+        No decks yet. Drop a JSON file in <code class="text-slate-700">src/data/decks/</code>.
       </div>
     ) : (
       <ul id="deck-grid" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -42,7 +43,8 @@ const LANG_LABEL: Record<string, string> = { en: "EN", ur: "اردو", ar: "ال
           <li
             class="deck-card group rounded-xl border border-slate-200 bg-white p-5 transition hover:border-slate-300"
             data-deck-id={d.id}
-            data-deck-json={`${base}/${d.json}`}
+            data-deck-title={d.title_i18n?.en ?? d.title}
+            data-deck-card-ids={JSON.stringify(d.cards.map((c, i) => c.id ?? `card-${i}`))}
             data-status="todo"
           >
             <div class="flex items-start justify-between gap-3">
@@ -234,21 +236,14 @@ const LANG_LABEL: Record<string, string> = { en: "EN", ur: "اردو", ar: "ال
     };
 
     async function hydrateDeck(card: HTMLElement) {
-      const url = card.dataset.deckJson!;
-      let total = 0, learnedN = 0;
+      const ids: string[] = JSON.parse(card.dataset.deckCardIds || "[]");
+      const title = card.dataset.deckTitle || "Deck";
+      let total = ids.length, learnedN = 0;
       try {
-        const res = await fetch(url, { cache: "no-store" });
-        if (res.ok) {
-          const data = await res.json();
-          const cards = Array.isArray(data) ? data : (data.cards || []);
-          const title = (data && data.title && (data.title.en || data.title.ur)) || "Deck";
-          const ids = ensureIds(cards);
-          total = ids.length;
-          const sig = signatureFor(title, ids);
-          const all = getRaw<LegacyMap>("flashcards.progress.v1", {}) || {};
-          const entry = all[sig];
-          if (entry && Array.isArray(entry.learned)) learnedN = entry.learned.length;
-        }
+        const sig = signatureFor(title, ids);
+        const all = getRaw<LegacyMap>("flashcards.progress.v1", {}) || {};
+        const entry = all[sig];
+        if (entry && Array.isArray(entry.learned)) learnedN = entry.learned.length;
       } catch { /* ignore — leave at 0 */ }
 
       const pct = total ? Math.round((learnedN / total) * 100) : 0;
