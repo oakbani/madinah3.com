@@ -1,0 +1,516 @@
+---
+import type { Roadmap } from "@/lib/roadmaps";
+import { layoutRoadmap } from "@/lib/roadmaps";
+import { getCollection } from "astro:content";
+
+export interface Props {
+  roadmap: Roadmap;
+}
+const { roadmap } = Astro.props as Props;
+const layout = layoutRoadmap(roadmap);
+
+// Markdown for each node lives in the `roadmapNodes` collection at
+// src/content/roadmap-nodes/<roadmap-id>/<node-id>.md
+const allEntries = await getCollection("roadmapNodes");
+const prefix = `${roadmap.id}/`;
+const entryById = new Map(
+  allEntries
+    .filter((e) => e.id.startsWith(prefix))
+    .map((e) => [e.id.slice(prefix.length).replace(/\.md$/, ""), e])
+);
+
+const ARROW_ID = `arrow-${roadmap.id}`;
+---
+
+<section
+  class="roadmap-shell"
+  data-roadmap-id={roadmap.id}
+  data-node-ids={JSON.stringify(roadmap.nodes.map((n) => n.id))}
+>
+  <!-- Toolbar -->
+  <div class="mb-3 flex flex-wrap items-center gap-3 text-xs text-slate-600">
+    <span><strong class="text-slate-800" data-roadmap-done-count>0</strong> / {roadmap.nodes.length} done</span>
+    <span class="h-1 w-32 overflow-hidden rounded-full bg-slate-200">
+      <span class="block h-full bg-emerald-500 transition-all" style="width: 0%" data-roadmap-progress-bar></span>
+    </span>
+    <button
+      type="button"
+      class="ml-auto rounded-lg border border-slate-300 bg-white px-2.5 py-1 hover:border-rose-300 hover:text-rose-700"
+      data-roadmap-reset
+    >Reset progress</button>
+  </div>
+
+  <!-- Canvas -->
+  <div class="relative w-full overflow-x-auto rounded-xl border border-slate-200 bg-slate-50/60">
+    <div
+      class="roadmap-canvas relative"
+      style={`width: ${layout.width}px; height: ${layout.height}px;`}
+    >
+      <!-- SVG connector layer -->
+      <svg
+        class="absolute inset-0 pointer-events-none"
+        width={layout.width}
+        height={layout.height}
+        viewBox={`0 0 ${layout.width} ${layout.height}`}
+        aria-hidden="true"
+      >
+        <defs>
+          <marker
+            id={ARROW_ID}
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="6"
+            markerHeight="6"
+            orient="auto-start-reverse"
+          >
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+          </marker>
+        </defs>
+
+        {/* Cluster rectangles */}
+        {layout.clusters.map((c) => (
+          <g>
+            <rect
+              x={c.x}
+              y={c.y}
+              width={c.w}
+              height={c.h}
+              rx="14"
+              ry="14"
+              fill="#ffffff"
+              stroke="#e2e8f0"
+              stroke-dasharray="4 4"
+            />
+            <text
+              x={c.x + 14}
+              y={c.y + 18}
+              fill="#64748b"
+              font-size="11"
+              font-weight="700"
+              style="text-transform: uppercase; letter-spacing: 0.08em;"
+            >{c.title}</text>
+          </g>
+        ))}
+
+        {/* Edges */}
+        {layout.edges.map((e) => {
+          if (e.points.length < 2) return null;
+          const d = e.points
+            .map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`)
+            .join(" ");
+          return (
+            <path
+              d={d}
+              fill="none"
+              stroke="#94a3b8"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              marker-end={`url(#${ARROW_ID})`}
+            />
+          );
+        })}
+      </svg>
+
+      <!-- Node layer -->
+      {layout.nodes.map((n) => (
+        <button
+          type="button"
+          class={`roadmap-node ${
+            n.type === "optional" ? "is-optional" : n.type === "header" ? "is-header" : "is-primary"
+          }`}
+          style={`left:${n.x}px;top:${n.y}px;width:${n.w}px;height:${n.h}px;`}
+          data-node-id={n.id}
+          data-node-title={n.title}
+          aria-label={`Open ${n.title}`}
+        >
+          <span class="roadmap-node-status" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span class="roadmap-node-text">
+            <span class="roadmap-node-title">{n.title}</span>
+            {n.subtitle && <span class="roadmap-node-subtitle">{n.subtitle}</span>}
+          </span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Hidden content templates: each node's markdown rendered server-side -->
+  <div hidden>
+    {await Promise.all(
+      roadmap.nodes.map(async (n) => {
+        const entry = entryById.get(n.id);
+        if (!entry) return null;
+        const { Content } = await entry.render();
+        return (
+          <template data-roadmap-content data-node-id={n.id}>
+            <Content />
+          </template>
+        );
+      })
+    )}
+  </div>
+
+  <!-- Right-side drawer -->
+  <div
+    class="roadmap-drawer-backdrop"
+    data-drawer-backdrop
+    aria-hidden="true"
+  ></div>
+  <aside
+    class="roadmap-drawer"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby={`drawer-title-${roadmap.id}`}
+    data-drawer
+    hidden
+  >
+    <header class="flex items-start justify-between gap-3 border-b border-slate-200 px-5 py-4">
+      <div class="min-w-0">
+        <p class="text-[11px] uppercase tracking-wider text-slate-500" data-drawer-group>Step</p>
+        <h2 id={`drawer-title-${roadmap.id}`} class="mt-0.5 text-lg font-bold leading-tight" data-drawer-title>—</h2>
+      </div>
+      <button
+        type="button"
+        class="shrink-0 rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+        data-drawer-close
+        aria-label="Close panel"
+      >
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </header>
+
+    <div class="px-5 py-4">
+      <p class="mb-2 text-[11px] uppercase tracking-wider text-slate-500">Status</p>
+      <div role="tablist" class="inline-flex rounded-lg border border-slate-200 bg-white p-1 text-xs">
+        <button data-status-btn="todo"        class="status-btn rounded-md px-3 py-1.5 font-semibold">To do</button>
+        <button data-status-btn="in-progress" class="status-btn rounded-md px-3 py-1.5 font-semibold">In progress</button>
+        <button data-status-btn="done"        class="status-btn rounded-md px-3 py-1.5 font-semibold">Done</button>
+      </div>
+    </div>
+
+    <div class="prose prose-slate max-w-none px-5 pb-8 text-sm" data-drawer-body>
+      <p class="text-sm text-slate-500">Loading…</p>
+    </div>
+  </aside>
+</section>
+
+<style>
+  .roadmap-shell { position: relative; }
+
+  .roadmap-canvas { min-width: 100%; }
+
+  .roadmap-node {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.85rem;
+    border-radius: 0.75rem;
+    text-align: left;
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+    cursor: pointer;
+    transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+  }
+  .roadmap-node:hover {
+    transform: translateY(-1px);
+    border-color: #10b981;
+    box-shadow: 0 6px 16px -8px rgb(16 185 129 / 0.45);
+  }
+  .roadmap-node:focus-visible {
+    outline: 2px solid #10b981;
+    outline-offset: 2px;
+  }
+  .roadmap-node.is-optional {
+    border-style: dashed;
+    background: #f8fafc;
+  }
+  .roadmap-node.is-header {
+    background: #ecfdf5;
+    border-color: #10b981;
+    color: #065f46;
+    font-weight: 700;
+  }
+
+  .roadmap-node-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 9999px;
+    border: 1.5px solid #cbd5e1;
+    color: #ffffff;
+    background: #ffffff;
+    flex-shrink: 0;
+    transition: background-color 120ms ease, border-color 120ms ease;
+  }
+  .roadmap-node-status svg { opacity: 0; }
+
+  .roadmap-node[data-status="in-progress"] .roadmap-node-status {
+    background: #fef3c7;
+    border-color: #f59e0b;
+  }
+  .roadmap-node[data-status="done"] .roadmap-node-status {
+    background: #10b981;
+    border-color: #059669;
+  }
+  .roadmap-node[data-status="done"] .roadmap-node-status svg { opacity: 1; }
+  .roadmap-node[data-status="done"] {
+    background: #f0fdf4;
+    border-color: #6ee7b7;
+  }
+  .roadmap-node[data-status="done"] .roadmap-node-title {
+    color: #065f46;
+  }
+
+  .roadmap-node-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    min-width: 0;
+    flex: 1;
+  }
+  .roadmap-node-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #0f172a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .roadmap-node-subtitle {
+    font-size: 0.7rem;
+    color: #64748b;
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Drawer */
+  .roadmap-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgb(15 23 42 / 0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+    z-index: 40;
+  }
+  .roadmap-drawer-backdrop[data-open] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .roadmap-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100dvh;
+    width: min(420px, 100%);
+    background: #ffffff;
+    border-left: 1px solid #e2e8f0;
+    box-shadow: -12px 0 24px -16px rgb(15 23 42 / 0.25);
+    transform: translateX(100%);
+    transition: transform 220ms cubic-bezier(.2,.8,.2,1);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .roadmap-drawer[data-open] {
+    transform: translateX(0);
+  }
+
+  @media (max-width: 640px) {
+    .roadmap-drawer {
+      top: auto;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      width: 100%;
+      height: 80dvh;
+      border-left: none;
+      border-top: 1px solid #e2e8f0;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      transform: translateY(100%);
+    }
+    .roadmap-drawer[data-open] { transform: translateY(0); }
+  }
+
+  .status-btn {
+    color: #475569;
+  }
+  .status-btn:hover { color: #0f172a; }
+  .status-btn[data-active] {
+    background: #0f172a;
+    color: #ffffff;
+  }
+  .status-btn[data-status-btn="in-progress"][data-active] {
+    background: #f59e0b;
+  }
+  .status-btn[data-status-btn="done"][data-active] {
+    background: #10b981;
+  }
+
+  /* Quick-fix prose for the body without bringing in @tailwindcss/typography */
+  [data-drawer-body] :global(h1),
+  [data-drawer-body] :global(h2),
+  [data-drawer-body] :global(h3) {
+    font-weight: 700;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  [data-drawer-body] :global(p) { margin: 0.5rem 0; line-height: 1.55; }
+  [data-drawer-body] :global(ul) { list-style: disc; padding-left: 1.25rem; margin: 0.5rem 0; }
+  [data-drawer-body] :global(ol) { list-style: decimal; padding-left: 1.25rem; margin: 0.5rem 0; }
+  [data-drawer-body] :global(li) { margin: 0.25rem 0; }
+  [data-drawer-body] :global(table) { width: 100%; border-collapse: collapse; margin: 0.75rem 0; }
+  [data-drawer-body] :global(th),
+  [data-drawer-body] :global(td) { border: 1px solid #e2e8f0; padding: 0.4rem 0.6rem; text-align: left; }
+  [data-drawer-body] :global(th) { background: #f8fafc; }
+  [data-drawer-body] :global(code) {
+    background: #f1f5f9;
+    padding: 0.05rem 0.3rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
+  [data-drawer-body] :global(a) { color: #047857; text-decoration: underline; }
+</style>
+
+<script is:inline define:vars={{ roadmapId: roadmap.id, nodes: roadmap.nodes.map((n) => ({ id: n.id, title: n.title, groupId: n.groupId ?? null })), groups: roadmap.groups }}>
+  (function () {
+    const STORAGE_KEY = `a3:roadmap.${roadmapId}.status`;
+    const VALID = new Set(["todo", "in-progress", "done"]);
+
+    const shell = document.querySelector(`.roadmap-shell[data-roadmap-id="${roadmapId}"]`);
+    if (!shell) return;
+
+    const drawer = shell.querySelector("[data-drawer]");
+    const backdrop = shell.querySelector("[data-drawer-backdrop]");
+    const drawerTitle = shell.querySelector("[data-drawer-title]");
+    const drawerGroup = shell.querySelector("[data-drawer-group]");
+    const drawerBody = shell.querySelector("[data-drawer-body]");
+    const closeBtn = shell.querySelector("[data-drawer-close]");
+    const statusBtns = shell.querySelectorAll("[data-status-btn]");
+    const doneCountEl = shell.querySelector("[data-roadmap-done-count]");
+    const progressBar = shell.querySelector("[data-roadmap-progress-bar]");
+    const resetBtn = shell.querySelector("[data-roadmap-reset]");
+
+    const groupById = new Map(groups.map((g) => [g.id, g.title]));
+    const nodeMeta = new Map(nodes.map((n) => [n.id, n]));
+
+    let statuses = loadStatuses();
+    let currentNodeId = null;
+
+    function loadStatuses() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        const out = {};
+        for (const [k, v] of Object.entries(parsed)) {
+          if (VALID.has(v)) out[k] = v;
+        }
+        return out;
+      } catch {
+        return {};
+      }
+    }
+    function saveStatuses() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(statuses)); } catch { /* noop */ }
+    }
+
+    function applyStatus(nodeId) {
+      const status = statuses[nodeId] || "todo";
+      const el = shell.querySelector(`.roadmap-node[data-node-id="${CSS.escape(nodeId)}"]`);
+      if (el) el.dataset.status = status;
+    }
+    function applyAllStatuses() {
+      for (const n of nodes) applyStatus(n.id);
+      updateProgress();
+    }
+    function updateProgress() {
+      const total = nodes.length;
+      const done = nodes.filter((n) => statuses[n.id] === "done").length;
+      if (doneCountEl) doneCountEl.textContent = String(done);
+      if (progressBar) progressBar.style.width = total ? `${Math.round((done / total) * 100)}%` : "0%";
+    }
+    function setStatus(nodeId, status) {
+      if (!VALID.has(status)) return;
+      if (status === "todo") delete statuses[nodeId];
+      else statuses[nodeId] = status;
+      saveStatuses();
+      applyStatus(nodeId);
+      updateProgress();
+      reflectStatusButtons(nodeId);
+    }
+    function reflectStatusButtons(nodeId) {
+      const current = statuses[nodeId] || "todo";
+      statusBtns.forEach((b) => {
+        if (b.dataset.statusBtn === current) b.setAttribute("data-active", "");
+        else b.removeAttribute("data-active");
+      });
+    }
+
+    function openNode(nodeId) {
+      const meta = nodeMeta.get(nodeId);
+      if (!meta) return;
+      currentNodeId = nodeId;
+      drawerTitle.textContent = meta.title;
+      drawerGroup.textContent = meta.groupId && groupById.has(meta.groupId) ? groupById.get(meta.groupId) : "Step";
+
+      const tpl = shell.querySelector(`template[data-roadmap-content][data-node-id="${CSS.escape(nodeId)}"]`);
+      drawerBody.innerHTML = "";
+      if (tpl && tpl.content) {
+        drawerBody.appendChild(tpl.content.cloneNode(true));
+      } else {
+        drawerBody.innerHTML = '<p class="text-sm text-slate-500">No notes yet for this step.</p>';
+      }
+
+      reflectStatusButtons(nodeId);
+      drawer.hidden = false;
+      // Force a reflow before adding [data-open] so the transition runs.
+      void drawer.offsetWidth;
+      drawer.setAttribute("data-open", "");
+      backdrop.setAttribute("data-open", "");
+      closeBtn?.focus();
+    }
+    function closeDrawer() {
+      drawer.removeAttribute("data-open");
+      backdrop.removeAttribute("data-open");
+      currentNodeId = null;
+      // Hide after transition.
+      setTimeout(() => { if (!drawer.hasAttribute("data-open")) drawer.hidden = true; }, 250);
+    }
+
+    // Wire node clicks
+    shell.querySelectorAll(".roadmap-node").forEach((el) => {
+      el.addEventListener("click", () => openNode(el.dataset.nodeId));
+    });
+    // Status buttons
+    statusBtns.forEach((b) => {
+      b.addEventListener("click", () => {
+        if (currentNodeId) setStatus(currentNodeId, b.dataset.statusBtn);
+      });
+    });
+    closeBtn?.addEventListener("click", closeDrawer);
+    backdrop?.addEventListener("click", closeDrawer);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && drawer.hasAttribute("data-open")) closeDrawer();
+    });
+    resetBtn?.addEventListener("click", () => {
+      if (!confirm("Reset progress for this roadmap?")) return;
+      statuses = {};
+      saveStatuses();
+      applyAllStatuses();
+      if (currentNodeId) reflectStatusButtons(currentNodeId);
+    });
+
+    applyAllStatuses();
+  })();
+</script>

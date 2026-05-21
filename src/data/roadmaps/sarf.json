@@ -1,0 +1,153 @@
+{
+  "id": "sarf",
+  "title": "Learn Arabic Sarf (Morphology)",
+  "description": "A path through Arabic morphology — from root letters to derived forms and applying patterns to real text.",
+  "tags": ["arabic", "grammar"],
+  "layout": {
+    "rankdir": "TB",
+    "nodesep": 50,
+    "ranksep": 80,
+    "nodeWidth": 240,
+    "nodeHeight": 70
+  },
+  "groups": [
+    { "id": "g-foundations", "title": "Foundations" },
+    { "id": "g-verbs", "title": "Verbs & Patterns" },
+    { "id": "g-families", "title": "Verb families" },
+    { "id": "g-application", "title": "Application" }
+  ],
+  "nodes": [
+    {
+      "id": "what-is-sarf",
+      "title": "What is Sarf?",
+      "subtitle": "Why study morphology",
+      "groupId": "g-foundations",
+      "type": "primary",
+      "connections": ["root-letters"]
+    },
+    {
+      "id": "root-letters",
+      "title": "Root letters (الجذر)",
+      "subtitle": "Trilateral & quadrilateral roots",
+      "groupId": "g-foundations",
+      "type": "primary",
+      "connections": ["wazn"]
+    },
+    {
+      "id": "wazn",
+      "title": "Patterns (الوزن)",
+      "subtitle": "How roots take shape",
+      "groupId": "g-foundations",
+      "type": "primary",
+      "connections": ["past-tense", "present-tense"]
+    },
+    {
+      "id": "past-tense",
+      "title": "Past tense (الماضي)",
+      "groupId": "g-verbs",
+      "type": "primary",
+      "connections": ["pronoun-conjugation"]
+    },
+    {
+      "id": "present-tense",
+      "title": "Present tense (المضارع)",
+      "groupId": "g-verbs",
+      "type": "primary",
+      "connections": ["pronoun-conjugation"]
+    },
+    {
+      "id": "pronoun-conjugation",
+      "title": "Pronoun conjugation",
+      "subtitle": "14 forms per verb",
+      "groupId": "g-verbs",
+      "type": "primary",
+      "connections": ["derived-forms", "verb-families"]
+    },
+    {
+      "id": "verb-families",
+      "title": "Verb families (الأقسام)",
+      "subtitle": "Classify roots by their letters",
+      "groupId": "g-families",
+      "type": "primary",
+      "connections": [
+        "family-sound",
+        "family-hamzated",
+        "family-doubled",
+        "family-hollow",
+        "family-defective"
+      ]
+    },
+    {
+      "id": "family-sound",
+      "title": "Sound (الصحيح السالم)",
+      "subtitle": "All strong letters",
+      "groupId": "g-families",
+      "type": "optional"
+    },
+    {
+      "id": "family-hamzated",
+      "title": "Hamzated (المهموز)",
+      "subtitle": "Contains a hamza",
+      "groupId": "g-families",
+      "type": "optional"
+    },
+    {
+      "id": "family-doubled",
+      "title": "Doubled (المضعّف)",
+      "subtitle": "Last two root letters identical",
+      "groupId": "g-families",
+      "type": "optional"
+    },
+    {
+      "id": "family-hollow",
+      "title": "Hollow (الأجوف)",
+      "subtitle": "Weak middle letter",
+      "groupId": "g-families",
+      "type": "optional"
+    },
+    {
+      "id": "family-defective",
+      "title": "Defective (الناقص)",
+      "subtitle": "Weak final letter",
+      "groupId": "g-families",
+      "type": "optional"
+    },
+    {
+      "id": "derived-forms",
+      "title": "Derived forms (الأبواب)",
+      "subtitle": "Forms II–X",
+      "groupId": "g-verbs",
+      "type": "primary",
+      "connections": ["active-passive", "verbal-noun"]
+    },
+    {
+      "id": "active-passive",
+      "title": "Active & passive participles",
+      "subtitle": "اسم الفاعل / اسم المفعول",
+      "groupId": "g-verbs",
+      "type": "optional",
+      "connections": ["read-quran"]
+    },
+    {
+      "id": "verbal-noun",
+      "title": "Verbal noun (المصدر)",
+      "groupId": "g-verbs",
+      "type": "primary",
+      "connections": ["read-quran"]
+    },
+    {
+      "id": "read-quran",
+      "title": "Apply: read Qur'anic phrases",
+      "subtitle": "Spot patterns in real text",
+      "groupId": "g-application",
+      "type": "primary",
+      "connections": ["practice-drills"]
+    },
+    {
+      "id": "practice-drills",
+      "title": "Daily drills & review",
+      "groupId": "g-application",
+      "type": "optional"
+    }
+  ]
+}

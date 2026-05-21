@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"chat.tools.terminal.autoApprove": {
+			"rsync": true,
+			"npm install": true,
+			"/^node -e \"JSON\\.parse\\(require\\('fs'\\)\\.readFileSync\\('src/data/roadmaps/sarf\\.json','utf8'\\)\\); console\\.log\\('OK'\\)\"$/": {
+				"approve": true,
+				"matchCommandLine": true
+			}
+		}
+	}
+}

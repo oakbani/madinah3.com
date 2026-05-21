@@ -1,7 +1,6 @@
 import { defineCollection, z } from "astro:content";
 
-// One collection: blog. Each post lives at src/content/blog/<slug>.md
-// with frontmatter validated by this schema.
+// Blog posts live at src/content/blog/<slug>.md with frontmatter validated below.
 const blog = defineCollection({
   type: "content",
   schema: z.object({
@@ -15,4 +14,19 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+// Right-panel content for roadmap nodes. Files live at
+// src/content/roadmap-nodes/<roadmap-id>/<node-id>.md
+const roadmapNodes = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string().optional(),
+    links: z
+      .array(z.object({ label: z.string(), href: z.string().url() }))
+      .default([]),
+    resources: z
+      .array(z.object({ label: z.string(), href: z.string().url() }))
+      .default([]),
+  }),
+});
+
+export const collections = { blog, roadmapNodes };
