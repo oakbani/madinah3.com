@@ -70,6 +70,15 @@ const description = deck.description;
     <div class="stack-card bg-slate-100 border border-slate-300 -z-20" style="transform: translateY(18px) scale(.94);"></div>
     <div class="stack-card bg-slate-100 border border-slate-300 -z-10" style="transform: translateY(9px) scale(.97);"></div>
 
+    <button id="btn-prev" type="button" aria-label="Previous card"
+            class="nav-arrow nav-arrow-left absolute top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-9 w-9 sm:h-11 sm:w-11 rounded-full border border-slate-300 bg-white/90 backdrop-blur text-slate-700 shadow-md hover:border-emerald-500 hover:text-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed">
+      <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <button id="btn-next" type="button" aria-label="Next card"
+            class="nav-arrow nav-arrow-right absolute top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-9 w-9 sm:h-11 sm:w-11 rounded-full border border-slate-300 bg-white/90 backdrop-blur text-slate-700 shadow-md hover:border-emerald-500 hover:text-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed">
+      <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+
     <div id="card" class="card-3d cursor-pointer select-none" role="button" aria-label="Flashcard. Tap to flip.">
       <div class="card-face card-front bg-gradient-to-br from-emerald-700 via-emerald-600 to-teal-600 shadow-2xl">
         <div class="w-full min-w-0">
@@ -92,6 +101,8 @@ const description = deck.description;
       <div class="text-sm text-slate-600 mt-1">Reset progress or pick another deck.</div>
     </div>
   </div>
+
+  <!-- Prev / Next navigation -->
 
   <!-- Action buttons -->
   <div class="mt-6 grid grid-cols-2 gap-2 sm:gap-3 mx-auto max-w-xl">
@@ -170,6 +181,12 @@ const description = deck.description;
       border-radius: 1.25rem;
       pointer-events: none;
     }
+    .nav-arrow-left  { left: -0.5rem; }
+    .nav-arrow-right { right: -0.5rem; }
+    @media (min-width: 640px) {
+      .nav-arrow-left  { left: -1.5rem; }
+      .nav-arrow-right { right: -1.5rem; }
+    }
     .urdu { font-family: 'Noto Naskh Arabic', serif; direction: rtl; }
   </style>
 
@@ -206,6 +223,8 @@ const description = deck.description;
         btnFlip: document.getElementById("btn-flip"),
         btnShuffle: document.getElementById("btn-shuffle"),
         btnReset: document.getElementById("btn-reset"),
+        btnPrev: document.getElementById("btn-prev"),
+        btnNext: document.getElementById("btn-next"),
         lang: document.getElementById("lang"),
       };
       els.lang.value = lang;
@@ -296,9 +315,39 @@ const description = deck.description;
         // Auto-detect Arabic/Urdu script even when "isUrdu" flag is false
         // (e.g. front side of the 99 Names deck stores Arabic in the English field).
         const hasArabic = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/.test(text);
-        div.className = (isUrdu || hasArabic) ? "urdu text-3xl sm:text-4xl leading-snug" : "leading-snug";
+        // Children inherit font-size from the content container so fitText() can
+        // shrink the whole block uniformly. Keep only script/style classes here.
+        div.className = (isUrdu || hasArabic) ? "urdu leading-snug" : "leading-snug";
         div.textContent = text;
         parent.appendChild(div);
+      }
+
+      // Shrink the text inside a card face until it fits without clipping.
+      function fitText(contentEl) {
+        if (!contentEl) return;
+        const face = contentEl.closest(".card-face");
+        if (!face) return;
+        // Reset any previous inline sizing so we measure from the Tailwind base.
+        contentEl.style.fontSize = "";
+        const wrapper = contentEl.parentElement; // .w-full.min-w-0
+        if (!wrapper) return;
+        const faceStyle = getComputedStyle(face);
+        const padY = parseFloat(faceStyle.paddingTop) + parseFloat(faceStyle.paddingBottom);
+        const padX = parseFloat(faceStyle.paddingLeft) + parseFloat(faceStyle.paddingRight);
+        const availH = face.clientHeight - padY;
+        const availW = face.clientWidth - padX;
+        if (availH <= 0 || availW <= 0) return;
+        let size = parseFloat(getComputedStyle(contentEl).fontSize) || 24;
+        const minSize = 12;
+        let guard = 40;
+        while (
+          (wrapper.scrollHeight > availH || wrapper.scrollWidth > availW) &&
+          size > minSize &&
+          guard-- > 0
+        ) {
+          size -= 1;
+          contentEl.style.fontSize = size + "px";
+        }
       }
       function renderSide(el, content) {
         el.innerHTML = "";
@@ -333,14 +382,23 @@ const description = deck.description;
           els.card.classList.add("invisible");
           els.btnKnew.disabled = true;
           els.btnDidnt.disabled = true;
+          if (els.btnPrev) els.btnPrev.disabled = true;
+          if (els.btnNext) els.btnNext.disabled = true;
           return;
         }
         els.empty.classList.add("hidden");
         els.card.classList.remove("invisible");
         els.btnKnew.disabled = false;
         els.btnDidnt.disabled = false;
+        if (els.btnPrev) els.btnPrev.disabled = queue.length < 2;
+        if (els.btnNext) els.btnNext.disabled = queue.length < 2;
         renderSide(els.front, c.front);
         renderSide(els.back, c.back);
+        // Auto-fit on next frame so layout is settled before measuring.
+        requestAnimationFrame(() => {
+          fitText(els.front);
+          fitText(els.back);
+        });
       }
 
       function next(initial) {
@@ -380,6 +438,26 @@ const description = deck.description;
       els.btnFlip.addEventListener("click", flip);
       els.btnKnew.addEventListener("click", () => decide(true));
       els.btnDidnt.addEventListener("click", () => decide(false));
+
+      // Navigate without changing learned state: rotate the queue.
+      function navigate(direction) {
+        if (queue.length < 2 || animating) return;
+        animating = true;
+        if (direction === "next") {
+          queue.push(queue.shift());
+        } else {
+          queue.unshift(queue.pop());
+        }
+        persist();
+        els.card.classList.add(direction === "next" ? "swipe-left" : "swipe-right");
+        setTimeout(() => {
+          els.card.classList.remove("swipe-right", "swipe-left");
+          animating = false;
+          next(false);
+        }, 420);
+      }
+      if (els.btnPrev) els.btnPrev.addEventListener("click", () => navigate("prev"));
+      if (els.btnNext) els.btnNext.addEventListener("click", () => navigate("next"));
       els.btnShuffle.addEventListener("click", () => {
         for (let i = queue.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -417,6 +495,16 @@ const description = deck.description;
       restore();
       updateStats();
       next(true);
+
+      // Re-fit when the card resizes (orientation change, window resize, etc.).
+      let resizeRaf = 0;
+      window.addEventListener("resize", () => {
+        if (resizeRaf) cancelAnimationFrame(resizeRaf);
+        resizeRaf = requestAnimationFrame(() => {
+          fitText(els.front);
+          fitText(els.back);
+        });
+      });
     })();
   </script>
 </Layout>

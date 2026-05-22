@@ -1,0 +1,127 @@
+{
+  "id": "qurbani-level-1-hanafi",
+  "title": "Qurbani Level 1 (Hanafi)",
+  "description": "Basic rulings on Qurbani (Udhiyah) according to the Hanafi school — Quranic basis, conditions, timing, animals, and shares.",
+  "tags": [
+    "islam",
+    "fiqh",
+    "hanafi",
+    "qurbani"
+  ],
+  "title_i18n": {
+    "en": "Qurbani Level 1 (Hanafi)",
+    "ur": "قربانی لیول 1 (حنفی)"
+  },
+  "cards": [
+    {
+      "id": "01-quran-reference",
+      "front": {
+        "en": "Where is Qurbani (sacrifice) mentioned in the Quran?",
+        "ur": "قرآن میں قربانی کا ذکر کہاں ہے؟"
+      },
+      "back": {
+        "en": "In Surah Al-Kawthar (108:2): \"So pray to your Lord and sacrifice [to Him alone]\" (فَصَلِّ لِرَبِّكَ وَانْحَرْ). It is also referred to in Surah Al-Hajj (22:34, 36) and Surah As-Saffat (37:107).",
+        "ur": "سورۂ الکوثر (108:2) میں: ’’پس آپ اپنے رب کے لیے نماز پڑھیے اور قربانی کیجیے‘‘ (فَصَلِّ لِرَبِّكَ وَانْحَرْ)۔ اس کے علاوہ سورۂ الحج (22:34، 36) اور سورۂ الصافات (37:107) میں بھی قربانی کا ذکر آیا ہے۔"
+      }
+    },
+    {
+      "id": "02-sunnah-of-rasulullah",
+      "front": {
+        "en": "Is Qurbani established from the practice of Rasulullah ﷺ?",
+        "ur": "کیا قربانی رسول اللہ ﷺ سے ثابت ہے؟"
+      },
+      "back": {
+        "en": "Yes. It is established by mutawatir (mass-transmitted) sunnah. \"The Messenger of Allah ﷺ stayed in Al-Madinah for ten years performing the Udhiyah.\" (Jami' at-Tirmidhi 1507). He ﷺ is also reported to have sacrificed two horned rams — one on behalf of himself and his family, and one on behalf of his ummah.",
+        "ur": "جی ہاں، قربانی سنتِ متواترہ سے ثابت ہے۔ ’’رسول اللہ ﷺ نے مدینہ منورہ میں دس سال قیام فرمایا اور ہر سال قربانی کرتے رہے‘‘ (جامع الترمذی 1507)۔ آپ ﷺ سے یہ بھی منقول ہے کہ آپ نے دو سینگوں والے مینڈھے ذبح فرمائے — ایک اپنی اور اپنے اہلِ بیت کی طرف سے، اور دوسرا اپنی امت کی طرف سے۔"
+      }
+    },
+    {
+      "id": "03-wealthy-minor",
+      "front": {
+        "en": "Is Qurbani wajib on a wealthy minor (na-baligh) child?",
+        "ur": "کیا مالدار نابالغ بچے پر قربانی واجب ہے؟"
+      },
+      "back": {
+        "en": "No. According to the Hanafi school, Qurbani is not wajib on a minor, even if wealthy. It is only wajib on a sane, adult (baligh), free Muslim who is a muqeem (resident) and possesses wealth equal to nisab.",
+        "ur": "نہیں۔ حنفی مسلک کے مطابق نابالغ بچے پر قربانی واجب نہیں، اگرچہ وہ مالدار ہو۔ قربانی صرف اس عاقل، بالغ، آزاد، مقیم مسلمان پر واجب ہے جو نصاب کے برابر مال کا مالک ہو۔"
+      }
+    },
+    {
+      "id": "04-nisab-amount",
+      "front": {
+        "en": "On how much wealth does Qurbani become wajib?",
+        "ur": "قربانی کتنے مال پر واجب ہو جاتی ہے؟"
+      },
+      "back": {
+        "en": "Qurbani becomes wajib on a person who owns wealth equal 7.5 tolas of gold, or 52.5 tolas of silver, or its equivalent in cash, trade goods, or surplus assets beyond basic needs. Unlike Zakat, this wealth does not need to be held for a full lunar year.",
+        "ur": "قربانی اس شخص پر واجب ہوتی ہے جس کے پاس نصاب کے برابر مال ہو (یعنی ساڑھے سات تولہ سونا، یا ساڑھے باون تولہ چاندی، یا اس کے برابر نقدی، مالِ تجارت، یا حاجتِ اصلیہ سے زائد اثاثے)۔ زکوٰۃ کے برخلاف، اس مال پر سال گزرنا شرط نہیں۔"
+      }
+    },
+    {
+      "id": "05-time-of-ownership",
+      "front": {
+        "en": "At what time must one possess the wealth for Qurbani to become wajib?",
+        "ur": "مال کس وقت میں ہو تو قربانی واجب ہو گی؟"
+      },
+      "back": {
+        "en": "One must possess nisab-level wealth at any time during the three days of Qurbani (10th, 11th, and 12th of Dhul-Hijjah). If a person becomes owner of nisab within these days, Qurbani becomes wajib upon them.",
+        "ur": "قربانی کے تین دنوں (10، 11 اور 12 ذوالحجہ) میں سے کسی بھی وقت نصاب کے برابر مال کا مالک ہونا ضروری ہے۔ اگر کوئی شخص ان دنوں کے اندر نصاب کا مالک بن جائے تو اس پر قربانی واجب ہو جاتی ہے۔"
+      }
+    },
+    {
+      "id": "06-on-behalf-of-others",
+      "front": {
+        "en": "Can Qurbani be performed on behalf of someone else?",
+        "ur": "کیا کسی اور کی جانب سے قربانی کی جا سکتی ہے؟"
+      },
+      "back": {
+        "en": "Yes, with conditions: (1) On behalf of a living person — only with their explicit permission (otherwise it does not fulfil their wajib Qurbani). (2) On behalf of a deceased person — permissible as nafl/sadaqah without prior permission; the meat is distributed like one's own Qurbani. (3) If the deceased had made a wasiyyah (bequest) for it, the entire meat must be distributed to the poor.",
+        "ur": "جی ہاں، چند شرائط کے ساتھ: (1) زندہ شخص کی طرف سے — صرف اس کی صریح اجازت سے (ورنہ اس کی واجب قربانی ادا نہیں ہوگی)۔ (2) میت کی طرف سے — اجازت کے بغیر نفل/صدقہ کے طور پر جائز ہے، اور گوشت اپنی قربانی کی طرح تقسیم کیا جائے گا۔ (3) اگر میت نے قربانی کی وصیت کی ہو تو سارا گوشت فقراء میں تقسیم کرنا واجب ہے۔"
+      }
+    },
+    {
+      "id": "07-time-of-qurbani",
+      "front": {
+        "en": "What is the time (window) for Qurbani?",
+        "ur": "قربانی کا وقت کیا ہے؟"
+      },
+      "back": {
+        "en": "From after the Eid prayer on the 10th of Dhul-Hijjah until before sunset on the 12th of Dhul-Hijjah — three days and two nights. In towns/cities where Eid prayer is held, Qurbani is not valid before the Eid salah; in villages where there is no Eid prayer, it is valid from subh-sadiq (true dawn) on the 10th.",
+        "ur": "ذوالحجہ کو نمازِ عید کے بعد سے لے کر 12 ذوالحجہ کو غروبِ آفتاب سے پہلے تک — یعنی تین دن اور دو راتیں۔ جن شہروں اور قصبوں میں نمازِ عید ہوتی ہے، وہاں نمازِ عید سے پہلے قربانی جائز نہیں؛ اور جن دیہاتوں میں نمازِ عید نہیں ہوتی، وہاں 10 ذوالحجہ کو صبحِ صادق سے قربانی جائز ہے۔"
+      }
+    },
+    {
+      "id": "08-hair-and-nails",
+      "front": {
+        "en": "Is it wajib for the one intending to do Qurbani to refrain from cutting hair and nails from the 1st of Dhul-Hijjah?",
+        "ur": "کیا قربانی کرنے والے کے لیے یکم ذوالحجہ کے بعد ناخن اور بال نہ کاٹنا واجب ہے؟"
+      },
+      "back": {
+        "en": "No, it is not wajib in the Hanafi school — it is mustahab (recommended). Based on the hadith of Umm Salamah (RA), one who intends to do Qurbani should refrain from cutting hair and trimming nails from the 1st of Dhul-Hijjah until the Qurbani is performed.",
+        "ur": "نہیں، حنفی مسلک میں یہ واجب نہیں بلکہ مستحب ہے۔ ام سلمہ رضی اللہ عنہا کی حدیث کی بنیاد پر، جو شخص قربانی کا ارادہ رکھتا ہو اسے یکم ذوالحجہ سے قربانی کرنے تک بال اور ناخن کاٹنے سے پرہیز کرنا چاہیے۔"
+      }
+    },
+    {
+      "id": "09-animals-and-ages",
+      "front": {
+        "en": "Which animals are eligible for Qurbani, and what is the minimum age of each?",
+        "ur": "کن جانوروں کی قربانی ہو سکتی ہے اور کم از کم کتنی عمر ہو؟"
+      },
+      "back": {
+        "en": "Camel — minimum 5 years. Cow / Buffalo — minimum 2 years. Goat — minimum 1 year. Sheep / Lamb (dumba/dumbi) — minimum 1 year; however, a 6-month-old sheep is also valid if it is so well-built/plump that it appears to be one year old from a distance.",
+        "ur": "اونٹ — کم از کم 5 سال۔ گائے / بھینس — کم از کم 2 سال۔ بکرا / بکری — کم از کم 1 سال۔ دنبہ / دنبی (بھیڑ) — کم از کم 1 سال؛ البتہ 6 ماہ کا دنبہ بھی جائز ہے بشرطیکہ اتنا موٹا اور تندرست ہو کہ دور سے ایک سال کا لگے۔"
+      }
+    },
+    {
+      "id": "10-shares-in-cow-camel",
+      "front": {
+        "en": "How many people can share in the Qurbani of a cow or camel?",
+        "ur": "گائے اور اونٹ کی قربانی میں کتنے لوگ شریک ہو سکتے ہیں؟"
+      },
+      "back": {
+        "en": "Up to seven people can share in one cow, buffalo, or camel, provided each share is at least one-seventh and every participant's intention is purely for Qurbani / qurbat (seeking nearness to Allah). If even one partner's intention is for meat only (without qurbat), the Qurbani of all partners is invalid. A goat or sheep, however, suffices for only one person.",
+        "ur": "ایک گائے، بھینس یا اونٹ میں زیادہ سے زیادہ سات افراد شریک ہو سکتے ہیں، بشرطیکہ ہر شخص کا حصہ کم از کم ساتواں حصہ ہو اور ہر شریک کی نیت خالص قربانی اور قربتِ الٰہی کی ہو۔ اگر ایک شریک کی بھی نیت محض گوشت حاصل کرنے کی ہو (قربت کے بغیر) تو تمام شرکاء کی قربانی باطل ہو جاتی ہے۔ البتہ بکرا یا دنبہ صرف ایک ہی شخص کی طرف سے کافی ہے۔"
+      }
+    }
+  ]
+}
