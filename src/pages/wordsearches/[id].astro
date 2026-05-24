@@ -1,0 +1,420 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { wordsearches, type WordSearch } from "@/lib/wordsearches";
+
+export function getStaticPaths() {
+  return wordsearches.map((w) => ({
+    params: { id: w.id },
+    props: { puzzle: w },
+  }));
+}
+
+interface Props {
+  puzzle: WordSearch;
+}
+
+const { puzzle } = Astro.props as Props;
+const title = `${puzzle.title} — Word Search · The Madinah Way`;
+const description = puzzle.description;
+---
+<Layout title={title} description={description} ogType="article">
+  <nav class="mb-4 text-sm text-slate-600">
+    <a href="/" class="hover:text-slate-800">Home</a>
+    <span class="mx-2 text-slate-600">/</span>
+    <a href="/#wordsearches" class="hover:text-slate-800">Word Searches</a>
+    <span class="mx-2 text-slate-600">/</span>
+    <span class="text-slate-700">{puzzle.title}</span>
+  </nav>
+
+  <header class="mb-6">
+    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">{puzzle.title}</h1>
+    <p class="text-sm text-slate-600 mt-1">{puzzle.description}</p>
+    {puzzle.ageRange && (
+      <p class="text-xs text-slate-500 mt-2">Recommended ages: {puzzle.ageRange}</p>
+    )}
+  </header>
+
+  <!-- Crossword-layout-generator places the words; we fill empty cells with random letters. -->
+  <script src="https://cdn.jsdelivr.net/gh/MichaelWehar/Crossword-Layout-Generator@master/layout_generator.js" is:inline></script>
+
+  <main class="grid grid-cols-1 lg:grid-cols-[auto_minmax(280px,1fr)] gap-6 items-start">
+    <section class="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm flex flex-col gap-4 items-center overflow-x-auto">
+      <div class="board-stage relative">
+        <div id="board" class="board" role="grid" aria-label="Word search grid"></div>
+        <svg id="overlay" class="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div class="flex flex-wrap gap-2 justify-center">
+        <button class="btn btn-primary" id="new-game">New game</button>
+        <button class="btn" id="hint">Hint</button>
+        <button class="btn" id="reveal-all">Reveal all</button>
+      </div>
+      <div id="status" class="status">Click and drag (or tap and drag) across a word.</div>
+    </section>
+
+    <section class="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm">
+      <h2 class="text-sm font-bold uppercase tracking-[0.18em] text-emerald-700 mb-3">Find these words</h2>
+      <ul id="wordlist" class="grid grid-cols-1 gap-2"></ul>
+    </section>
+  </main>
+
+  <!-- Words data embedded for the inline script. -->
+  <script id="puzzle-data" type="application/json" set:html={JSON.stringify({ words: puzzle.words })}></script>
+
+  <style is:global>
+    #board.board {
+      display: grid;
+      gap: 2px;
+      background: #0f172a;
+      padding: 6px;
+      border-radius: 10px;
+      user-select: none;
+      touch-action: none;
+    }
+    #board .cell {
+      position: relative;
+      width: 38px; height: 38px;
+      background: #f8fafc;
+      color: #0f172a;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    @media (max-width: 480px) {
+      #board .cell { width: 30px; height: 30px; font-size: 15px; }
+    }
+    svg#overlay.overlay {
+      position: absolute; inset: 6px;
+      pointer-events: none;
+    }
+    svg#overlay .selection { stroke: #f59e0b; }
+    svg#overlay .found-line { stroke: #10b981; }
+    svg#overlay line {
+      stroke-width: 32;
+      stroke-linecap: round;
+      opacity: 0.45;
+    }
+    .btn {
+      background: #fff;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      padding: 9px 14px; border-radius: 10px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    .btn:hover { border-color: #10b981; color: #047857; }
+    .btn.btn-primary {
+      background: #10b981; color: #fff; border-color: #059669;
+    }
+    .btn.btn-primary:hover { background: #059669; color: #fff; }
+    .status { min-height: 22px; font-size: 14px; color: #475569; text-align: center; }
+    .status.win { color: #047857; font-weight: 700; }
+
+    #wordlist li {
+      padding: 8px 10px; border-radius: 8px;
+      background: #f1f5f9;
+      color: #0f172a;
+      display: flex; flex-direction: column; gap: 2px;
+      font-size: 14px;
+    }
+    #wordlist li.found {
+      background: #d1fae5;
+      color: #064e3b;
+    }
+    #wordlist li.found .answer { text-decoration: line-through; text-decoration-color: rgba(6, 78, 59, 0.6); }
+    #wordlist li .clue { font-size: 14px; }
+    #wordlist li .answer {
+      font-size: 11px; letter-spacing: 0.18em;
+      opacity: 0.85; font-weight: 700;
+    }
+    #wordlist li .answer.hidden { letter-spacing: 0.25em; }
+  </style>
+
+  <script is:inline>
+    (function () {
+      const dataEl = document.getElementById("puzzle-data");
+      const { words: INPUT_WORDS } = JSON.parse(dataEl.textContent || "{}");
+      let WORDS = INPUT_WORDS;
+
+      const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const board = document.getElementById("board");
+      const overlay = document.getElementById("overlay");
+      const wordlist = document.getElementById("wordlist");
+      const statusEl = document.getElementById("status");
+
+      let cols = 0, rows = 0;
+      let solutionGrid = [];
+      let realLetterAt = [];
+      let cellEls = [];
+      let placedWords = [];
+      let foundSet = new Set();
+
+      function buildPuzzle() {
+        const layout = generateLayout(WORDS);
+        placedWords = layout.result.filter((w) => w.orientation !== "none");
+        cols = layout.cols;
+        rows = layout.rows;
+        solutionGrid = Array.from({ length: rows }, () => Array(cols).fill(null));
+        realLetterAt = Array.from({ length: rows }, () => Array(cols).fill(false));
+        for (const w of placedWords) {
+          const letters = w.answer.toUpperCase().split("");
+          for (let i = 0; i < letters.length; i++) {
+            const x = (w.orientation === "across" ? w.startx + i : w.startx) - 1;
+            const y = (w.orientation === "down"   ? w.starty + i : w.starty) - 1;
+            solutionGrid[y][x] = letters[i];
+            realLetterAt[y][x] = true;
+          }
+        }
+        for (let y = 0; y < rows; y++) {
+          for (let x = 0; x < cols; x++) {
+            if (!solutionGrid[y][x]) {
+              solutionGrid[y][x] = ALPHABET[Math.floor(Math.random() * 26)];
+            }
+          }
+        }
+      }
+
+      function render() {
+        board.innerHTML = "";
+        overlay.innerHTML = "";
+        const cellPx = window.innerWidth < 480 ? 30 : 38;
+        board.style.gridTemplateColumns = `repeat(${cols}, ${cellPx}px)`;
+        board.style.gridTemplateRows    = `repeat(${rows}, ${cellPx}px)`;
+        cellEls = Array.from({ length: rows }, () => Array(cols).fill(null));
+        for (let y = 0; y < rows; y++) {
+          for (let x = 0; x < cols; x++) {
+            const div = document.createElement("div");
+            div.className = "cell";
+            div.textContent = solutionGrid[y][x];
+            div.dataset.x = x;
+            div.dataset.y = y;
+            board.appendChild(div);
+            cellEls[y][x] = div;
+          }
+        }
+        wordlist.innerHTML = "";
+        foundSet = new Set();
+        const sorted = [...placedWords].sort((a, b) =>
+          (a.clue || "").localeCompare(b.clue || "") || a.answer.localeCompare(b.answer));
+        for (const w of sorted) {
+          const li = document.createElement("li");
+          const upper = w.answer.toUpperCase();
+          li.dataset.answer = upper;
+          const masked = "·".repeat(w.answer.length);
+          const clueText = w.clue ? escapeHtml(w.clue) : `(${w.answer.length} letters)`;
+          li.innerHTML =
+            `<span class="clue">${clueText}</span>` +
+            `<span class="answer hidden" data-real="${upper}" aria-hidden="true">${masked} · ${w.answer.length} letters</span>`;
+          wordlist.appendChild(li);
+        }
+        sizeOverlay(cellPx);
+        setStatus(`Find ${placedWords.length} words. Drag in any of 8 directions.`);
+      }
+
+      function escapeHtml(s) {
+        return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+      }
+
+      let CELL = 38;
+      const GAP = 2;
+      function cellCenter(x, y) {
+        return { cx: x * (CELL + GAP) + CELL / 2, cy: y * (CELL + GAP) + CELL / 2 };
+      }
+      function sizeOverlay(cellPx) {
+        CELL = cellPx;
+        const w = cols * CELL + (cols - 1) * GAP;
+        const h = rows * CELL + (rows - 1) * GAP;
+        overlay.setAttribute("viewBox", `0 0 ${w} ${h}`);
+        overlay.setAttribute("width", w);
+        overlay.setAttribute("height", h);
+      }
+
+      let dragging = false;
+      let startCell = null;
+      let endCell = null;
+      let liveLine = null;
+
+      function cellAtEvent(e) {
+        const t = (e.touches && e.touches[0]) || e;
+        const el = document.elementFromPoint(t.clientX, t.clientY);
+        const cell = el && el.closest && el.closest(".cell");
+        if (!cell || !board.contains(cell)) return null;
+        return { x: +cell.dataset.x, y: +cell.dataset.y };
+      }
+      function snap(s, e) {
+        const dx = e.x - s.x, dy = e.y - s.y;
+        if (dx === 0 && dy === 0) return { x: s.x, y: s.y };
+        const adx = Math.abs(dx), ady = Math.abs(dy);
+        let stepX = 0, stepY = 0, len;
+        if (adx > ady * 2) { stepX = Math.sign(dx); stepY = 0; len = adx; }
+        else if (ady > adx * 2) { stepX = 0; stepY = Math.sign(dy); len = ady; }
+        else { stepX = Math.sign(dx); stepY = Math.sign(dy); len = Math.max(adx, ady); }
+        return { x: s.x + stepX * len, y: s.y + stepY * len, stepX, stepY, len };
+      }
+      function drawSelection() {
+        if (liveLine) liveLine.remove();
+        liveLine = null;
+        if (!startCell || !endCell) return;
+        const a = cellCenter(startCell.x, startCell.y);
+        const b = cellCenter(endCell.x, endCell.y);
+        liveLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        liveLine.setAttribute("x1", a.cx); liveLine.setAttribute("y1", a.cy);
+        liveLine.setAttribute("x2", b.cx); liveLine.setAttribute("y2", b.cy);
+        liveLine.setAttribute("class", "selection");
+        overlay.appendChild(liveLine);
+      }
+      function lettersAlong(s, snapped) {
+        const cells = [];
+        if (snapped.x === s.x && snapped.y === s.y) {
+          cells.push({ x: s.x, y: s.y });
+        } else {
+          const { stepX, stepY, len } = snapped;
+          for (let i = 0; i <= len; i++) {
+            const x = s.x + stepX * i, y = s.y + stepY * i;
+            if (x < 0 || y < 0 || x >= cols || y >= rows) break;
+            cells.push({ x, y });
+          }
+        }
+        const word = cells.map((c) => solutionGrid[c.y][c.x]).join("");
+        return { cells, word };
+      }
+      function onDown(e) {
+        const c = cellAtEvent(e);
+        if (!c) return;
+        e.preventDefault();
+        dragging = true;
+        startCell = c;
+        endCell = c;
+        drawSelection();
+      }
+      function onMove(e) {
+        if (!dragging) return;
+        const c = cellAtEvent(e);
+        if (!c) return;
+        e.preventDefault();
+        endCell = snap(startCell, c);
+        drawSelection();
+      }
+      function onUp() {
+        if (!dragging) return;
+        dragging = false;
+        if (startCell && endCell) {
+          const snapped = (endCell.stepX === undefined) ? snap(startCell, endCell) : endCell;
+          const { word } = lettersAlong(startCell, snapped);
+          tryMatch(word, startCell, snapped);
+        }
+        if (liveLine) { liveLine.remove(); liveLine = null; }
+        startCell = endCell = null;
+      }
+      board.addEventListener("mousedown", onDown);
+      window.addEventListener("mousemove", onMove);
+      window.addEventListener("mouseup", onUp);
+      board.addEventListener("touchstart", onDown, { passive: false });
+      board.addEventListener("touchmove", onMove, { passive: false });
+      board.addEventListener("touchend", onUp);
+
+      function tryMatch(word, startC, snapped) {
+        const reversed = word.split("").reverse().join("");
+        const candidates = new Set([word, reversed]);
+        const found = placedWords.find((w) => {
+          if (foundSet.has(w.answer.toUpperCase())) return false;
+          return candidates.has(w.answer.toUpperCase());
+        });
+        if (!found) {
+          flashStatus(`"${word}" — not a word.`);
+          return;
+        }
+        foundSet.add(found.answer.toUpperCase());
+        markFound(startC, snapped, found);
+        const li = wordlist.querySelector(`li[data-answer="${found.answer.toUpperCase()}"]`);
+        if (li) {
+          li.classList.add("found");
+          revealAnswerInLi(li);
+        }
+        if (foundSet.size === placedWords.length) {
+          setStatus("All words found! 🎉", "win");
+        } else {
+          setStatus(`Nice — ${found.answer.toUpperCase()} found. ${placedWords.length - foundSet.size} to go.`);
+        }
+      }
+      function markFound(startC, snapped, _entry) {
+        const a = cellCenter(startC.x, startC.y);
+        const b = cellCenter(snapped.x, snapped.y);
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", a.cx); line.setAttribute("y1", a.cy);
+        line.setAttribute("x2", b.cx); line.setAttribute("y2", b.cy);
+        line.setAttribute("class", "found-line");
+        overlay.appendChild(line);
+      }
+      function revealAnswerInLi(li) {
+        const ans = li.querySelector(".answer");
+        if (!ans) return;
+        ans.textContent = ans.dataset.real;
+        ans.classList.remove("hidden");
+        ans.removeAttribute("aria-hidden");
+      }
+      function setStatus(msg, kind) {
+        statusEl.textContent = msg;
+        statusEl.classList.remove("win");
+        if (kind === "win") statusEl.classList.add("win");
+      }
+      function flashStatus(msg) {
+        setStatus(msg);
+        clearTimeout(flashStatus._t);
+        flashStatus._t = setTimeout(() => {
+          if (foundSet.size === placedWords.length) return;
+          setStatus(`${placedWords.length - foundSet.size} word(s) left.`);
+        }, 1400);
+      }
+
+      document.getElementById("new-game").addEventListener("click", () => {
+        buildPuzzle(); render();
+      });
+      document.getElementById("hint").addEventListener("click", () => {
+        const remaining = placedWords.filter((w) => !foundSet.has(w.answer.toUpperCase()));
+        if (!remaining.length) return;
+        const w = remaining[Math.floor(Math.random() * remaining.length)];
+        const sx = w.startx - 1, sy = w.starty - 1;
+        const el = cellEls[sy][sx];
+        el.animate(
+          [{ outline: "3px solid #f59e0b" }, { outline: "3px solid transparent" }],
+          { duration: 1400, iterations: 2 }
+        );
+        setStatus(`Hint: "${w.answer.toUpperCase()}" starts at row ${sy + 1}, col ${sx + 1} (${w.orientation}).`);
+      });
+      document.getElementById("reveal-all").addEventListener("click", () => {
+        for (const w of placedWords) {
+          const upper = w.answer.toUpperCase();
+          if (!foundSet.has(upper)) {
+            const sx = w.startx - 1, sy = w.starty - 1;
+            const ex = (w.orientation === "across" ? w.startx + w.answer.length - 1 : w.startx) - 1;
+            const ey = (w.orientation === "down"   ? w.starty + w.answer.length - 1 : w.starty) - 1;
+            markFound({ x: sx, y: sy }, { x: ex, y: ey }, w);
+            foundSet.add(upper);
+          }
+          const li = wordlist.querySelector(`li[data-answer="${upper}"]`);
+          if (li) {
+            li.classList.add("found");
+            revealAnswerInLi(li);
+          }
+        }
+        setStatus("All words revealed.", "win");
+      });
+
+      // Re-render on resize so cell size adapts (e.g., rotate phone).
+      let resizeTimer;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          // Only re-render if cell size class changed
+          const target = window.innerWidth < 480 ? 30 : 38;
+          if (target !== CELL) render();
+        }, 200);
+      });
+
+      buildPuzzle();
+      render();
+    })();
+  </script>
+</Layout>

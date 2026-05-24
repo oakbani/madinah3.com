@@ -1,0 +1,31 @@
+{
+  "id": "hajj",
+  "title": "Hajj Word Search",
+  "description": "Find 15 words from the journey of Hajj — the Kaaba, Tawaf, Arafat and more. A fun puzzle for ages 6–12.",
+  "language": "en",
+  "ageRange": "6-12",
+  "tags": [
+    "islam",
+    "hajj",
+    "kids"
+  ],
+  "words": [
+    { "answer": "HAJJ",       "clue": "The yearly pilgrimage to Makkah" },
+    { "answer": "KAABA",      "clue": "The black cube Muslims face in prayer" },
+    { "answer": "MAKKAH",     "clue": "Holy city where the Kaaba is" },
+    { "answer": "MADINAH",    "clue": "City of the Prophet ﷺ" },
+    { "answer": "IHRAM",      "clue": "Two white cloths worn by pilgrims" },
+    { "answer": "TAWAF",      "clue": "Walking around the Kaaba seven times" },
+    { "answer": "SAFA",       "clue": "One of the two small hills near the Kaaba" },
+    { "answer": "MARWA",      "clue": "The other hill, walked with Safa" },
+    { "answer": "ARAFAT",     "clue": "The plain where pilgrims stand and pray" },
+    { "answer": "MINA",       "clue": "Tent city near Makkah" },
+    { "answer": "MUZDALIFAH", "clue": "Open plain where pilgrims sleep under the sky" },
+    { "answer": "JAMARAT",    "clue": "Pillars where pilgrims throw small stones" },
+    { "answer": "ZAMZAM",     "clue": "Blessed spring of water near the Kaaba" },
+    { "answer": "IBRAHIM",    "clue": "The prophet linked with building the Kaaba" },
+    { "answer": "ISMAIL",     "clue": "Ibrahim's son who helped to build Kaaba" },
+    { "answer": "TALBIYAH",   "clue": "The \"Labbaik\" prayer of the pilgrims" },
+    { "answer": "UMRAH",      "clue": "The smaller pilgrimage" }
+  ]
+}
