@@ -43,12 +43,13 @@ const description = puzzle.description;
         <div id="board" class="board" role="grid" aria-label="Word search grid"></div>
         <svg id="overlay" class="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
       </div>
-      <div class="flex flex-wrap gap-2 justify-center">
+      <div class="flex flex-wrap gap-2 justify-center no-print">
         <button class="btn btn-primary" id="new-game">New game</button>
         <button class="btn" id="hint">Hint</button>
         <button class="btn" id="reveal-all">Reveal all</button>
+        <button class="btn" id="print" title="Print a clean A4 black-and-white version">Print</button>
       </div>
-      <div id="status" class="status">Click and drag (or tap and drag) across a word.</div>
+      <div id="status" class="status no-print">Click and drag (or tap and drag) across a word.</div>
     </section>
 
     <section class="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm">
@@ -129,6 +130,83 @@ const description = puzzle.description;
       opacity: 0.85; font-weight: 700;
     }
     #wordlist li .answer.hidden { letter-spacing: 0.25em; }
+
+    /* ---------- Print: clean A4 black & white version ---------- */
+    @media print {
+      @page { size: A4 portrait; margin: 14mm; }
+
+      /* Hide everything that isn't the puzzle */
+      nav, .no-print, svg#overlay { display: none !important; }
+
+      html, body {
+        background: #fff !important;
+        color: #000 !important;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+      }
+
+      /* Strip card chrome */
+      main, section, .board-stage {
+        background: #fff !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        gap: 0 !important;
+      }
+      main { display: block !important; }
+
+      header { margin-bottom: 8mm !important; }
+      header h1 { font-size: 20pt !important; color: #000 !important; margin: 0 0 2mm 0; }
+      header p   { font-size: 10.5pt !important; color: #000 !important; }
+
+      /* Grid: B&W, visible borders, large enough to fill the page width */
+      #board.board {
+        background: #fff !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        border: 2px solid #000 !important;
+        margin: 0 auto 8mm auto !important;
+      }
+      #board .cell {
+        background: #fff !important;
+        color: #000 !important;
+        border: 1px solid #000 !important;
+        border-radius: 0 !important;
+        width: var(--print-cell, 9mm) !important;
+        height: var(--print-cell, 9mm) !important;
+        font-size: 14pt !important;
+        font-weight: 700 !important;
+      }
+
+      /* Word list: 3-column, clues only, no highlighting */
+      h2 {
+        color: #000 !important;
+        font-size: 11pt !important;
+        letter-spacing: 0.12em;
+        margin: 0 0 3mm 0 !important;
+      }
+      #wordlist {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 2mm 6mm !important;
+      }
+      #wordlist li {
+        background: #fff !important;
+        color: #000 !important;
+        border: none !important;
+        padding: 0 !important;
+        font-size: 11pt !important;
+        text-decoration: none !important;
+      }
+      #wordlist li .answer { display: none !important; }
+      #wordlist li .clue {
+        font-size: 11pt !important;
+        color: #000 !important;
+      }
+      /* Don't visually mark already-found words on the printout */
+      #wordlist li.found { background: #fff !important; color: #000 !important; }
+      #wordlist li.found .clue { text-decoration: none !important; }
+    }
   </style>
 
   <script is:inline>
@@ -400,6 +478,16 @@ const description = puzzle.description;
           }
         }
         setStatus("All words revealed.", "win");
+      });
+
+      // ---- Print: fit the grid to A4 (portrait) before invoking window.print()
+      document.getElementById("print").addEventListener("click", () => {
+        // A4 portrait usable width @ 14mm margins ≈ 182mm; leave ~10mm headroom
+        const usableMm = 170;
+        const cellMm = Math.max(6, Math.min(12, +(usableMm / Math.max(cols, 1)).toFixed(2)));
+        document.documentElement.style.setProperty("--print-cell", `${cellMm}mm`);
+        // Give the browser a tick to apply the variable before the print preview snapshots.
+        setTimeout(() => window.print(), 50);
       });
 
       // Re-render on resize so cell size adapts (e.g., rotate phone).
