@@ -1,0 +1,128 @@
+{
+  "id": "takbeer-e-tashreeq-hanafi",
+  "title": "Takbeer-e-Tashreeq (Hanafi)",
+  "description": "Rulings on Takbeer-e-Tashreeq according to the Hanafi school — its wording, timing, and on whom it is wajib.",
+  "tags": [
+    "islam",
+    "fiqh",
+    "hanafi",
+    "takbeer",
+    "dhul-hijjah"
+  ],
+  "title_i18n": {
+    "en": "Takbeer-e-Tashreeq (Hanafi)",
+    "ur": "تکبیرِ تشریق (حنفی)"
+  },
+  "cards": [
+    {
+      "id": "01-what-is-takbeer-e-tashreeq",
+      "front": {
+        "en": "What is Takbeer-e-Tashreeq?",
+        "ur": "تکبیرِ تشریق کیا ہے؟"
+      },
+      "back": {
+        "en": "Allāhu Akbar, Allāhu Akbar, Lā ilāha illa-llāhu wa-llāhu akbar, Allāhu akbar wa lillāhi-l-ḥamd.\n\n(\"Allah is the Greatest, Allah is the Greatest, there is no god but Allah, and Allah is the Greatest, Allah is the Greatest, and to Allah belongs all praise.\")",
+        "ur": "اَللّٰهُ اَكْبَرُ، اَللّٰهُ اَكْبَرُ، لَا إِلٰهَ إِلَّا اللّٰهُ وَاللّٰهُ اَكْبَرُ، اَللّٰهُ اَكْبَرُ وَلِلّٰهِ الْحَمْدُ۔\n\n(’’اللہ سب سے بڑا ہے، اللہ سب سے بڑا ہے، اللہ کے سوا کوئی معبود نہیں، اور اللہ سب سے بڑا ہے، اللہ سب سے بڑا ہے، اور تمام تعریفیں اللہ ہی کے لیے ہیں۔‘‘)"
+      }
+    },
+    {
+      "id": "02-timing",
+      "front": {
+        "en": "What is the time/duration for this takbeer?",
+        "ur": "اس تکبیر کا وقت کیا ہے؟"
+      },
+      "back": {
+        "en": "Takbeer-e-Tashreeq is from the Fajr of the 9th of Dhul-Hijjah (Day of Arafah) until the ‘Asr of the 13th of Dhul-Hijjah — a total of 23 fardh salahs.",
+        "ur": "تکبیرِ تشریق 9 ذوالحجہ (یومِ عرفہ) کی فجر سے لے کر 13 ذوالحجہ کی عصر تک ہے — یعنی کل 23 فرض نمازوں کے بعد۔"
+      }
+    },
+    {
+      "id": "03-on-whom-wajib",
+      "front": {
+        "en": "On whom is this takbeer wajib?",
+        "ur": "یہ تکبیر کس پر واجب ہے؟"
+      },
+      "back": {
+        "en": "Takbeer-e-Tashreeq is wajib on every Muslim who is mukallaf (sane and baligh) and offers fardh salah in congregation with the appointed imam in the masjid. This includes men whether muqeem (resident) or musafir (traveller), and women praying behind the imam.",
+        "ur": "تکبیرِ تشریق ہر اُس مسلمان پر واجب ہے جو مکلف (عاقل و بالغ) ہو اور مسجد میں مقررہ امام کے ساتھ باجماعت فرض نماز ادا کرے۔ اس میں مرد شامل ہیں خواہ مقیم ہوں یا مسافر، اور وہ خواتین بھی جو امام کے پیچھے نماز ادا کریں۔"
+      }
+    },
+    {
+      "id": "04-immediately-after-salam",
+      "front": {
+        "en": "Is it wajib immediately after saying salam?",
+        "ur": "کیا سلام پھیرنے کے فوراً بعد واجب ہے؟"
+      },
+      "back": {
+        "en": "Yes. It is wajib to recite Takbeer-e-Tashreeq immediately after completing the salam of the fardh salah. If one delays it intentionally by engaging in a long worldly conversation, or breaks wudu deliberately, or leaves the masjid, the wajib is missed and there is no qadha for it. However, if one is still in the place of salah and has not done anything contradictory, it can still be recited. A person who fails to say the takbeer should make tawbah (repent) for leaving the wajib.",
+        "ur": "جی ہاں۔ فرض نماز کے سلام کے فوراً بعد تکبیرِ تشریق پڑھنا واجب ہے۔ اگر کوئی شخص جان بوجھ کر کسی لمبی دنیاوی بات چیت میں مشغول ہو جائے، یا قصداً وضو توڑ دے، یا مسجد سے باہر چلا جائے تو واجب فوت ہو جاتا ہے اور اس کی قضا نہیں۔ البتہ اگر شخص اب بھی نماز کی جگہ پر موجود ہو اور کوئی منافی عمل نہ کیا ہو تو پھر بھی پڑھ سکتا ہے۔ جو شخص تکبیر کہنا چھوڑ دے اُسے واجب ترک کرنے پر توبہ کرنی چاہیے۔"
+      }
+    },
+    {
+      "id": "05-munfarid",
+      "front": {
+        "en": "Is the takbeer wajib on a person praying alone (munfarid)?",
+        "ur": "کیا تنہا نماز پڑھنے والے پر تکبیر کہنا واجب ہے؟"
+      },
+      "back": {
+        "en": "No, it is not wajib on a person offering salah alone, though it is recommended (mustahabb) for him to recite it.",
+        "ur": "نہیں، تنہا نماز پڑھنے والے پر یہ واجب نہیں، البتہ پڑھنا مستحب ہے۔"
+      }
+    },
+    {
+      "id": "06-muqeem-behind-musafir",
+      "front": {
+        "en": "If a resident (muqeem) prays behind a traveller (musafir) imam, on whom is the takbeer wajib?",
+        "ur": "اگر مقیم نے مسافر کے پیچھے نماز پڑھی تو تکبیر کس پر واجب ہے؟"
+      },
+      "back": {
+        "en": "It is wajib on the muqeem (resident follower), but not on the musafir imam.",
+        "ur": "یہ تکبیر مقیم (مقتدی) پر واجب ہے، لیکن مسافر امام پر واجب نہیں۔"
+      }
+    },
+    {
+      "id": "07-nafl-behind-fardh-imam",
+      "front": {
+        "en": "If someone is praying nafl behind an imam who is praying fardh, is the takbeer wajib on him?",
+        "ur": "اگر کوئی نفل پڑھنے والا فرض پڑھنے والے امام کے پیچھے نماز پڑھے تو کیا اس پر تکبیر واجب ہے؟"
+      },
+      "back": {
+        "en": "Yes. The takbeer is wajib on the person offering nafl behind such an imam, due to his iqtida (following) of the imam who is offering fardh in congregation.",
+        "ur": "جی ہاں۔ ایسے شخص پر بھی تکبیر واجب ہے، کیونکہ وہ اُس امام کی اقتدا کر رہا ہے جو باجماعت فرض ادا کر رہا ہے۔"
+      }
+    },
+    {
+      "id": "08-after-jumuah",
+      "front": {
+        "en": "Is the takbeer wajib after Jumu'ah salah?",
+        "ur": "کیا جمعہ کی نماز کے بعد واجب ہے؟"
+      },
+      "back": {
+        "en": "Yes. If Jumu'ah falls within the days of Tashreeq (9th to 13th Dhul-Hijjah), Takbeer-e-Tashreeq is wajib after the fardh of Jumu'ah just as it is after any other fardh salah offered in congregation with the appointed imam.",
+        "ur": "جی ہاں۔ اگر جمعہ ایامِ تشریق (9 تا 13 ذوالحجہ) میں آجائے تو جمعہ کے فرض کے بعد بھی تکبیرِ تشریق اسی طرح واجب ہے جیسے باجماعت ادا کی جانے والی دیگر فرض نمازوں کے بعد۔"
+      }
+    },
+    {
+      "id": "09-qadha-from-before",
+      "front": {
+        "en": "If someone offers a qadha (missed) salah from before these days during the days of Tashreeq, is the takbeer wajib?",
+        "ur": "اگر کوئی ان دنوں میں پرانی نماز قضا ادا کرے تو کیا واجب ہے؟"
+      },
+      "back": {
+        "en": "No. Takbeer-e-Tashreeq is not wajib upon offering a qadha salah that was missed from outside the days of Tashreeq (i.e., from a previous time/year), even if it is being made up during these days.",
+        "ur": "نہیں۔ اگر کوئی نماز ایامِ تشریق سے باہر کی قضا ہو (یعنی پہلے کسی وقت یا سال کی) اور اُسے ان دنوں میں ادا کیا جائے تو اس کے بعد تکبیرِ تشریق واجب نہیں۔"
+      }
+    },
+    {
+      "id": "10-qadha-within-same-days",
+      "front": {
+        "en": "If someone misses a salah from these very days (of Tashreeq) and makes it up within these same days, is the takbeer wajib?",
+        "ur": "انہی دنوں کی قضا انہی دنوں میں ادا کرے تو کیا تکبیر واجب ہے؟"
+      },
+      "back": {
+        "en": "Yes. If a fardh salah of the days of Tashreeq is missed and then made up as qadha within the same days of Tashreeq, Takbeer-e-Tashreeq is wajib after that qadha salah. If, however, it is made up after the days of Tashreeq have ended, the takbeer is no longer wajib.",
+        "ur": "جی ہاں۔ اگر ایامِ تشریق کی کوئی فرض نماز چھوٹ جائے اور انہی ایامِ تشریق کے اندر اُس کی قضا ادا کی جائے تو اُس کے بعد تکبیرِ تشریق واجب ہے۔ البتہ اگر ایامِ تشریق گزرنے کے بعد قضا کی جائے تو پھر واجب نہیں۔"
+      }
+    }
+  ]
+}
