@@ -1,0 +1,27 @@
+{
+  "id": "qurbani",
+  "title": "Qurbani Word Search",
+  "description": "Find 12 words about Qurbani — the Eid al-Adha sacrifice. A fun puzzle for ages 6–12.",
+  "language": "en",
+  "ageRange": "6-12",
+  "tags": [
+    "islam",
+    "qurbani",
+    "eid",
+    "kids"
+  ],
+  "words": [
+    { "answer": "QURBANI",   "clue": "The sacrifice offered during Eid al-Adha" },
+    { "answer": "EID",       "clue": "The festival when Qurbani is done" },
+    { "answer": "IBRAHIM",   "clue": "The prophet asked to sacrifice his son" },
+    { "answer": "ISMAIL",    "clue": "The son Ibrahim was ready to sacrifice" },
+    { "answer": "COW",       "clue": "A larger animal shared by seven people" },
+    { "answer": "CAMEL",     "clue": "The largest animal allowed for Qurbani" },
+    { "answer": "KNIFE",     "clue": "Sharp tool used by the butcher" },
+    { "answer": "BISMILLAH", "clue": "Said before the slaughter begins" },
+    { "answer": "TAKBIR",    "clue": "\"Allahu Akbar\" said during the sacrifice" },
+    { "answer": "QIBLAH",    "clue": "Direction the animal faces" },
+    { "answer": "MEAT",      "clue": "What Qurbani provides to share" },
+    { "answer": "POOR",      "clue": "People who receive a third of the meat" }
+  ]
+}
