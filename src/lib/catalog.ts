@@ -23,6 +23,25 @@ export type Diagram = {
   kind: "flowchart" | "tree" | "mindmap";
 };
 
+export type Doc = {
+  id: string;
+  title: string;
+  description: string;
+  /** Path under /public/ to the article HTML. */
+  href: string;
+  tags?: string[];
+};
+
+export const docs: Doc[] = [
+  {
+    id: "mens-shorts-awrah",
+    title: "How Short Is Too Short?",
+    description: "What a man must cover, how long his shorts should be, and what the Qurʾan, the Sunnah and the scholars say.",
+    href: "docs/mens-shorts-awrah/",
+    tags: ["Fiqh", "Sitr al-ʿAwrah"],
+  },
+];
+
 export const puzzles: Puzzle[] = [
   {
     id: "crossword-en",
