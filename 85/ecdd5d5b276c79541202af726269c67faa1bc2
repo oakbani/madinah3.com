@@ -1,0 +1,23 @@
+public/docs/mens-shorts-awrah/index.html
+  s_c75f331555e1da::t_c59485ad8de81c 1-328
+src/lib/catalog.ts
+  s_c75f331555e1da::t_46685071c928c2 26-44
+src/pages/index.astro
+  s_c75f331555e1da::t_48a6ebe45dff92 5,118-143
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "85ecdd5d5b276c79541202af726269c67faa1bc2",
+  "prompts": {},
+  "sessions": {
+    "s_c75f331555e1da": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "482fc967-821f-4e59-a2cd-b80d33ccbb3b",
+        "model": "claude-sonnet-5-5"
+      },
+      "human_author": "Owais Akbani <owais.akbani@hungerstation.com>"
+    }
+  }
+}
