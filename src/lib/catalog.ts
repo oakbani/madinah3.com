@@ -23,7 +23,7 @@ export type Diagram = {
   kind: "flowchart" | "tree" | "mindmap";
 };
 
-export type Doc = {
+export type Article = {
   id: string;
   title: string;
   description: string;
@@ -32,12 +32,12 @@ export type Doc = {
   tags?: string[];
 };
 
-export const docs: Doc[] = [
+export const articles: Article[] = [
   {
     id: "mens-shorts-awrah",
     title: "How Short Is Too Short?",
     description: "What a man must cover, how long his shorts should be, and what the Qurʾan, the Sunnah and the scholars say.",
-    href: "docs/mens-shorts-awrah/",
+    href: "articles/mens-shorts-awrah/",
     tags: ["Fiqh", "Sitr al-ʿAwrah"],
   },
 ];
