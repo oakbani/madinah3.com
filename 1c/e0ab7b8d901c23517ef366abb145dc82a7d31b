@@ -1,0 +1,31 @@
+src/pages/index.astro
+  s_3044aa53323a48::t_adc61a37df2aa5 5,25-50,248-249
+  s_3044aa53323a48::t_97d394c9d679ad 250
+src/lib/catalog.ts
+  s_3044aa53323a48::t_3d6243a87a4d40 26,35,40
+astro.config.mjs
+  s_3044aa53323a48::t_adc61a37df2aa5 10-11,13-14
+  s_3044aa53323a48::t_7f6e4cb7793a7d 12
+public/articles/mens-shorts-awrah/index.html
+  s_3044aa53323a48::t_9d903eb75eb8fb 10,51
+  s_3044aa53323a48::t_bd09c10a0f6ff4 79-88,152,194,326-352
+  s_3044aa53323a48::t_3d6243a87a4d40 1-9,11-50,52-78,89-151,153-193,195-325,353-358
+src/layouts/Layout.astro
+  s_3044aa53323a48::t_adc61a37df2aa5 70
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1ce0ab7b8d901c23517ef366abb145dc82a7d31b",
+  "prompts": {},
+  "sessions": {
+    "s_3044aa53323a48": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e0461b75-1a70-422a-93e7-173065d67674",
+        "model": "claude-sonnet-5-5"
+      },
+      "human_author": "Owais Akbani <owais.akbani@hungerstation.com>"
+    }
+  }
+}
