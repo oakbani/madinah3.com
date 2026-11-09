@@ -48,15 +48,7 @@ body{
   border-left:6px solid var(--gold);border-right:6px solid var(--gold);
   box-shadow:0 0 0 14px var(--green-700),0 0 60px rgba(0,0,0,.45);
 }
-.page{padding:44px 44px 64px;border-bottom:1px dashed #d9d2bf;position:relative}
-/* Brand mark on every section so a screenshot of any section carries it */
-.page::after,.hero::after{
-  content:"Madinah3.com";position:absolute;right:22px;bottom:16px;
-  font-family:var(--font-body);font-weight:700;font-size:.9rem;letter-spacing:.06em;
-  color:var(--green-700);background:var(--green-100);border:1px solid var(--gold);
-  border-radius:99px;padding:3px 14px;z-index:2;
-}
-.hero::after{color:var(--gold-soft);background:rgba(10,44,32,.55);width:auto;height:auto;border-radius:99px;left:auto;top:auto}
+.page{padding:44px 44px 40px;border-bottom:1px dashed #d9d2bf;position:relative}
 .page:last-of-type{border-bottom:0}
 @media(max-width:640px){.page{padding:28px 18px}.sheet{box-shadow:0 0 0 6px var(--green-700)}}
 h1,h2,h3{line-height:1.2;margin:0}
@@ -84,6 +76,16 @@ a:hover{color:var(--gold)}
 .why-row .quote{margin:0 0 6px;font-size:1.1rem;line-height:1.8;padding:8px 14px}
 .why-row .quote:last-child{margin-bottom:0}
 @media(max-width:640px){.why-row{grid-template-columns:1fr}}
+.vtbl{width:100%;border-collapse:collapse;font-size:.92rem;margin:8px 0 22px;background:#fff;border:1px solid #e3ddca}
+.vtbl th{background:var(--green-900);color:#fff;text-align:left;padding:9px 12px;font-weight:600}
+.vtbl td{padding:10px 12px;border-top:1px solid #e6dfcd;vertical-align:middle}
+.vtbl .t{font-weight:700;color:var(--green-900)}
+.vtbl .mean{font-size:.84rem;color:var(--ink);margin-top:2px}
+.vtbl .ch{font-size:.78rem;color:var(--muted)}
+.vthumb{position:relative;display:block;width:120px;aspect-ratio:4/3;background:#111;border-radius:8px;overflow:hidden}
+.vthumb img{width:100%;height:100%;object-fit:contain;display:block}
+.vthumb .play{position:absolute;inset:0;margin:auto;width:30px;height:30px;border-radius:50%;background:rgba(15,61,46,.88);display:grid;place-items:center;color:#fff;font-size:.8rem;padding-left:2px}
+.soon{font-size:.9rem;color:var(--muted);border:1px dashed #d9d2bf;border-radius:10px;padding:10px 14px;margin:8px 0 22px}
 .draft{font-size:.78rem;color:var(--muted);border:1px dashed var(--gold);background:#fffdf6;border-radius:8px;padding:6px 10px;margin:10px 0}
 
 /* ---------- Hero ---------- */
@@ -189,6 +191,7 @@ footer{background:var(--green-950);height:44px}
     <li><div><b>The Hanafi view</b><span>Why the knee matters and the minimum length of shorts.</span></div></li>
     <li><div><b>What if someone does not cover?</b><span>The consequences mentioned by the scholars.</span></div></li>
     <li><div><b>Evidences in Shariah</b><span>The Qurʾan and the hadith on covering.</span></div></li>
+    <li><div><b>YouTube videos</b><span>Short videos in Urdu, English and Arabic.</span></div></li>
   </ol>
 </section>
 
@@ -320,6 +323,33 @@ footer{background:var(--green-950);height:44px}
   <div class="quote ar">إِيَّاكُمْ وَالتَّعَرِّيَ، فَإِنَّ مَعَكُمْ مَنْ لَا يُفَارِقُكُمْ إِلَّا عِنْدَ الْغَائِطِ وَحِينَ يُفْضِي الرَّجُلُ إِلَى أَهْلِهِ، فَاسْتَحْيُوهُمْ وَأَكْرِمُوهُمْ<div class="tr">"Beware of nakedness, for with you are those who never leave you except when you relieve yourselves and when a man is with his wife. So feel shy before them and honour them."</div><span class="src">Narrated by Ibn ʿUmar · Tirmidhi 2800 · <a href="https://shamela.ws/book/16976/1631">al-Mafātīḥ 4/26</a></span></div>
   <div class="quote ar">نَهَى رَسُولُ اللَّهِ ﷺ عَنْ لِبْسَتَيْنِ… وَاللِّبْسَةُ الْأُخْرَى: احْتِبَاؤُهُ بِثَوْبِهِ وَهُوَ جَالِسٌ، لَيْسَ عَلَى فَرْجِهِ مِنْهُ شَيْءٌ<div class="tr">"The Messenger of Allah (peace be upon him) forbade two ways of dressing… and the other is sitting wrapped in his garment, with nothing of it over his private part."</div><span class="src">Narrated by Abu Saʿīd al-Khudrī · al-Bukhārī 5820 · <a href="https://shamela.ws/book/37837/298">Mukhtaṣar al-Naṣīḥ p. 303</a></span></div>
   <div class="quote ar">لَا يَحُجُّ بَعْدَ الْعَامِ مُشْرِكٌ، وَلَا يَطُوفُ بِالْبَيْتِ عُرْيَانٌ<div class="tr">"No idolater may perform Hajj after this year, and no one may circle the Kaʿba naked."</div><span class="src">Narrated by Abu Hurayra · al-Bukhārī 369 · <a href="https://shamela.ws/book/1673/964">Fatḥ al-Bārī 1/478</a></span></div>
+</section>
+
+<!-- ====================== 5. YOUTUBE VIDEOS ====================== -->
+<section class="page" id="videos">
+  <div class="eyebrow">5 · YouTube videos</div>
+  <h2>Short videos on covering the ʿawrah</h2>
+
+  <h3><span class="tag">Urdu</span> اردو</h3>
+  <table class="vtbl">
+    <tr><th>Title</th><th>Speaker</th><th>Video</th></tr>
+    <tr>
+      <td><div class="t">Namaz Mai Sitar Zahir Ho Jaye To Namaz Ho Jayegi</div><div class="mean">If the sitr (ʿawrah) becomes uncovered during prayer, is the prayer valid?</div></td>
+      <td>Mufti Akmal<div class="ch">Short · Huzoor Zeenat ul Fuqaha</div></td>
+      <td><a class="vthumb" href="https://www.youtube.com/watch?v=G8nGh8jw2fM" target="_blank" rel="noopener" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/G8nGh8jw2fM/hqdefault.jpg" alt="Video thumbnail" loading="lazy"><span class="play">▶</span></a></td>
+    </tr>
+    <tr>
+      <td><div class="t">mard ka sitr || mufti akmal</div><div class="mean">What a man must cover (a man's sitr / ʿawrah).</div></td>
+      <td>Mufti Akmal<div class="ch">Short · Ali Syed</div></td>
+      <td><a class="vthumb" href="https://www.youtube.com/watch?v=XMqg1b2bbeg" target="_blank" rel="noopener" aria-label="Watch on YouTube"><img src="https://i.ytimg.com/vi/XMqg1b2bbeg/hqdefault.jpg" alt="Video thumbnail" loading="lazy"><span class="play">▶</span></a></td>
+    </tr>
+  </table>
+
+  <h3><span class="tag t2">English</span></h3>
+  <div class="soon">More videos coming soon.</div>
+
+  <h3><span class="tag t3">Arabic</span> العربية</h3>
+  <div class="soon">More videos coming soon.</div>
 </section>
 
 <footer></footer>

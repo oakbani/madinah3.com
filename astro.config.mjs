@@ -7,6 +7,11 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://madinah3.com",
   trailingSlash: "ignore",
+  // Old shared links: /docs/* moved to /articles/*
+  redirects: {
+    "/docs": "/",
+    "/docs/mens-shorts-awrah": "/articles/mens-shorts-awrah/",
+  },
   integrations: [tailwind({ applyBaseStyles: true }), sitemap()],
   vite: {
     resolve: {
