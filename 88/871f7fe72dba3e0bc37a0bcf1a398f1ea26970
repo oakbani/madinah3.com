@@ -1,0 +1,22 @@
+src/lib/catalog.ts
+  s_33316e2e6707d6::t_032d07aee47b56 37-42
+  s_33316e2e6707d6::t_61498a4b05759d 36
+public/articles/feet-towards-qibla/index.html
+  s_33316e2e6707d6::t_032d07aee47b56 1-372
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "88871f7fe72dba3e0bc37a0bcf1a398f1ea26970",
+  "prompts": {},
+  "sessions": {
+    "s_33316e2e6707d6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "19c38bdb-da91-4cb2-b51f-cb977ee050e5",
+        "model": "claude-sonnet-5-5"
+      },
+      "human_author": "Owais Akbani <owais.akbani@hungerstation.com>"
+    }
+  }
+}
