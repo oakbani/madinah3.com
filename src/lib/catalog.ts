@@ -34,6 +34,13 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    id: "feet-towards-qibla",
+    title: "Feet Toward the Qibla: Is It a Sin?",
+    description: "Disliked, but not a sin: what the Qurʾan, the hadith and the scholars say, and why we should be gentle with each other.",
+    href: "articles/feet-towards-qibla/",
+    tags: ["Fiqh", "Adab"],
+  },
+  {
     id: "mens-shorts-awrah",
     title: "How Short Is Too Short?",
     description: "What a man must cover, how long his shorts should be, and what the Qurʾan, the Sunnah and the scholars say.",
