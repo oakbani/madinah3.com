@@ -1,0 +1,21 @@
+public/articles/tawassul-after-wafat/index.html
+  s_c24e95e2730627::t_65c94698852e4f 1-261
+src/lib/catalog.ts
+  s_c24e95e2730627::t_9ed48500186cb0 36-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b81413d79a6c5504a77fb1e0f3021dfd62d69169",
+  "prompts": {},
+  "sessions": {
+    "s_c24e95e2730627": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2385eb3e-d89a-4674-baee-0871ea71f2fa",
+        "model": "claude-sonnet-5-5"
+      },
+      "human_author": "Owais Akbani <owais.akbani@hungerstation.com>"
+    }
+  }
+}
