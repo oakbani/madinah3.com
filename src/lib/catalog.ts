@@ -34,6 +34,13 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    id: "tawassul-after-wafat",
+    title: "Can We Call upon the Prophet ﷺ After His Passing?",
+    description: "What the Qurʾan, the hadith and the scholars of every generation say about calling upon the Prophet ﷺ after his passing.",
+    href: "articles/tawassul-after-wafat/",
+    tags: ["Aqidah", "Tawassul"],
+  },
+  {
     id: "feet-towards-qibla",
     title: "Feet Toward the Qibla: Is It a Sin?",
     description: "Disliked, but not a sin: what the Qurʾan, the hadith and the scholars say, and why we should be gentle with each other.",

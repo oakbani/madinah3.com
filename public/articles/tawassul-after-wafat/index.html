@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="What the Qurʾan, the hadith and the scholars of every generation say about calling upon the Prophet ﷺ after his passing.">
+<title>Can We Call upon the Prophet ﷺ After His Passing?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ================= SHARED THEME (same as topic 01) ================= */
+:root{
+  --green-950:#0a2c20;--green-900:#0f3d2e;--green-700:#1d6b4f;--green-500:#3f9a73;
+  --green-100:#e4f1ea;--green-50:#f1f8f4;--gold:#b8913a;--gold-soft:#f3e9cf;
+  --paper:#fbf8f1;--ink:#1c2a24;--muted:#5b6b63;
+  --font-body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-ar:'Amiri','Noto Naskh Arabic','Geeza Pro','Traditional Arabic',serif;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font-body);color:var(--ink);line-height:1.5;
+  background:repeating-linear-gradient(45deg,rgba(255,255,255,.035) 0 14px,transparent 14px 28px),var(--green-900)}
+.sheet{max-width:880px;margin:0 auto;background:var(--paper);
+  border-left:6px solid var(--gold);border-right:6px solid var(--gold);
+  box-shadow:0 0 0 14px var(--green-700),0 0 60px rgba(0,0,0,.45)}
+.page{padding:26px 36px 22px;position:relative}
+.page+.page{border-top:1px dashed #d9d2bf}
+h1,h2,h3{line-height:1.2;margin:0}
+h2{font-size:1.25rem;color:var(--green-900);margin:0 0 2px;letter-spacing:-.01em}
+p{margin:0 0 8px}
+a{color:var(--green-700);text-decoration:none;border-bottom:1px dotted var(--green-500)}
+a:hover{color:var(--gold)}
+.eyebrow{font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.ar{font-family:var(--font-ar);direction:rtl;text-align:right;font-size:1.22rem;line-height:1.85;color:var(--green-950)}
+.tr{direction:ltr;text-align:left;font-family:var(--font-body);font-size:.8rem;line-height:1.45;color:var(--ink);margin-top:2px}
+.quote{background:var(--green-50);border-right:4px solid var(--green-700);border-radius:10px;padding:8px 14px;margin:8px 0}
+.src{display:block;direction:ltr;text-align:left;font-family:var(--font-body);font-size:.72rem;color:var(--muted);margin-top:3px;line-height:1.4}
+.tag{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:var(--green-100);color:var(--green-900);margin-right:6px;vertical-align:middle}
+.tag.t2{background:#dfe9f6;color:#23456f}.tag.t3{background:var(--gold-soft);color:#6b4f12}.tag.t4{background:#eee6f5;color:#51326f}
+
+/* hero */
+.hero{background:linear-gradient(160deg,var(--green-950),var(--green-700));color:#fff;text-align:center;padding:14px 28px 14px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:300px;height:300px;border:2px solid rgba(184,145,58,.35);border-radius:50%;top:-160px;left:-110px}
+.hero .ar{color:var(--gold-soft);text-align:center;font-size:1.7rem;margin-bottom:2px;line-height:1.6}
+.hero h1{font-size:clamp(1.8rem,5vw,2.5rem);font-weight:800;letter-spacing:-.02em;position:relative}
+.hero h1 em{font-style:normal;color:var(--gold-soft);border-bottom:4px solid var(--gold)}
+.hero p{max-width:600px;margin:10px auto 0;font-size:.95rem;color:#d7ebe1;position:relative}
+
+.scope{background:var(--gold-soft);border-radius:10px;padding:6px 14px;font-size:.8rem;margin:10px 0 2px}
+
+.sec{margin-top:11px}
+.sec-h{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--gold);padding-bottom:3px;margin-bottom:6px}
+.sec-h .n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--green-700);color:#fff;font-weight:700;display:grid;place-items:center;font-size:.8rem}
+
+.row{display:grid;grid-template-columns:150px 1fr;gap:12px;background:#fff;border:1px solid #e3ddca;border-left:5px solid var(--green-700);border-radius:10px;padding:4px 12px;margin:3px 0;align-items:start}
+.row>div:first-child>b{color:var(--green-900);font-size:.85rem;line-height:1.3;display:block}
+.row small{display:block;color:var(--muted);font-size:.7rem;margin-top:2px}
+.row .ar{font-size:1rem;line-height:1.65}
+.row p{margin:0;font-size:.82rem;line-height:1.45}
+
+.hd{background:#fff;border:1px solid #e3ddca;border-radius:12px;padding:6px 14px;margin:6px 0}
+.hd h3{font-size:.95rem;color:var(--green-900);margin:0 0 2px}
+.hd .ar{font-size:1.05rem;line-height:1.7}
+
+footer{background:var(--green-950);height:44px}
+@page{size:880px 1245px;margin:0}
+@media print{
+  body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sheet{box-shadow:none;max-width:none;border:0}
+  .page{height:1245px;overflow:hidden;break-after:page}
+  footer{display:none}
+}
+.note{font-size:.8rem;background:#fff8e1;border:1px solid var(--gold,#c9a24b);border-radius:6px;padding:6px 10px;margin:0 0 6px}
+.tag.tw{background:#b45309;color:#fff}
+</style>
+</head>
+<body>
+<main class="sheet">
+
+<!-- ================= PAGE 1 ================= -->
+<section class="page" id="p1">
+  <header class="hero">
+    <div class="ar">يَا رَسُولَ اللَّهِ</div>
+    <h1>Can We <em>Call upon</em> the Prophet&nbsp;ﷺ<br>After His Passing?</h1>
+    <p>The view of the Ahl al-Sunnah scholars who allow it, with the evidence from the Qurʾān, the hadith and the scholars of every generation.</p>
+  </header>
+
+  <div class="scope"><b>Who this page is about:</b> people who believe that Allah alone is the real doer, and that the Prophet ﷺ acts only by Allah's permission. Anyone who believes the Prophet ﷺ acts independently of Allah commits shirk.</div>
+
+  <!-- 1. QURAN -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">1</span><div><div class="eyebrow">The Qurʾān</div><h2>Come to the Messenger, ask forgiveness, and he asks for you</h2></div></div>
+    <div class="quote">
+      <div class="ar">وَمَآ أَرْسَلْنَا مِن رَّسُولٍ إِلَّا لِيُطَاعَ بِإِذْنِ ٱللَّهِ ۚ وَلَوْ أَنَّهُمْ إِذ ظَّلَمُوٓا۟ أَنفُسَهُمْ جَآءُوكَ فَٱسْتَغْفَرُوا۟ ٱللَّهَ وَٱسْتَغْفَرَ لَهُمُ ٱلرَّسُولُ لَوَجَدُوا۟ ٱللَّهَ تَوَّابًا رَّحِيمًا</div>
+      <div class="tr">“And We did not send any messenger except to be obeyed by permission of Allāh. And if, when they wronged themselves, they had come to you, [O Muḥammad], and asked forgiveness of Allāh and the Messenger had asked forgiveness for them, they would have found Allāh Accepting of Repentance and Merciful.”</div>
+      <span class="src">Sūrat al-Nisāʾ 4:64 · Translation: Saheeh International (Quran.com)</span>
+    </div>
+
+    <h3 style="font-size:.88rem;color:var(--green-700);margin:10px 0 4px">What the commentators wrote on this verse</h3>
+
+    <div class="row"><div><b>Ibn Kathīr</b><small>Tafsīr 4/140</small></div>
+      <div><div class="ar">يرشد تعالى العصاة والمذنبين إذا وقع منهم الخطأ والعصيان أن يأتوا إلى الرسول ﷺ فيستغفروا اللَّه عنده ويسألوه أن يستغفر لهم</div>
+      <div class="tr">Allah guides sinners, when they fall into error, to come to the Messenger ﷺ, ask Allah's forgiveness in his presence and ask him to seek forgiveness for them. He then relates the well-known story of the man at the Prophet's grave. <a href="https://shamela.ws/book/1509/1769">Shamela</a></div></div></div>
+
+    <div class="row"><div><b>al-Qurṭubī · al-Nasafī · Abū Ḥayyān</b><small>Tafsīr 5/265 · Madārik 1/370 · al-Baḥr 3/694</small></div>
+      <div><div class="ar">قدم علينا أعرابي بعد ما دفنا رسول اللَّه ﷺ بثلاثة أيام… فنودي من القبر إنه قد غفر لك</div>
+      <div class="tr">All three relate that a Bedouin came after the Prophet's burial (al-Qurṭubī and Abū Ḥayyān, from ʿAlī: three days after), threw himself on the grave, recited this verse and asked for forgiveness, and a voice came from the grave: “You have been forgiven.” <a href="https://shamela.ws/book/20855/1935">Qurṭubī</a> · <a href="https://shamela.ws/book/1394/862">Nasafī</a> · <a href="https://shamela.ws/book/23591/2115">Abū Ḥayyān</a></div></div></div>
+
+    <div class="row"><div><b>al-Subkī</b><small>quoted in al-Ṣārim al-Munkī, p. 314–315</small></div>
+      <div><div class="ar">فهمَ العلماءُ من الآيةِ العمومَ في الحالتين، واستحبوا لمن أتى قبرَ النبي ﷺ أن يتلوَ هذه الآيةَ ويستغفرَ اللَّه</div>
+      <div class="tr">“The scholars understood the verse to cover both cases [his life and after his death], and recommended that whoever comes to the Prophet's grave recite this verse and ask Allah's forgiveness.” <a href="https://shamela.ws/book/8622/311">Shamela</a></div></div></div>
+
+  </div>
+
+  <!-- 2. HADITH (first one on page 1) -->
+  <div class="sec">
+    <div class="sec-h"><span class="n">2</span><div><div class="eyebrow">The hadith, one by one</div><h2>The Prophet ﷺ taught a call that names him</h2></div></div>
+    <div class="hd">
+      <h3><span class="tag t2">Tirmidhī · Nasāʾī · Ibn Mājah</span> The blind man</h3>
+      <p style="font-size:.82rem;margin:2px 0 4px">A blind man asked the Prophet ﷺ to pray for his sight. The Prophet ﷺ told him to make wuḍūʾ well, pray two rakʿahs and say:</p>
+      <div class="quote" style="margin:4px 0"><div class="ar">اللَّهُمَّ إنِّي أسْألُكَ وأتَوَجَّهُ إلَيْكَ بِنَبِيِّكَ مُحَمَّدٍ نَبِيِّ الرَّحْمَةِ، يَا مُحَمَّدُ إنِّي تَوَجَّهْتُ بِكَ إِلَى رَبِّي فِي حاجَتِي هَذِهِ لِتُقْضَى لِي، اللَّهُمَّ فَشَفِّعْهُ فِيَّ</div>
+      <div class="tr">“O Allah, I ask You and turn to You by Your Prophet Muḥammad, the Prophet of mercy. O Muḥammad, I turn by you to my Lord in this need of mine, so that it be met. O Allah, accept his intercession for me.” The man got up able to see. ʿUthmān b. Ḥunayf said: “By Allah, we had not parted and the talk had not grown long before the man came back in, as if he had never been harmed.” (al-Bayhaqī, <a href="https://shamela.ws/book/7478/2632">Dalāʾil 6/167</a>)</div></div>
+      <span class="src"><b>Graded:</b> al-Tirmidhī “ḥasan ṣaḥīḥ gharīb” · al-Ḥākim “ṣaḥīḥ on the condition of al-Bukhārī and Muslim” · al-Ṭabarānī “the hadith is ṣaḥīḥ” · al-Shawkānī: it proves tawassul by the Prophet ﷺ “with the belief that the Doer is Allah” (<a href="https://shamela.ws/book/6844/208">Tuḥfat al-Dhākirīn p. 212</a>). Sources: <a href="https://shamela.ws/book/25794/13780">Musnad Aḥmad 28/480</a> · <a href="https://shamela.ws/book/1424/1621">al-Ḥākim, Mustadrak 2/761</a> · <a href="https://shamela.ws/book/21809/5908">Jāmiʿ al-Masānīd 6/45</a></span>
+    </div>
+  </div>
+  <div class="note"><b>About weak reports:</b> “weak” is not “made up”. Only fabricated reports are left out. A weak report can support that something is <i>permitted</i>, not that it is obligatory or forbidden. Marked <span class="tag tw">weak</span>.</div>
+</section>
+
+<!-- ================= PAGE 2 ================= -->
+<section class="page" id="p2">
+
+
+  <div class="hd">
+    <h3><span class="tag t2">Muslim</span><span class="tag t2">Abū Dāwūd</span> His Ummah's deeds are shown to him; his salām is answered</h3>
+    <div class="quote" style="margin:4px 0"><div class="ar">عُرِضَتْ عَلَيَّ أَعْمَالُ أُمَّتِي حَسَنُهَا وَسَيِّئُهَا<br>ما مِن أحدٍ يُسلِّمُ عليَّ إلا ردَّ اللَّهُ عليَّ روحي حتى أردَّ عليه السلام</div>
+    <div class="tr">“My Ummah’s deeds, good and bad, were shown to me.” (Abū Dharr, <a href="https://shamela.ws/book/711/1465">Muslim no. 553</a>) · “No one greets me but Allah returns my soul to me so I return his greeting.” (Abū Hurayrah, Abū Dāwūd, in <a href="https://shamela.ws/book/6910/2607">al-Mughnī 5/465</a>)</div></div>
+  </div>
+
+  <div class="hd">
+    <h3><span class="tag t3">Ibn Abī Shaybah · al-Bayhaqī</span> The man at the grave in ʿUmar's time</h3>
+    <div class="quote" style="margin:4px 0"><div class="ar">أصابَ الناسَ قحطٌ في زمن عمر بن الخطاب فجاء رجلٌ إلى قبر النبي ﷺ فقال: يا رسولَ الله استسقِ اللهَ لأمتك فإنهم قد هَلَكوا. فأتاه رسول الله ﷺ في المنام فقال: ائت عمر فأقرئه مني السلامَ وأخبرهم أنهم مُسْقَوْن</div>
+    <div class="tr">“Famine struck the people in the time of ʿUmar. A man came to the grave of the Prophet ﷺ and said: ‘O Messenger of Allah, ask Allah for rain for your Ummah, for they are perishing.’ Then the Messenger of Allah ﷺ came to him in a dream and said: ‘Go to ʿUmar, give him my greetings, and tell them that they will be given rain.’”</div></div>
+    <span class="src">Via Mālik al-Dār, ʿUmar’s freed servant · <a href="https://shamela.ws/book/333/39245">Ibn Abī Shaybah 18/31</a> · <a href="https://shamela.ws/book/7478/3059">al-Bayhaqī, Dalāʾil al-Nubuwwah 7/47</a><br>
+    Ibn Ḥajar: “with a ṣaḥīḥ chain”; he names the man as the Companion Bilāl b. al-Ḥārith al-Muzanī (<a href="https://shamela.ws/book/1673/1574">Fatḥ al-Bārī 2/495</a>, <a href="https://shamela.ws/book/1673/1575">2/496</a>) · al-Bayhaqī: “isnād ṣaḥīḥ” (<a href="https://shamela.ws/book/30097/3351">al-Bidāyah 7/205</a>)</span>
+  </div>
+
+  <div class="hd">
+    <h3><span class="tag t3">al-Ṭabarānī</span> ʿUthmān b. Ḥunayf teaches the du'a after the Prophet's death <span class="tag tw">grading disputed</span></h3>
+    <div class="quote" style="margin:4px 0"><div class="ar">ثُمَّ قُلْ: اللهُمَّ إِنِّي أَسْأَلُكَ وَأَتَوَجَّهُ إِلَيْكَ بِنَبِيِّنَا مُحَمَّدٍ نَبِيِّ الرَّحْمَةِ، يَا مُحَمَّدُ إِنِّي أَتَوَجَّهُ بِكَ إِلَى رَبِّي فَتَقْضِي لِي حَاجَتِي</div>
+    <div class="tr">In ʿUthmān ibn ʿAffān's time a man's need was not being met. The Companion ʿUthmān b. Ḥunayf told him to pray two rakʿahs and say the du'a above. The man did, and his need was met. <a href="https://shamela.ws/book/1733/10308">al-Muʿjam al-Kabīr 9/30</a></div></div>
+    <span class="src">Ibn Taymiyya: al-Bayhaqī’s story “may be used as evidence by one who makes tawassul after his death, if it is ṣaḥīḥ” (<a href="https://shamela.ws/book/7289/270">Majmūʿ al-Fatāwā 1/268</a>); al-Albānī calls the story weak (<a href="https://shamela.ws/book/36190/1079">Mawsūʿat al-ʿAqīdah 3/680</a>).</span>
+  </div>
+
+  <div class="hd">
+    <h3><span class="tag t3">al-Bukhārī, <i>al-Adab al-Mufrad</i></span> Ibn ʿUmar calls “Yā Muḥammad” <span class="tag tw">weak</span></h3>
+    <div class="quote" style="margin:4px 0"><div class="ar">خَدِرَتْ رِجْلُ ابْنِ عُمَرَ، فَقَالَ لَهُ رَجُلٌ: اذْكُرْ أَحَبَّ النَّاسِ إِلَيْكَ، فَقَالَ: يَا مُحَمَّدُ</div>
+    <div class="tr">Ibn ʿUmar's foot went numb. A man said, “Remember the person you love most.” He said, “O Muḥammad.” <a href="https://shamela.ws/book/12991/1438">no. 964</a></div></div>
+  </div>
+
+  <!-- 3. SCHOLARS -->
+  <div class="sec" style="margin-top:12px">
+    <div class="sec-h"><span class="n">3</span><div><div class="eyebrow">The scholars</div><h2>From every generation</h2></div></div>
+
+    <div class="row"><div><b>Companions and Tābiʿūn</b><small>1st–2nd century</small></div>
+      <p>The Companion <b>ʿUthmān b. Ḥunayf</b> narrated the blind man's hadith above. The Companion <b>Bilāl b. al-Ḥārith al-Muzanī</b> is named by Ibn Ḥajar as the man who went to the Prophet's grave in ʿUmar's time (<a href="https://shamela.ws/book/1673/1575">Fatḥ al-Bārī 2/496</a>). <b>Mālik al-Dār</b>, ʿUmar's freed servant, relayed that report; al-Khalīlī calls him a senior tābiʿī “agreed upon” (<a href="https://shamela.ws/book/12993/214">al-Irshād 1/313</a>).</p></div>
+
+    <div class="row"><div><b>Imām Mālik</b><small>2nd century · Mālikī · <span class="tag tw">chain disputed</span></small></div>
+      <div><div class="ar">وَلِمَ تَصْرِفُ وَجْهَكَ عَنْهُ وَهُوَ وَسِيلَتُكَ وَوَسِيلَةُ أَبِيكَ آدَمَ عَلَيْهِ السَّلَامُ إِلَى اللَّهِ تَعَالَى يَوْمَ الْقِيَامَةِ؟ بَلِ اسْتَقْبِلْهُ وَاسْتَشْفِعْ بِهِ فَيُشَفِّعَهُ اللَّهُ</div>
+      <div class="tr">Qāḍī ʿIyāḍ reports, with his chain, that the caliph Abū Jaʿfar asked Mālik whether to face the qiblah or the Prophet ﷺ when making du’a. Mālik answered: “Why turn your face away from him, when he is your means (<i>wasīlah</i>) and the means of your father Ādam to Allah on the Day of Resurrection? Face him and ask for his intercession, and Allah will accept his intercession.” Ibn Taymiyya and Ibn ʿAbd al-Hādī question this chain. <a href="https://shamela.ws/book/1753/424">al-Shifāʾ 2/41</a> · repeated by Ibn al-Ḥājj in <a href="https://shamela.ws/book/11406/255">al-Madkhal 1/260</a></div></div></div>
+
+    <div class="row"><div><b>Imām Aḥmad b. Ḥanbal</b><small>3rd century</small></div>
+      <div><div class="ar">قال المروذي: قال الإمام أحمد: يتوسل بالنبي ﷺ في دعائه</div>
+      <div class="tr">Al-Marrūdhī reports that Imām Aḥmad said: “One makes tawassul by the Prophet ﷺ in one's du'a.” <a href="https://shamela.ws/book/20879/712">al-Jāmiʿ li-ʿUlūm al-Imām Aḥmad 4/120</a></div></div></div>
+
+    <div class="row"><div><b>Ibn Qudāmah</b><small>7th century · Ḥanbalī</small></div>
+      <div><div class="ar">وقد أتيتُك مستغفرًا من ذنوبي مستشفعًا بك إلى ربي</div>
+      <div class="tr">In al-Mughnī he gives the visitor to the grave these words: “I have come to you asking forgiveness for my sins, asking you to intercede for me with my Lord.” <a href="https://shamela.ws/book/6910/2609">al-Mughnī 5/467</a></div></div></div>
+
+    <div class="row"><div><b>al-Nawawī</b><small>7th century · Shāfiʿī</small></div>
+      <div><div class="ar">ثُمَّ يَرْجِعُ إِلَى مَوْقِفِهِ الأَوَّلِ قِبَالَ وَجْهِ رَسُولِ اللهِ ﷺ وَيَتَوَسَّلُ بِهِ فِي حَقِّ نَفْسِهِ وَيَتَشَفَّعُ بِهِ إِلَى رَبِّهِ سُبْحَانَهُ وَتَعَالَى</div>
+      <div class="tr">In his book on Hajj rites, for the visitor to the Prophet’s grave: he “returns to his first place facing the face of the Messenger of Allah ﷺ, makes tawassul by him for himself and asks his intercession with his Lord.” He adds that the Bedouin’s words are among the best to say. <a href="https://shamela.ws/book/96232/451">al-Īḍāḥ fī Manāsik al-Ḥajj p. 454</a></div></div></div>
+
+    <div class="row"><div><b>al-Subkī</b><small>8th century · Shāfiʿī</small></div>
+      <div><div class="ar">الاستعانة والتشفع بالنبي ﷺ وبجاهه إلى ربه… واقع في كل حال… وذلك مما قام الإجماع عليه وتواترت به الأخبار</div>
+      <div class="tr">Quoted by al-Ṣāliḥī: seeking help and intercession through the Prophet ﷺ happens “in every state… and this is something on which there is consensus.” <a href="https://shamela.ws/book/1693/5690">Subul al-Hudā 12/403</a></div></div></div>
+
+    <div class="row"><div><b>Ibn al-Ḥājj al-ʿAbdarī</b><small>8th century · Mālikī</small></div>
+      <div><div class="ar">فَمَنْ جَاءَهُ وَوَقَفَ بِبَابِهِ وَتَوَسَّلَ بِهِ وَجَدَ اللَّهَ تَوَّابًا رَحِيمًا</div>
+      <div class="tr">On Nisāʾ 4:64: “Whoever comes to him, stands at his door and makes tawassul by him will find Allah Accepting of repentance and Merciful.” About visiting the prophets in general, he writes that the visitor “makes tawassul to Allah by them for his needs and the forgiveness of his sins, asks them for help and asks them for his needs.” <a href="https://shamela.ws/book/11406/255">al-Madkhal 1/260</a> · <a href="https://shamela.ws/book/11406/253">1/258</a></div></div></div>
+
+    <div class="row"><div><b>Ibn Mufliḥ</b><small>8th century · Ḥanbalī</small></div>
+      <div><div class="ar">وَيَجُوزُ التَّوَسُّلُ بِصَالِحٍ، وَقِيلَ: يُسْتَحَبُّ، قَالَ أَحْمَدُ فِي مَنْسَكِهِ: إِنَّهُ يَتَوَسَّلُ بِالنَّبِيِّ ﷺ فِي دُعَائِهِ</div>
+      <div class="tr">“Tawassul by a righteous person is allowed, and it is said to be recommended. Aḥmad said in his manual of Hajj that one makes tawassul by the Prophet ﷺ in his du’a.” <a href="https://shamela.ws/book/12052/1199">al-Furūʿ 3/229</a></div></div></div>
+
+    <div class="row"><div><b>Ibn Ḥajar al-ʿAsqalānī</b><small>9th century · Shāfiʿī</small></div>
+      <div><div class="ar">روى ابن أبي شيبة بإسناد صحيح من رواية أبي صالح السمان عن مالك الداري</div>
+      <div class="tr">In Fatḥ al-Bārī, after telling the story of the man at the grave, he says: “Ibn Abī Shaybah narrated it with a ṣaḥīḥ chain, from Abū Ṣāliḥ al-Sammān, from Mālik al-Dārī.” <a href="https://shamela.ws/book/1673/1574">Fatḥ al-Bārī 2/495</a></div></div></div>
+
+    <div class="row"><div><b>al-Qasṭallānī</b><small>10th century · Shāfiʿī</small></div>
+      <div><div class="ar">ينبغي للزائر أن يكثر من الدعاء والتضرع والاستغاثة والتشفع والتوسل به ﷺ</div>
+      <div class="tr">“The visitor should make much du'a and humble supplication, and ask for help (istighāthah), intercession and tawassul through him ﷺ.” <a href="https://shamela.ws/book/23685/1921">al-Mawāhib al-Laduniyyah 3/605</a></div></div></div>
+
+    <div class="row"><div><b>Zakariyyā al-Anṣārī</b><small>10th century · Shāfiʿī</small></div>
+      <div><div class="ar">ثُمَّ يَرْجِعُ إِلَى مَوْقِفِهِ الأَوَّلِ قِبَالَةَ وَجْهِ رَسُولِ اللَّهِ ﷺ وَيَتَوَسَّلُ بِهِ فِي حَقِّ نَفْسِهِ وَيَسْتَشْفِعُ بِهِ إِلَى رَبِّهِ</div>
+      <div class="tr">In his Shāfiʿī fiqh commentary, for the visitor to the grave: “He returns to his first place facing the face of the Messenger of Allah ﷺ, makes tawassul by him for himself and asks his intercession with his Lord.” <a href="https://shamela.ws/book/30130/1502">Asnā al-Maṭālib 3/243</a></div></div></div>
+
+    <div class="row"><div><b>al-Samhūdī</b><small>10th century · Shāfiʿī</small></div>
+      <div><div class="ar">لحثّه على المجيء إليه والاستغفار عنده واستغفاره للجائين، وهذه رتبة لا تنقطع بموته</div>
+      <div class="tr">On Nisāʾ 4:64: it urges coming to him, asking forgiveness before him, and his asking forgiveness for those who come: “a rank that does not end with his death.” <a href="https://shamela.ws/book/31372/319">Khulāṣat al-Wafā 1/367</a></div></div></div>
+
+    <div class="row"><div><b>ʿAbd al-Ḥaqq al-Dihlawī</b><small>11th century · Ḥanafī muḥaddith</small></div>
+      <div><div class="ar">الداعي المحتاج الفقير إلى اللَّه يدعو اللَّه ويطلب حاجته من فضله تعالى، ويتوسل بروحانية هذا العبد المقرب المكرم عنده</div>
+      <div class="tr">On asking Allah's friends for help: the needy person “prays to Allah, asks for his need from Allah's bounty, and makes tawassul by the spirit of this servant who is near and honoured with Him.” <a href="https://shamela.ws/book/145212/3883">Lamaʿāt al-Tanqīḥ 7/38</a></div></div></div>
+
+    <div class="row"><div><b>al-Shawkānī</b><small>13th century</small></div>
+      <div><div class="ar">وفي الحديث دليل على جواز التوسل برسول الله ﷺ إلى الله عز وجل مع اعتقاد أن الفاعل هو الله</div>
+      <div class="tr">On the blind man's hadith: “It is evidence that tawassul by the Messenger of Allah ﷺ to Allah is allowed, with the belief that the Doer is Allah.” <a href="https://shamela.ws/book/6844/208">Tuḥfat al-Dhākirīn p. 212</a></div></div></div>
+
+  </div>
+
+  <div class="sec" style="margin-top:10px">
+    <div class="sec-h"><span class="n">4</span><div><div class="eyebrow">Replies to objections</div><h2>Ibn Taymiyya’s three objections, and the answers</h2></div></div>
+    <p class="src" style="margin:0 0 4px">Ibn Taymiyya’s objections are from <a href="https://shamela.ws/book/7289/276">Majmūʿ al-Fatāwā 1/274–276</a>. The answers are those of the author of the Urdu tafsīr <i>Tibyān al-Qurʾān</i> (vol. 1, pp. 197–198). He first notes that Ibn Taymiyya himself says al-Ṭabarānī’s version has two ṣaḥīḥ chains.</p>
+    <div class="row"><div><b>1. “The last words are ʿUthmān’s, not the Prophet’s”</b><small>“If you have another need, do the same”</small></div>
+      <p><b>Answer:</b> Even if they are ʿUthmān b. Ḥunayf’s words, there is no harm. He was a Companion, and relying on a Companion’s understanding of the Prophet’s teaching is closer to sound reasoning than relying on Ibn Taymiyya’s.</p></div>
+    <div class="row"><div><b>2. “Other narrators don’t have those words”</b><small>They appear in Ibn Abī Khaythamah’s version</small></div>
+      <p><b>Answer:</b> We do not rely on that version. We rely on al-Ṭabarānī’s report, which Ibn Taymiyya himself says has two ṣaḥīḥ chains.</p></div>
+    <div class="row"><div><b>3. “This only works while the Prophet is praying for the person”</b><small>and we cannot know he prays for us</small></div>
+      <p><b>Answer:</b> When we ask the Prophet ﷺ to pray for us, Allah makes him aware of it, and he asks Allah to accept it. Nothing in the Sharīʿah or in reason rules this out. Muslim reports that his Ummah’s deeds are shown to him (Abū Dharr, <a href="https://shamela.ws/book/711/1465">no. 553</a>). The Prophet’s instruction to the blind man has no limit to his lifetime.</p></div>
+  </div>
+
+  <div class="sec" style="margin-top:10px">
+    <div class="sec-h"><span class="n">5</span><div><div class="eyebrow">The most common objection</div><h2>ʿUmar asked al-ʿAbbās to pray for rain. Doesn’t that close the door?</h2></div></div>
+    <div class="row"><div><b>The report</b><small>Anas · al-Bukhārī</small></div>
+      <div><div class="ar">أَنَّ عُمَرَ بْنَ الْخَطَّابِ ﵁ كَانَ إِذَا قَحَطُوا اسْتَسْقَى بِالْعَبَّاسِ بْنِ عَبْدِ الْمُطَّلِبِ فَقَالَ: اللَّهُمَّ إِنَّا كُنَّا نَتَوَسَّلُ إِلَيْكَ بِنَبِيِّنَا فَتَسْقِينَا، وَإِنَّا نَتَوَسَّلُ إِلَيْكَ بِعَمِّ نَبِيِّنَا فَاسْقِنَا، قَالَ فَيُسْقَوْنَ</div>
+      <div class="tr">In years of drought ʿUmar used to ask al-ʿAbbās, the Prophet’s uncle, to pray for rain. He said: “O Allah, we used to turn to You through our Prophet and You would give us rain. Now we turn to You through the uncle of our Prophet, so give us rain.” And they were given rain. <a href="https://shamela.ws/book/1681/1642">Ṣaḥīḥ al-Bukhārī no. 1010</a></div></div></div>
+    <div class="row"><div><b>The objection</b><small>Ibn Taymiyya</small></div>
+      <div><div class="ar">وَلَوْ كَانَ التَّوَسُّلُ بِهِ بَعْدَ مَوْتِهِ مُمْكِنًا كَالتَّوَسُّلِ بِهِ فِي حَيَاتِهِ لَمَا عَدَلُوا عَنِ الرَّسُولِ ﷺ إِلَى الْعَبَّاسِ</div>
+      <div class="tr">“If turning to Allah through him after his death were possible as it was in his life, they would not have turned from the Messenger ﷺ to al-ʿAbbās.” He reads “through our Prophet” as “through his du’a and intercession”. <a href="https://shamela.ws/book/9277/370">al-Ikhnāʾiyya p. 463</a></div></div></div>
+    <div class="row"><div><b>What the report says, and what it does not</b><small>Reading ʿUmar’s words</small></div>
+      <div><div class="tr"><b>Before:</b> in a drought the people went to the Prophet ﷺ himself, and he prayed for them directly. They asked him, “Pray to Allah for us,” and Allah sent rain (<a href="https://shamela.ws/book/20638/648">Anas, Ṣaḥīḥ Muslim</a>). <b>After he passed away:</b> ʿUmar asked al-ʿAbbās to stand and pray for them directly (<a href="https://shamela.ws/book/1673/1574">ʿAbd al-Razzāq, in Fatḥ al-Bārī 2/495</a>). That is all the report says.<br>
+      It does <b>not</b> say “you can no longer go to the Prophet and ask for rain”, and no Companion says so. Asking one person to pray does not shut the door on asking another. In the same famine, a Companion went to the Prophet’s grave and said, “O Messenger of Allah, ask Allah for rain for your Ummah.” When ʿUmar was told, he wept and said, “O Lord, I spare no effort except in what I am unable to do.” The report records no objection (<a href="https://shamela.ws/book/333/39245">Ibn Abī Shaybah</a>; Ibn Ḥajar: “ṣaḥīḥ chain”).</div></div></div>
+    <p class="src" style="margin:4px 0 2px"><b>Answers from the scholars who allow it:</b></p>
+    <div class="row"><div><b>1. The words do not say they asked him</b><small>Ibn Ḥajar al-ʿAsqalānī</small></div>
+      <div><div class="ar">وَلَيْسَ فِي قَوْلِ عُمَرَ أَنَّهُمْ كَانُوا يَتَوَسَّلُونَ بِهِ دَلَالَةٌ عَلَى أَنَّهُمْ سَأَلُوهُ أَنْ يَسْتَسْقِيَ لَهُمْ، إِذْ يُحْتَمَلُ أَنْ يَكُونُوا فِي الْحَالَيْنِ طَلَبُوا السُّقْيَا مِنَ اللَّهِ مُسْتَشْفِعِينَ بِهِ ﷺ</div>
+      <div class="tr">“There is nothing in ʿUmar’s words ‘we used to turn to You through him’ to show that they asked him to pray for rain. It is possible that, in both situations, they asked Allah for rain, seeking the Prophet’s intercession.” <a href="https://shamela.ws/book/1673/1574">Fatḥ al-Bārī 2/495</a></div></div></div>
+    <div class="row"><div><b>2. In the same year, a Companion went to the grave</b><small>Ibn Ḥajar al-ʿAsqalānī</small></div>
+      <div><div class="ar">رَوَى ابْنُ أَبِي شَيْبَةَ بِإِسْنَادٍ صَحِيحٍ … فَجَاءَ رَجُلٌ إِلَى قَبْرِ النَّبِيِّ ﷺ فَقَالَ: يَا رَسُولَ اللَّهِ، اسْتَسْقِ لِأُمَّتِكَ فَإِنَّهُمْ قَدْ هَلَكُوا</div>
+      <div class="tr">Ibn Ḥajar places the report of the man at the Prophet’s grave right inside his explanation of this very story. He says it has a ṣaḥīḥ chain, and that the man was the Companion Bilāl b. al-Ḥārith al-Muzanī. The famine, the year and the caliph are the same. <a href="https://shamela.ws/book/1673/1574">2/495</a> · <a href="https://shamela.ws/book/1673/1575">2/496</a></div></div></div>
+    <div class="row"><div><b>3. Why al-ʿAbbās, then?</b><small>Ibn Ḥajar, from al-Zubayr b. Bakkār <span class="tag tw">two chains, narrators disputed</span></small></div>
+      <div><div class="ar">إِنَّ رَسُولَ اللَّهِ ﷺ كَانَ يَرَى لِلْعَبَّاسِ مَا يَرَى الْوَلَدُ لِلْوَالِدِ، فَاقْتَدُوا أَيُّهَا النَّاسُ بِرَسُولِ اللَّهِ ﷺ فِي عَمِّهِ الْعَبَّاسِ وَاتَّخِذُوهُ وَسِيلَةً إِلَى اللَّهِ</div>
+      <div class="tr">ʿUmar told the people: “The Messenger of Allah ﷺ treated al-ʿAbbās as a son treats a father. So follow the Messenger ﷺ in how he treated his uncle al-ʿAbbās, and make him a means to Allah.” Ibn Ḥajar adds: “From the story of al-ʿAbbās we learn that it is recommended to seek the intercession of good and righteous people and of the Prophet’s family.” <a href="https://shamela.ws/book/1673/1576">Fatḥ al-Bārī 2/497</a></div></div></div>
+    <div class="row"><div><b>4. It shows that others may be asked too</b><small>Aḥmad Daḥlān, as quoted by his critic</small></div>
+      <div><div class="ar">وَإِنَّمَا اسْتَسْقَى عُمَرُ بِالْعَبَّاسِ وَلَمْ يَسْتَسْقِ بِالنَّبِيِّ ﷺ لِيُبَيِّنَ لِلنَّاسِ جَوَازَ الِاسْتِسْقَاءِ بِغَيْرِ النَّبِيِّ ﷺ وَأَنَّ ذَلِكَ لَا حَرَجَ فِيهِ</div>
+      <div class="tr">“ʿUmar asked al-ʿAbbās and did not ask through the Prophet ﷺ in order to show people that it is allowed to ask through someone other than the Prophet ﷺ, and that there is no harm in it.” <a href="https://shamela.ws/book/12027/206">quoted in Ṣiyānat al-Insān p. 207</a></div></div></div>
+  </div>
+</section>
+
+<footer></footer>
+</main>
+</body>
+</html>
